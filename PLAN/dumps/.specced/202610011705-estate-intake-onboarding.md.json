@@ -1,0 +1,12 @@
+{
+  "dump": "202610011705-estate-intake-onboarding.md",
+  "spec": "PLAN/specs/SPEC-ci-lint-typecheck-gate.md",
+  "specs": [
+    "PLAN/specs/SPEC-ci-lint-typecheck-gate.md",
+    "PLAN/specs/SPEC-cut-pending-release.md"
+  ],
+  "rc": 0,
+  "filed_at": 1790867130.4325838,
+  "started_at": 1790867149.05893,
+  "finished_at": 1790867973.591121
+}
