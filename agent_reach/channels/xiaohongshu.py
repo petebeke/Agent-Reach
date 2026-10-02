@@ -92,9 +92,7 @@ def _clean_note(note):
     # Author
     user = inner.get("user") or inner.get("author")
     if isinstance(user, dict):
-        result["user"] = {
-            k: user[k] for k in ("nickname", "user_id", "nick_name") if k in user
-        }
+        result["user"] = {k: user[k] for k in ("nickname", "user_id", "nick_name") if k in user}
 
     # Engagement metrics
     interact = inner.get("interact_info") or inner.get("note_interact_info") or {}
@@ -263,9 +261,7 @@ class XiaoHongShuChannel(Channel):
                 max_bytes=_MAX_XHS_COOKIE_BYTES,
             )
         except PrivatePathError as exc:
-            return "warn", (
-                f"xhs-cli 已安装，但 cookies.json 无法安全读取：{exc}。"
-            )
+            return "warn", (f"xhs-cli 已安装，但 cookies.json 无法安全读取：{exc}。")
         except OSError:
             return "warn", (
                 "xhs-cli 已安装，但 cookies.json 无法安全读取；"

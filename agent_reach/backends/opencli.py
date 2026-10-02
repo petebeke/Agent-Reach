@@ -27,9 +27,7 @@ from agent_reach.probe import probe_command
 
 OPENCLI_PACKAGE = "@jackwener/opencli"
 OPENCLI_EXTENSION_ID = "ildkmabpimmkaediidaifkhjpohdnifk"
-OPENCLI_EXTENSION_URL = (
-    f"https://chromewebstore.google.com/detail/opencli/{OPENCLI_EXTENSION_ID}"
-)
+OPENCLI_EXTENSION_URL = f"https://chromewebstore.google.com/detail/opencli/{OPENCLI_EXTENSION_ID}"
 
 # OpenCLIApp 0.1.35 injected this now-unsupported variable into every child.
 # OpenCLI >=1.8.5 rejects it before even handling ``--version``.  Doctor is a
@@ -39,11 +37,11 @@ _UNSUPPORTED_APP_ENV = ("OPENCLI_DAEMON_PORT",)
 #: Chromium-family profile roots that contain <Profile>/Extensions/<id>/
 _CHROME_PROFILE_ROOTS = (
     "~/Library/Application Support/Google/Chrome",  # macOS Chrome
-    "~/Library/Application Support/Chromium",       # macOS Chromium
+    "~/Library/Application Support/Chromium",  # macOS Chromium
     "~/Library/Application Support/Microsoft Edge",  # macOS Edge
-    "~/.config/google-chrome",                      # Linux Chrome
-    "~/.config/chromium",                           # Linux Chromium
-    "~/.config/microsoft-edge",                     # Linux Edge
+    "~/.config/google-chrome",  # Linux Chrome
+    "~/.config/chromium",  # Linux Chromium
+    "~/.config/microsoft-edge",  # Linux Edge
 )
 
 _OPENCLI_UNPACKED_EXTENSION = "~/.opencli/extension"
@@ -151,9 +149,7 @@ def opencli_status(timeout: int = 10) -> OpenCLIStatus:
     daemon_status = _fetch_daemon_status(timeout)
     if daemon_status is not None:
         st.daemon_running = True
-        st.extension_connected = bool(
-            daemon_status.get("extensionConnected")
-        )
+        st.extension_connected = bool(daemon_status.get("extensionConnected"))
 
     if not st.extension_connected:
         st.extension_installed = _extension_installed_on_disk()

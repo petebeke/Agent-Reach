@@ -18,15 +18,16 @@ import time
 from agent_reach import __version__
 
 # Pinned to the 0.4.2 state — PyPI still only has 0.4.1 (upstream issue #10).
-_RDT_GIT_SOURCE = "git+https://github.com/public-clis/rdt-cli.git@5e4fb3720d5c174e976cd425ccc3b879d52cac66"
+_RDT_GIT_SOURCE = (
+    "git+https://github.com/public-clis/rdt-cli.git@5e4fb3720d5c174e976cd425ccc3b879d52cac66"
+)
 # boss-agent-cli PRs #403-#407 are all merged into upstream master. Pin to a fixed
 # upstream commit that contains strict CDP, JobItem.lid, job_card_browser(), and the
 # throttle progress feedback. Never point the installer at a moving branch. Once an
 # upstream release containing #403/#404/#406 ships, switch to a version specifier.
 _BOSS_AGENT_CLI_PR_COMMIT = "4c991b77086a203173bf08a4cb64a23af6514fe6"
 _BOSS_AGENT_CLI_SOURCE = (
-    "git+https://github.com/can4hou6joeng4/boss-agent-cli.git@"
-    + _BOSS_AGENT_CLI_PR_COMMIT
+    "git+https://github.com/can4hou6joeng4/boss-agent-cli.git@" + _BOSS_AGENT_CLI_PR_COMMIT
 )
 _MAX_CONFIGURE_VALUE_CHARS = 1024 * 1024
 _SENSITIVE_CONFIG_KEYS = {
@@ -48,6 +49,7 @@ def _ensure_utf8_console():
         return
     try:
         import io
+
         if hasattr(sys.stdout, "buffer"):
             sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
         if hasattr(sys.stderr, "buffer"):
@@ -60,6 +62,7 @@ def _ensure_utf8_console():
 def _configure_logging(verbose: bool = False):
     """Suppress loguru output unless --verbose is set."""
     from loguru import logger
+
     logger.remove()  # Remove default stderr handler
     if verbose:
         logger.add(sys.stderr, level="INFO")
@@ -81,11 +84,18 @@ def main():
 
     # ── install ──
     p_install = sub.add_parser("install", help="One-shot installer with flags")
-    p_install.add_argument("--env", choices=["local", "server", "auto"], default="auto",
-                           help="Environment: local, server, or auto-detect")
-    p_install.add_argument("--proxy", default="",
-                           help="Network proxy saved for agents to export as HTTP(S)_PROXY "
-                                "in restricted networks (http://user:pass@ip:port)")
+    p_install.add_argument(
+        "--env",
+        choices=["local", "server", "auto"],
+        default="auto",
+        help="Environment: local, server, or auto-detect",
+    )
+    p_install.add_argument(
+        "--proxy",
+        default="",
+        help="Network proxy saved for agents to export as HTTP(S)_PROXY "
+        "in restricted networks (http://user:pass@ip:port)",
+    )
     install_mode = p_install.add_mutually_exclusive_group()
     install_mode.add_argument(
         "--system",
@@ -97,20 +107,34 @@ def main():
         action="store_true",
         help="Safe check-only mode (default; retained for compatibility)",
     )
-    p_install.add_argument("--dry-run", action="store_true",
-                           help="Show what would be done without making any changes")
-    p_install.add_argument("--channels", default="",
-                           help="Comma-separated optional channels to install "
-                                "(twitter,xiaoyuzhou,xueqiu,xiaohongshu,"
-                                "reddit,facebook,instagram,bilibili,linkedin,boss,all)")
+    p_install.add_argument(
+        "--dry-run", action="store_true", help="Show what would be done without making any changes"
+    )
+    p_install.add_argument(
+        "--channels",
+        default="",
+        help="Comma-separated optional channels to install "
+        "(twitter,xiaoyuzhou,xueqiu,xiaohongshu,"
+        "reddit,facebook,instagram,bilibili,linkedin,boss,all)",
+    )
 
     # ── configure ──
     p_conf = sub.add_parser("configure", help="Set a config value or auto-extract from browser")
-    p_conf.add_argument("key", nargs="?", default=None,
-                        choices=["proxy", "github-token", "groq-key", "openai-key",
-                                 "twitter-cookies", "youtube-cookies",
-                                 "xhs-cookies"],
-                        help="What to configure (omit if using --from-browser)")
+    p_conf.add_argument(
+        "key",
+        nargs="?",
+        default=None,
+        choices=[
+            "proxy",
+            "github-token",
+            "groq-key",
+            "openai-key",
+            "twitter-cookies",
+            "youtube-cookies",
+            "xhs-cookies",
+        ],
+        help="What to configure (omit if using --from-browser)",
+    )
     p_conf.add_argument("value", nargs="*", help="The value(s) to set")
     p_conf.add_argument(
         "--stdin",
@@ -118,9 +142,12 @@ def main():
         action="store_true",
         help="Read the value from stdin instead of exposing it in process arguments",
     )
-    p_conf.add_argument("--from-browser", metavar="BROWSER",
-                        choices=["chrome", "firefox", "edge", "brave", "opera"],
-                        help="Extract cookies for one explicitly selected platform")
+    p_conf.add_argument(
+        "--from-browser",
+        metavar="BROWSER",
+        choices=["chrome", "firefox", "edge", "brave", "opera"],
+        help="Extract cookies for one explicitly selected platform",
+    )
     p_conf.add_argument(
         "--platform",
         choices=["twitter", "xiaohongshu", "bilibili", "xueqiu"],
@@ -138,23 +165,36 @@ def main():
 
     # ── doctor ──
     p_doctor = sub.add_parser("doctor", help="Check platform availability")
-    p_doctor.add_argument("--json", action="store_true",
-                          help="Output machine-readable JSON instead of the text report")
+    p_doctor.add_argument(
+        "--json",
+        action="store_true",
+        help="Output machine-readable JSON instead of the text report",
+    )
 
     # ── uninstall ──
-    p_uninstall = sub.add_parser("uninstall", help="Remove all Agent Reach config, tokens, and skill files")
-    p_uninstall.add_argument("--dry-run", action="store_true",
-                             help="Show what would be removed without making any changes")
-    p_uninstall.add_argument("--keep-config", action="store_true",
-                             help="Remove skill files only, keep ~/.agent-reach/ config and tokens")
+    p_uninstall = sub.add_parser(
+        "uninstall", help="Remove all Agent Reach config, tokens, and skill files"
+    )
+    p_uninstall.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Show what would be removed without making any changes",
+    )
+    p_uninstall.add_argument(
+        "--keep-config",
+        action="store_true",
+        help="Remove skill files only, keep ~/.agent-reach/ config and tokens",
+    )
 
     # ── skill ──
     p_skill = sub.add_parser("skill", help="Manage agent skill registration")
     p_skill_group = p_skill.add_mutually_exclusive_group(required=True)
-    p_skill_group.add_argument("--install", action="store_true",
-                               help="Install SKILL.md to agent skill directories")
-    p_skill_group.add_argument("--uninstall", action="store_true",
-                               help="Remove SKILL.md from agent skill directories")
+    p_skill_group.add_argument(
+        "--install", action="store_true", help="Install SKILL.md to agent skill directories"
+    )
+    p_skill_group.add_argument(
+        "--uninstall", action="store_true", help="Remove SKILL.md from agent skill directories"
+    )
 
     # ── format ──
     p_format = sub.add_parser("format", help="Clean and format platform API output")
@@ -162,10 +202,16 @@ def main():
 
     # ── check-update ──
     # ── transcribe ──
-    p_tr = sub.add_parser("transcribe", help="Transcribe a URL or local audio file (Whisper via Groq/OpenAI)")
+    p_tr = sub.add_parser(
+        "transcribe", help="Transcribe a URL or local audio file (Whisper via Groq/OpenAI)"
+    )
     p_tr.add_argument("source", help="Audio/video URL or local file path")
-    p_tr.add_argument("--provider", choices=["auto", "groq", "openai"], default="auto",
-                      help="Transcription provider (default: first configured provider)")
+    p_tr.add_argument(
+        "--provider",
+        choices=["auto", "groq", "openai"],
+        default="auto",
+        help="Transcription provider (default: first configured provider)",
+    )
     p_tr.add_argument(
         "--allow-provider-fallback",
         action="store_true",
@@ -174,8 +220,9 @@ def main():
             "configured provider after a failure"
         ),
     )
-    p_tr.add_argument("-o", "--output", default=None,
-                      help="Write transcript to a file instead of stdout")
+    p_tr.add_argument(
+        "-o", "--output", default=None, help="Write transcript to a file instead of stdout"
+    )
 
     sub.add_parser("check-update", help="Check for new versions and changes")
 
@@ -202,9 +249,7 @@ def main():
                 f"`agent-reach configure {manual_keys[args.platform]} ...`"
             )
         if args.profile and args.from_browser not in {"chrome", "edge", "brave"}:
-            p_conf.error(
-                "--profile is supported only for Chrome/Edge/Brave"
-            )
+            p_conf.error("--profile is supported only for Chrome/Edge/Brave")
         if args.sync_legacy_twitter:
             p_conf.error("--sync-legacy-twitter is only valid with twitter-cookies")
     elif args.command == "configure":
@@ -217,11 +262,7 @@ def main():
         if args.sync_legacy_twitter and args.key != "twitter-cookies":
             p_conf.error("--sync-legacy-twitter is only valid with twitter-cookies")
 
-    if (
-        args.command == "transcribe"
-        and args.allow_provider_fallback
-        and args.provider != "auto"
-    ):
+    if args.command == "transcribe" and args.allow_provider_fallback and args.provider != "auto":
         p_tr.error("--allow-provider-fallback requires --provider auto")
 
     # Suppress loguru noise unless --verbose
@@ -272,31 +313,28 @@ def _cmd_install(args):
 
     # Validate channel names before constructing config or changing the system.
     CHANNEL_INSTALLERS = {
-        "twitter":     _install_twitter_deps,
-        "xiaoyuzhou":  _install_xiaoyuzhou_deps,
+        "twitter": _install_twitter_deps,
+        "xiaoyuzhou": _install_xiaoyuzhou_deps,
         "xiaohongshu": _install_xhs_deps,
-        "reddit":      _install_reddit_deps,
-        "facebook":    _install_opencli_deps,
-        "instagram":   _install_opencli_deps,
-        "bilibili":    _install_bili_deps,
-        "boss":        _install_boss_deps,
-        "opencli":     _install_opencli_deps,  # cross-channel backend, desktop only
+        "reddit": _install_reddit_deps,
+        "facebook": _install_opencli_deps,
+        "instagram": _install_opencli_deps,
+        "bilibili": _install_bili_deps,
+        "boss": _install_boss_deps,
+        "opencli": _install_opencli_deps,  # cross-channel backend, desktop only
         # xueqiu: cookie-only, no install step
         # linkedin: manual setup, no auto-install
     }
     supported_channels = set(CHANNEL_INSTALLERS) | {"xueqiu", "linkedin"}
     raw_channels = [
-        channel.strip().lower()
-        for channel in args.channels.split(",")
-        if channel.strip()
+        channel.strip().lower() for channel in args.channels.split(",") if channel.strip()
     ]
     unknown_channels = set(raw_channels) - supported_channels - {"all"}
     if unknown_channels:
         supported = ", ".join(sorted(supported_channels | {"all"}))
         unknown = ", ".join(sorted(unknown_channels))
         print(
-            f"agent-reach install: error: unknown channel(s): {unknown}. "
-            f"Supported: {supported}",
+            f"agent-reach install: error: unknown channel(s): {unknown}. Supported: {supported}",
             file=sys.stderr,
         )
         raise SystemExit(2)
@@ -373,8 +411,10 @@ def _cmd_install(args):
 
     if server_skipped_desktop_channels:
         print()
-        print("  -- 以下渠道需要桌面环境 + Chrome，服务器环境跳过："
-              f"{', '.join(sorted(server_skipped_desktop_channels))}")
+        print(
+            "  -- 以下渠道需要桌面环境 + Chrome，服务器环境跳过："
+            f"{', '.join(sorted(server_skipped_desktop_channels))}"
+        )
 
     # ── Install optional channels (only if --channels specified) ──
     if requested_channels and not dry_run and not safe_mode:
@@ -385,9 +425,7 @@ def _cmd_install(args):
         for ch_name in sorted(requested_channels):
             installer = CHANNEL_INSTALLERS.get(ch_name)
             if installer and installer not in ran_installers:
-                optional_install_ok = (
-                    installer() is not False
-                ) and optional_install_ok
+                optional_install_ok = (installer() is not False) and optional_install_ok
                 ran_installers.add(installer)
     else:
         optional_install_ok = True
@@ -408,10 +446,7 @@ def _cmd_install(args):
             elif channel == "xiaohongshu":
                 print("  agent-reach configure xhs-cookies")
             else:
-                print(
-                    "  agent-reach configure --from-browser chrome "
-                    f"--platform {channel}"
-                )
+                print(f"  agent-reach configure --from-browser chrome --platform {channel}")
     elif env == "local" and needs_cookies and dry_run:
         print()
         print("[dry-run] Cookie import remains explicit; install will not read a browser")
@@ -438,16 +473,11 @@ def _cmd_install(args):
         print()
 
         if safe_mode:
-            print(
-                "Safe mode check complete. No changes were made. "
-                f"{ok}/{total} channels active."
-            )
+            print(f"Safe mode check complete. No changes were made. {ok}/{total} channels active.")
         else:
             # ── Install agent skill ──
             skill_install_ok = _install_skill() is not False
-            install_ok = (
-                core_install_ok and optional_install_ok and skill_install_ok
-            )
+            install_ok = core_install_ok and optional_install_ok and skill_install_ok
 
             if install_ok:
                 print(f"Installation complete. {ok}/{total} channels active.")
@@ -461,7 +491,9 @@ def _cmd_install(args):
                 # First install — hint about optional channels
                 print()
                 print("More channels available! Use --channels to install:")
-                print("   agent-reach install --system --channels=twitter,xiaohongshu,reddit,facebook,instagram,...")
+                print(
+                    "   agent-reach install --system --channels=twitter,xiaohongshu,reddit,facebook,instagram,..."
+                )
                 print("   agent-reach install --system --channels=all  (install everything)")
 
             # Star reminder
@@ -524,6 +556,7 @@ def _install_skill(force: bool = True):
                 skill_md = _read_skill_markdown(skill_pkg)
             except Exception:
                 from pathlib import Path
+
                 skill_pkg = Path(__file__).resolve().parent / "skill"
                 skill_md = _read_skill_markdown(skill_pkg)
 
@@ -537,9 +570,13 @@ def _install_skill(force: bool = True):
             os.makedirs(refs_target, exist_ok=True)
 
             for ref_file in refs_pkg.iterdir():
-                name = ref_file.name if hasattr(ref_file, 'name') else str(ref_file).split('/')[-1]
+                name = ref_file.name if hasattr(ref_file, "name") else str(ref_file).split("/")[-1]
                 if name.endswith(".md"):
-                    content = ref_file.read_text(encoding="utf-8") if hasattr(ref_file, 'read_text') else ref_file.read_text()
+                    content = (
+                        ref_file.read_text(encoding="utf-8")
+                        if hasattr(ref_file, "read_text")
+                        else ref_file.read_text()
+                    )
                     with open(os.path.join(refs_target, name), "w", encoding="utf-8") as f:
                         f.write(content)
 
@@ -571,7 +608,9 @@ def _install_skill(force: bool = True):
             status = _copy_skill_dir(target)
             if status:
                 if status == "preserved":
-                    print(f"Skill already installed for {platform_name}, preserving existing files: {target}")
+                    print(
+                        f"Skill already installed for {platform_name}, preserving existing files: {target}"
+                    )
                 else:
                     print(f"Skill installed for {platform_name}: {target}")
                 installed = True
@@ -711,9 +750,7 @@ def _install_system_deps():
                 )
                 if update_result.returncode != 0:
                     system_install_ok = False
-                    print(
-                        "  [!]  apt-get update failed; no packages were installed."
-                    )
+                    print("  [!]  apt-get update failed; no packages were installed.")
                 else:
                     install_result = subprocess.run(
                         [apt_get, "install", "-y", "-qq", *packages],
@@ -722,22 +759,13 @@ def _install_system_deps():
                     )
                     if install_result.returncode == 0:
                         system_install_ok = True
-                        print(
-                            "  ✅ Installed with apt-get: "
-                            f"{', '.join(missing_labels)}"
-                        )
+                        print(f"  ✅ Installed with apt-get: {', '.join(missing_labels)}")
                     else:
                         system_install_ok = False
-                        print(
-                            "  [!]  apt-get install failed for: "
-                            f"{', '.join(missing_labels)}"
-                        )
+                        print(f"  [!]  apt-get install failed for: {', '.join(missing_labels)}")
             except (OSError, subprocess.TimeoutExpired):
                 system_install_ok = False
-                print(
-                    "  [!]  apt-get failed for: "
-                    f"{', '.join(missing_labels)}"
-                )
+                print(f"  [!]  apt-get failed for: {', '.join(missing_labels)}")
     elif missing_labels and os_type == "darwin":
         brew = shutil.which("brew")
         if not brew:
@@ -792,17 +820,10 @@ def _install_system_deps():
             npm_root_result = None
 
         if npm_root_result is None or npm_root_result.returncode != 0:
-            print(
-                "  -- Could not inspect global npm packages; "
-                "skipping optional undici install"
-            )
+            print("  -- Could not inspect global npm packages; skipping optional undici install")
         else:
             npm_root = npm_root_result.stdout.strip()
-            undici_path = (
-                os.path.join(npm_root, "undici", "index.js")
-                if npm_root
-                else ""
-            )
+            undici_path = os.path.join(npm_root, "undici", "index.js") if npm_root else ""
             if os.path.exists(undici_path):
                 print("  ✅ undici already installed (Node.js proxy support)")
             else:
@@ -817,15 +838,9 @@ def _install_system_deps():
                     if result.returncode == 0:
                         print("  ✅ undici installed (Node.js proxy support)")
                     else:
-                        print(
-                            "  -- undici install failed "
-                            "(optional — may not work behind proxies)"
-                        )
+                        print("  -- undici install failed (optional — may not work behind proxies)")
                 except (OSError, subprocess.TimeoutExpired):
-                    print(
-                        "  -- undici install failed "
-                        "(optional — may not work behind proxies)"
-                    )
+                    print("  -- undici install failed (optional — may not work behind proxies)")
 
     # ── yt-dlp JS runtime config (YouTube requires external JS runtime) ──
     if shutil.which("deno"):
@@ -854,16 +869,11 @@ def _install_system_deps():
                     timeout=10,
                 )
                 if version_result.returncode == 0:
-                    installed_version = _parse_ytdlp_version(
-                        version_result.stdout.strip()
-                    )
+                    installed_version = _parse_ytdlp_version(version_result.stdout.strip())
             except (OSError, subprocess.TimeoutExpired):
                 installed_version = None
 
-        if (
-            installed_version is None
-            or installed_version < _JS_RUNTIMES_SUPPORTED_FROM
-        ):
+        if installed_version is None or installed_version < _JS_RUNTIMES_SUPPORTED_FROM:
             print(
                 "  -- 未写入 yt-dlp JS runtime 配置：yt-dlp 缺失、过旧或"
                 "版本无法确认。先升级：python -m pip install -U "
@@ -876,34 +886,22 @@ def _install_system_deps():
                     ytdlp_config,
                     max_bytes=1024 * 1024,
                 )
-                if (
-                    existing_config is not None
-                    and "--js-runtimes" in existing_config
-                ):
+                if existing_config is not None and "--js-runtimes" in existing_config:
                     print("  ✅ yt-dlp JS runtime already configured")
                 else:
                     existing_config = existing_config or ""
                     separator = (
                         ""
-                        if not existing_config
-                        or existing_config.endswith(("\n", "\r"))
+                        if not existing_config or existing_config.endswith(("\n", "\r"))
                         else "\n"
                     )
                     atomic_write_private_text(
                         ytdlp_config,
-                        existing_config
-                        + separator
-                        + "--js-runtimes node\n",
+                        existing_config + separator + "--js-runtimes node\n",
                     )
-                    print(
-                        "  ✅ yt-dlp configured to use Node.js as JS runtime "
-                        "(YouTube)"
-                    )
+                    print("  ✅ yt-dlp configured to use Node.js as JS runtime (YouTube)")
             except (OSError, UnicodeError, ValueError, PrivatePathError):
-                print(
-                    "  -- Could not configure yt-dlp JS runtime "
-                    "(YouTube may not work)"
-                )
+                print("  -- Could not configure yt-dlp JS runtime (YouTube may not work)")
 
     # NOTE: twitter-cli, xiaoyuzhou, xhs-cli etc. are optional.
     # They are installed via --channels flag, not here.
@@ -979,8 +977,11 @@ def _install_twitter_deps():
         if tool_cmd:
             try:
                 result = subprocess.run(
-                    [tool_cmd, *args], capture_output=True, encoding="utf-8",
-                    errors="replace", timeout=120,
+                    [tool_cmd, *args],
+                    capture_output=True,
+                    encoding="utf-8",
+                    errors="replace",
+                    timeout=120,
                 )
                 if result.returncode == 0 and shutil.which("twitter"):
                     print("  ✅ twitter-cli installed")
@@ -1020,7 +1021,9 @@ def _install_boss_deps():
             )
             if result.returncode == 0 and shutil.which("boss"):
                 print("  ✅ boss-agent-cli installed from pinned upstream commit")
-                print("  下一步：启动专用 Chrome，由用户手动登录 zhipin.com，再运行 agent-reach doctor")
+                print(
+                    "  下一步：启动专用 Chrome，由用户手动登录 zhipin.com，再运行 agent-reach doctor"
+                )
                 return True
         except (OSError, subprocess.TimeoutExpired):
             pass
@@ -1049,7 +1052,9 @@ def _install_xhs_deps():
         print("    2. 启动服务（首次运行会下载约 150MB 浏览器，请等待完成）")
         print("    3. 用 Cookie-Editor 从 xiaohongshu.com 明确导出 Cookie")
         print("       agent-reach configure xhs-cookies（粘贴到隐藏输入提示）")
-        print("    4. 接入：mcporter config add xiaohongshu http://localhost:18060/mcp --scope home")
+        print(
+            "    4. 接入：mcporter config add xiaohongshu http://localhost:18060/mcp --scope home"
+        )
         print("    5. 验证：agent-reach doctor")
         return False
 
@@ -1094,7 +1099,10 @@ def _install_opencli_deps():
     try:
         install_result = subprocess.run(
             [npm_cmd, "install", "-g", OPENCLI_PACKAGE],
-            capture_output=True, encoding="utf-8", errors="replace", timeout=300,
+            capture_output=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=300,
         )
     except (OSError, subprocess.TimeoutExpired):
         install_result = None
@@ -1127,6 +1135,7 @@ def _install_reddit_deps():
         installed = _install_opencli_deps()
         print("  Reddit 走 OpenCLI（浏览器里登录过 reddit.com 即可用）")
         import shutil
+
         if shutil.which("rdt"):
             print("  ✅ 检测到存量 rdt-cli，将作为备选后端继续可用")
         return installed
@@ -1151,8 +1160,11 @@ def _install_rdt_cli():
         if tool_cmd:
             try:
                 result = subprocess.run(
-                    [tool_cmd, *args], capture_output=True, encoding="utf-8",
-                    errors="replace", timeout=120,
+                    [tool_cmd, *args],
+                    capture_output=True,
+                    encoding="utf-8",
+                    errors="replace",
+                    timeout=120,
                 )
                 if result.returncode == 0 and shutil.which("rdt"):
                     print("  ✅ rdt-cli installed")
@@ -1180,8 +1192,11 @@ def _install_bili_deps():
         if tool_cmd:
             try:
                 result = subprocess.run(
-                    [tool_cmd, *args], capture_output=True, encoding="utf-8",
-                    errors="replace", timeout=120,
+                    [tool_cmd, *args],
+                    capture_output=True,
+                    encoding="utf-8",
+                    errors="replace",
+                    timeout=120,
                 )
                 if result.returncode == 0 and shutil.which("bili"):
                     print("  ✅ bili-cli installed")
@@ -1199,7 +1214,12 @@ def _install_system_deps_safe():
     print("Checking system dependencies (safe mode — no auto-install)...")
 
     deps = [
-        ("gh", ["gh"], "GitHub CLI", "https://cli.github.com — or: apt install gh / brew install gh"),
+        (
+            "gh",
+            ["gh"],
+            "GitHub CLI",
+            "https://cli.github.com — or: apt install gh / brew install gh",
+        ),
         ("node", ["node", "npm"], "Node.js", "https://nodejs.org — or: apt install nodejs npm"),
     ]
 
@@ -1244,7 +1264,6 @@ def _install_system_deps_dryrun():
             print(f"  {label}: would install via: {method}")
 
 
-
 def _install_mcporter():
     """Install mcporter and configure Exa search."""
     import shutil
@@ -1264,13 +1283,18 @@ def _install_mcporter():
         try:
             install_result = subprocess.run(
                 [npm_cmd, "install", "-g", "mcporter"],
-                capture_output=True, encoding="utf-8", errors="replace", timeout=120,
+                capture_output=True,
+                encoding="utf-8",
+                errors="replace",
+                timeout=120,
             )
             mcporter_cmd = shutil.which("mcporter")
             if install_result.returncode == 0 and mcporter_cmd:
                 print("  ✅ mcporter installed")
             else:
-                print("  [X] mcporter install failed. Retry: npm install -g mcporter (check network/timeout), or try: npx mcporter@latest list")
+                print(
+                    "  [X] mcporter install failed. Retry: npm install -g mcporter (check network/timeout), or try: npx mcporter@latest list"
+                )
                 return False
         except (OSError, subprocess.TimeoutExpired) as e:
             print(f"  [X] mcporter install failed: {e}")
@@ -1304,7 +1328,10 @@ def _install_mcporter():
                     "--scope",
                     "home",
                 ],
-                capture_output=True, encoding="utf-8", errors="replace", timeout=10,
+                capture_output=True,
+                encoding="utf-8",
+                errors="replace",
+                timeout=10,
             )
             if add_result.returncode == 0:
                 print("  ✅ Exa search configured (free, no API key needed)")
@@ -1319,7 +1346,9 @@ def _install_mcporter():
             print("  ✅ Exa search already configured")
             return True
     except Exception:
-        print("  [!]  Could not configure Exa. Run manually: mcporter config add exa https://mcp.exa.ai/mcp --scope home")
+        print(
+            "  [!]  Could not configure Exa. Run manually: mcporter config add exa https://mcp.exa.ai/mcp --scope home"
+        )
         return False
 
     # NOTE: xhs-cli is now optional, installed via --channels=xiaohongshu
@@ -1333,7 +1362,9 @@ def _install_mcporter_safe():
 
     if shutil.which("mcporter"):
         print("  ✅ mcporter already installed")
-        print("  To configure Exa search: mcporter config add exa https://mcp.exa.ai/mcp --scope home")
+        print(
+            "  To configure Exa search: mcporter config add exa https://mcp.exa.ai/mcp --scope home"
+        )
     else:
         print("  -- mcporter not installed")
         print("  To install: npm install -g mcporter")
@@ -1365,7 +1396,18 @@ def _detect_environment():
             try:
                 with open(cloud_file) as f:
                     content = f.read().lower()
-                if any(x in content for x in ["amazon", "google", "microsoft", "digitalocean", "linode", "vultr", "hetzner"]):
+                if any(
+                    x in content
+                    for x in [
+                        "amazon",
+                        "google",
+                        "microsoft",
+                        "digitalocean",
+                        "linode",
+                        "vultr",
+                        "hetzner",
+                    ]
+                ):
                     indicators += 2
             except Exception:
                 pass
@@ -1373,7 +1415,14 @@ def _detect_environment():
     # systemd-detect-virt
     try:
         import subprocess
-        result = subprocess.run(["systemd-detect-virt"], capture_output=True, encoding="utf-8", errors="replace", timeout=3)
+
+        result = subprocess.run(
+            ["systemd-detect-virt"],
+            capture_output=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=3,
+        )
         if result.returncode == 0 and result.stdout.strip() != "none":
             indicators += 1
     except Exception:
@@ -1451,8 +1500,7 @@ def _cmd_configure(args):
             from agent_reach.utils.text import scrub_url_credentials
 
             print(
-                f"agent-reach configure: error: "
-                f"{scrub_url_credentials(exc)}",
+                f"agent-reach configure: error: {scrub_url_credentials(exc)}",
                 file=sys.stderr,
             )
             raise SystemExit(2) from None
@@ -1488,10 +1536,7 @@ def _cmd_configure(args):
     if not args.key:
         print("Usage: agent-reach configure <key> [--stdin]")
         print("   Omit the value to enter it through a hidden prompt.")
-        print(
-            "   or: agent-reach configure --from-browser chrome "
-            "--platform xueqiu"
-        )
+        print("   or: agent-reach configure --from-browser chrome --platform xueqiu")
         return
 
     value = _read_configure_value(args)
@@ -1506,7 +1551,9 @@ def _cmd_configure(args):
         # bilibili_proxy key is kept in sync for older configs.
         config.set("proxy", value)
         config.set("bilibili_proxy", value)
-        print("✅ 代理已保存（供 Agent 在访问 Reddit/Twitter 等需要代理的网络时设置 HTTP_PROXY/HTTPS_PROXY）")
+        print(
+            "✅ 代理已保存（供 Agent 在访问 Reddit/Twitter 等需要代理的网络时设置 HTTP_PROXY/HTTPS_PROXY）"
+        )
         print("  Note: B站走 bili-cli，国内网络无需代理。")
 
     elif args.key == "twitter-cookies":
@@ -1547,9 +1594,7 @@ def _cmd_configure(args):
                 "验证失败时会自动读取浏览器 Cookie。"
             )
             if not shutil.which("twitter"):
-                print(
-                    "  [!] twitter-cli 未安装。运行：pipx install twitter-cli"
-                )
+                print("  [!] twitter-cli 未安装。运行：pipx install twitter-cli")
             else:
                 print(
                     "  注意：独立 `twitter` 命令不会读取 Agent Reach 配置；"
@@ -1688,25 +1733,14 @@ def _configure_xhs_cookies(value) -> bool:
                     valid_cookies.append(cookie)
 
                 if ignored_domains:
-                    print(
-                        f"  [!] 已忽略 {ignored_domains} 个非 "
-                        "xiaohongshu.com 域 Cookie"
-                    )
+                    print(f"  [!] 已忽略 {ignored_domains} 个非 xiaohongshu.com 域 Cookie")
                 if ignored_invalid:
-                    print(
-                        f"  [!] 已忽略 {ignored_invalid} 个格式无效的 Cookie"
-                    )
+                    print(f"  [!] 已忽略 {ignored_invalid} 个格式无效的 Cookie")
                 if not valid_cookies:
-                    print(
-                        "[X] Cookie-Editor JSON 中没有有效的 "
-                        "xiaohongshu.com 域 Cookie"
-                    )
+                    print("[X] Cookie-Editor JSON 中没有有效的 xiaohongshu.com 域 Cookie")
                     return False
                 cookies_json = json.dumps(valid_cookies)
-                print(
-                    f"  Parsed {len(valid_cookies)} "
-                    "xiaohongshu.com cookies from JSON format"
-                )
+                print(f"  Parsed {len(valid_cookies)} xiaohongshu.com cookies from JSON format")
             else:
                 print("[X] Empty or invalid JSON array")
                 return False
@@ -1725,18 +1759,20 @@ def _configure_xhs_cookies(value) -> bool:
             name = name.strip()
             val = val.strip()
             if name:
-                cookies.append({
-                    "name": name,
-                    "value": val,
-                    "domain": ".xiaohongshu.com",
-                    "path": "/",
-                    "expires": -1,
-                    "size": len(name) + len(val),
-                    "httpOnly": False,
-                    "secure": False,
-                    "session": True,
-                    "sameSite": "Lax",
-                })
+                cookies.append(
+                    {
+                        "name": name,
+                        "value": val,
+                        "domain": ".xiaohongshu.com",
+                        "path": "/",
+                        "expires": -1,
+                        "size": len(name) + len(val),
+                        "httpOnly": False,
+                        "secure": False,
+                        "session": True,
+                        "sameSite": "Lax",
+                    }
+                )
         if cookies:
             cookies_json = json.dumps(cookies)
             print(f"  Parsed {len(cookies)} cookies from Header String format")
@@ -1775,13 +1811,17 @@ def _configure_xhs_cookies(value) -> bool:
     try:
         result = subprocess.run(
             [docker, "ps", "--filter", "name=xiaohongshu-mcp", "--format", "{{.Names}}"],
-            capture_output=True, encoding="utf-8", timeout=5,
+            capture_output=True,
+            encoding="utf-8",
+            timeout=5,
         )
         container_name = result.stdout.strip()
         if not container_name:
             print("[X] xiaohongshu-mcp container is not running.")
             print("   Start it first:")
-            print("   docker run -d --name xiaohongshu-mcp -p 18060:18060 xpzouying/xiaohongshu-mcp")
+            print(
+                "   docker run -d --name xiaohongshu-mcp -p 18060:18060 xpzouying/xiaohongshu-mcp"
+            )
             return False
     except Exception as e:
         print(f"[X] Could not check Docker: {e}")
@@ -1791,7 +1831,9 @@ def _configure_xhs_cookies(value) -> bool:
     try:
         result = subprocess.run(
             [docker, "exec", container_name, "printenv", "COOKIES_PATH"],
-            capture_output=True, encoding="utf-8", timeout=5,
+            capture_output=True,
+            encoding="utf-8",
+            timeout=5,
         )
         cookie_path_in_container = result.stdout.strip()
         if not cookie_path_in_container:
@@ -1804,13 +1846,16 @@ def _configure_xhs_cookies(value) -> bool:
     try:
         # Write to temp file then docker cp
         import tempfile
+
         with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False) as f:
             f.write(cookies_json)
             tmp_path = f.name
 
         result = subprocess.run(
             [docker, "cp", tmp_path, f"{container_name}:{cookie_path_in_container}"],
-            capture_output=True, encoding="utf-8", timeout=10,
+            capture_output=True,
+            encoding="utf-8",
+            timeout=10,
         )
 
         if result.returncode != 0:
@@ -1823,13 +1868,12 @@ def _configure_xhs_cookies(value) -> bool:
         try:
             restart = subprocess.run(
                 [docker, "restart", container_name],
-                capture_output=True, encoding="utf-8", timeout=30,
+                capture_output=True,
+                encoding="utf-8",
+                timeout=30,
             )
             if restart.returncode != 0:
-                detail = (
-                    (restart.stderr or "").strip()[:200]
-                    or f"exit {restart.returncode}"
-                )
+                detail = (restart.stderr or "").strip()[:200] or f"exit {restart.returncode}"
                 print(f"\n  [!] Could not restart container: {detail}")
                 print(f"  Restart manually: docker restart {container_name}")
                 return False
@@ -1857,7 +1901,10 @@ def _configure_xhs_cookies(value) -> bool:
         try:
             result = subprocess.run(
                 [mcporter, "call", "xiaohongshu.check_login_status()"],
-                capture_output=True, encoding="utf-8", errors="replace", timeout=15,
+                capture_output=True,
+                encoding="utf-8",
+                errors="replace",
+                timeout=15,
             )
             if "已登录" in result.stdout or "logged" in result.stdout.lower():
                 print("✅ Login verified!")
@@ -1919,9 +1966,7 @@ def _cmd_uninstall(args):
         home_dir() / ".config" / "xfetch" / "session.json",
         home_dir() / ".config" / "bird" / "credentials.env",
     )
-    present_legacy_paths = [
-        path for path in legacy_credential_paths if os.path.lexists(path)
-    ]
+    present_legacy_paths = [path for path in legacy_credential_paths if os.path.lexists(path)]
     if present_legacy_paths:
         print("  [!] 检测到可选的 Twitter legacy 凭据副本；不会自动删除：")
         for path in present_legacy_paths:
@@ -1981,10 +2026,7 @@ def _cmd_uninstall(args):
             subprocess.TimeoutExpired,
         ):
             mcporter_cleanup_skipped = True
-            print(
-                "  [!] 无法安全核验 mcporter 配置来源；"
-                "不会自动删除 exa/xiaohongshu 项。"
-            )
+            print("  [!] 无法安全核验 mcporter 配置来源；不会自动删除 exa/xiaohongshu 项。")
         else:
             for mcp_name in ("exa", "xiaohongshu"):
                 if mcp_name not in server_names:
@@ -2021,6 +2063,7 @@ def _cmd_uninstall(args):
 def _cmd_doctor(args=None):
     from agent_reach.config import Config
     from agent_reach.doctor import check_all, format_report
+
     config = Config(read_only=True)
     results = check_all(config)
 
@@ -2092,7 +2135,10 @@ def _cmd_setup():
                             "--scope",
                             "home",
                         ],
-                        capture_output=True, encoding="utf-8", errors="replace", timeout=10,
+                        capture_output=True,
+                        encoding="utf-8",
+                        errors="replace",
+                        timeout=10,
                     )
                     if add_r.returncode == 0:
                         print("  ✅ Exa 已配置")
@@ -2256,6 +2302,7 @@ def _is_newer_version(remote: str, local: str) -> bool:
     AHEAD of the latest release (e.g. installed from main during a release
     window) — and walk them into a downgrade.
     """
+
     def parse(v):
         try:
             return tuple(int(x) for x in v.strip().split("."))
@@ -2392,7 +2439,9 @@ def _cmd_watch():
             for line in release_body.strip().split("\n")[:10]:
                 print(f"    {line}")
         print("  更新（一句话发给 Agent 即可完整更新）：")
-        print("    帮我更新 Agent Reach：https://raw.githubusercontent.com/Panniantong/agent-reach/main/docs/update.md")
+        print(
+            "    帮我更新 Agent Reach：https://raw.githubusercontent.com/Panniantong/agent-reach/main/docs/update.md"
+        )
 
 
 if __name__ == "__main__":

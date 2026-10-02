@@ -103,16 +103,10 @@ class YouTubeChannel(Channel):
                 providers.append("openai")
             if providers:
                 missing_media_tools = [
-                    tool
-                    for tool in ("ffmpeg", "ffprobe")
-                    if not shutil.which(tool)
+                    tool for tool in ("ffmpeg", "ffprobe") if not shutil.which(tool)
                 ]
                 if missing_media_tools:
-                    msg += (
-                        "（音频转写需安装 "
-                        + "、".join(missing_media_tools)
-                        + "）"
-                    )
+                    msg += "（音频转写需安装 " + "、".join(missing_media_tools) + "）"
                 else:
                     msg += f"，可转写音频（{'/'.join(providers)}）"
         return "ok", msg

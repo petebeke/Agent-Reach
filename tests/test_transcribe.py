@@ -274,9 +274,7 @@ class TestOrchestrator:
         assert text == "from-openai"
         assert calls == [tr.PROVIDERS["openai"]["endpoint"]]
 
-    def test_rejects_overlong_audio_before_compression(
-        self, monkeypatch, fake_config, chunk_file
-    ):
+    def test_rejects_overlong_audio_before_compression(self, monkeypatch, fake_config, chunk_file):
         fake_config.set("groq_api_key", "gsk_test")
         events = []
 
@@ -607,9 +605,7 @@ class TestOrchestrator:
 
 
 class TestDownloadAudioSafety:
-    def test_rejects_download_that_exceeds_limit(
-        self, monkeypatch, tmp_path
-    ):
+    def test_rejects_download_that_exceeds_limit(self, monkeypatch, tmp_path):
         monkeypatch.setattr(tr, "_require", lambda _binary: None)
         monkeypatch.setattr(tr, "MAX_SOURCE_BYTES", 4)
 
@@ -774,9 +770,7 @@ class TestDownloadAudioSafety:
 
 
 class TestMediaGenerationBudget:
-    def test_compression_has_hard_duration_cap(
-        self, monkeypatch, tmp_path, chunk_file
-    ):
+    def test_compression_has_hard_duration_cap(self, monkeypatch, tmp_path, chunk_file):
         captured = {}
 
         def fake_run(cmd, timeout=600):
@@ -791,9 +785,7 @@ class TestMediaGenerationBudget:
         duration_index = captured["cmd"].index("-t")
         assert captured["cmd"][duration_index + 1] == str(tr.MAX_AUDIO_SECONDS)
 
-    def test_chunk_generation_has_hard_duration_cap(
-        self, monkeypatch, tmp_path, chunk_file
-    ):
+    def test_chunk_generation_has_hard_duration_cap(self, monkeypatch, tmp_path, chunk_file):
         captured = {}
 
         def fake_run(cmd, timeout=600):
@@ -815,9 +807,7 @@ class TestMediaGenerationBudget:
         monkeypatch.setattr(
             tr,
             "_run",
-            lambda *_args, **_kwargs: pytest.fail(
-                "unsafe chunk budget must fail before ffmpeg"
-            ),
+            lambda *_args, **_kwargs: pytest.fail("unsafe chunk budget must fail before ffmpeg"),
         )
 
         with pytest.raises(tr.TranscribeError, match=r"chunk.*limit.*24"):
@@ -849,9 +839,7 @@ class TestSubprocessDecoding:
         with pytest.raises(tr.TranscribeError, match="yt-dlp"):
             tr._run(["yt-dlp", "https://example.com/video"], timeout=5)
 
-    def test_probe_preserves_cjk_failure_as_transcribe_error(
-        self, monkeypatch, tmp_path
-    ):
+    def test_probe_preserves_cjk_failure_as_transcribe_error(self, monkeypatch, tmp_path):
         monkeypatch.setattr(tr, "_require", lambda _binary: None)
         monkeypatch.setattr(tr.subprocess, "run", self._decoding_run(1))
 

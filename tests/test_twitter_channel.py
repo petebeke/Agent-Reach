@@ -17,9 +17,12 @@ def _which(*present):
 
 def test_twitter_cli_without_explicit_auth_is_unverified():
     channel = TwitterChannel()
-    with patch("shutil.which", side_effect=_which("twitter")), patch(
-        "subprocess.run",
-        side_effect=AssertionError("twitter status must not run"),
+    with (
+        patch("shutil.which", side_effect=_which("twitter")),
+        patch(
+            "subprocess.run",
+            side_effect=AssertionError("twitter status must not run"),
+        ),
     ):
         status, message = channel.check()
 
@@ -39,9 +42,7 @@ def test_saved_credentials_are_recognised_without_starting_upstream(
     monkeypatch.delenv("TWITTER_AUTH_TOKEN", raising=False)
     monkeypatch.delenv("TWITTER_CT0", raising=False)
 
-    with patch("shutil.which", side_effect=_which("twitter")), patch(
-        "subprocess.run"
-    ) as run:
+    with patch("shutil.which", side_effect=_which("twitter")), patch("subprocess.run") as run:
         channel = TwitterChannel()
         status, message = channel.check(config)
 
@@ -85,9 +86,12 @@ def test_child_env_supplies_only_missing_saved_credentials(monkeypatch):
 def test_bird_with_explicit_env_remains_unverified(monkeypatch):
     monkeypatch.setenv("AUTH_TOKEN", "explicit-auth")
     monkeypatch.setenv("CT0", "explicit-ct0")
-    with patch("shutil.which", side_effect=_which("bird")), patch(
-        "subprocess.run",
-        side_effect=AssertionError("bird check must not run"),
+    with (
+        patch("shutil.which", side_effect=_which("bird")),
+        patch(
+            "subprocess.run",
+            side_effect=AssertionError("bird check must not run"),
+        ),
     ):
         channel = TwitterChannel()
         status, message = channel.check()
@@ -137,15 +141,19 @@ def test_opencli_bridge_ready_is_unverified_for_twitter():
 
 def test_verified_backend_result_wins_over_unverified_twitter_cli():
     channel = TwitterChannel()
-    with patch.object(
-        TwitterChannel,
-        "_check_twitter_cli",
-        return_value=("warn", "twitter-cli 未验证"),
-    ), patch.object(
-        TwitterChannel,
-        "_check_opencli",
-        return_value=("ok", "OpenCLI 可用"),
-    ), patch.object(TwitterChannel, "_check_bird", return_value=None):
+    with (
+        patch.object(
+            TwitterChannel,
+            "_check_twitter_cli",
+            return_value=("warn", "twitter-cli 未验证"),
+        ),
+        patch.object(
+            TwitterChannel,
+            "_check_opencli",
+            return_value=("ok", "OpenCLI 可用"),
+        ),
+        patch.object(TwitterChannel, "_check_bird", return_value=None),
+    ):
         status, message = channel.check()
 
     assert status == "ok"
@@ -155,15 +163,19 @@ def test_verified_backend_result_wins_over_unverified_twitter_cli():
 
 def test_all_warn_returns_first_warning_without_active_backend():
     channel = TwitterChannel()
-    with patch.object(
-        TwitterChannel,
-        "_check_twitter_cli",
-        return_value=("warn", "twitter-cli 未验证"),
-    ), patch.object(
-        TwitterChannel,
-        "_check_opencli",
-        return_value=("warn", "扩展未连接"),
-    ), patch.object(TwitterChannel, "_check_bird", return_value=None):
+    with (
+        patch.object(
+            TwitterChannel,
+            "_check_twitter_cli",
+            return_value=("warn", "twitter-cli 未验证"),
+        ),
+        patch.object(
+            TwitterChannel,
+            "_check_opencli",
+            return_value=("warn", "扩展未连接"),
+        ),
+        patch.object(TwitterChannel, "_check_bird", return_value=None),
+    ):
         status, message = channel.check()
 
     assert status == "warn"

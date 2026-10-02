@@ -58,9 +58,7 @@ def test_twitter_doctor_still_avoids_upstream_fallback_with_saved_credentials(
     assert "不会执行" in message
 
 
-def test_reddit_doctor_does_not_create_or_refresh_missing_credentials(
-    isolated_home, monkeypatch
-):
+def test_reddit_doctor_does_not_create_or_refresh_missing_credentials(isolated_home, monkeypatch):
     monkeypatch.setattr(
         "shutil.which",
         lambda name: "/usr/local/bin/rdt" if name == "rdt" else None,
@@ -76,12 +74,8 @@ def test_reddit_doctor_does_not_create_or_refresh_missing_credentials(
     assert not (isolated_home / ".config" / "rdt-cli").exists()
 
 
-def test_reddit_doctor_reports_stale_saved_credential_without_refresh(
-    isolated_home, monkeypatch
-):
-    credential_path = (
-        isolated_home / ".config" / "rdt-cli" / "credential.json"
-    )
+def test_reddit_doctor_reports_stale_saved_credential_without_refresh(isolated_home, monkeypatch):
+    credential_path = isolated_home / ".config" / "rdt-cli" / "credential.json"
     credential_path.parent.mkdir(parents=True)
     credential_path.write_text(
         json.dumps(
@@ -106,9 +100,7 @@ def test_reddit_doctor_reports_stale_saved_credential_without_refresh(
     assert credential_path.read_bytes() == original
 
 
-def test_xhs_doctor_does_not_create_or_extract_missing_cookies(
-    isolated_home, monkeypatch
-):
+def test_xhs_doctor_does_not_create_or_extract_missing_cookies(isolated_home, monkeypatch):
     monkeypatch.setattr(
         "shutil.which",
         lambda name: "/usr/local/bin/xhs" if name == "xhs" else None,
@@ -134,9 +126,7 @@ def test_xhs_doctor_does_not_create_or_extract_missing_cookies(
     assert not (isolated_home / ".xiaohongshu-cli").exists()
 
 
-def test_xhs_doctor_reports_stale_cookie_without_refresh(
-    isolated_home, monkeypatch
-):
+def test_xhs_doctor_reports_stale_cookie_without_refresh(isolated_home, monkeypatch):
     cookie_path = isolated_home / ".xiaohongshu-cli" / "cookies.json"
     cookie_path.parent.mkdir(parents=True)
     cookie_path.write_text(

@@ -46,10 +46,7 @@ _CDP_TIMEOUT = 5
 def _chrome_launch_command(system: str | None = None) -> str:
     """Return a dedicated-profile Chrome command for the current OS."""
     system = system or platform.system()
-    common = (
-        "--remote-debugging-address=127.0.0.1 "
-        "--remote-debugging-port=9222 "
-    )
+    common = "--remote-debugging-address=127.0.0.1 --remote-debugging-port=9222 "
     url = '"https://www.zhipin.com/web/geek/job"'
     if system == "Darwin":
         return (
@@ -66,12 +63,7 @@ def _chrome_launch_command(system: str | None = None) -> str:
             '"--user-data-dir=$env:USERPROFILE\\.boss-chrome-profile",'
             "'https://www.zhipin.com/web/geek/job'"
         )
-    return (
-        "google-chrome "
-        + common
-        + '--user-data-dir="$HOME/.boss-chrome-profile" '
-        + url
-    )
+    return "google-chrome " + common + '--user-data-dir="$HOME/.boss-chrome-profile" ' + url
 
 
 def _cdp_json(path: str):
@@ -111,8 +103,7 @@ def _security_check_blocks_all(pages) -> bool:
     if not zhipin_urls:
         return False
     return all(
-        any(marker in url.lower() for marker in _SECURITY_CHECK_MARKERS)
-        for url in zhipin_urls
+        any(marker in url.lower() for marker in _SECURITY_CHECK_MARKERS) for url in zhipin_urls
     )
 
 
@@ -142,7 +133,7 @@ def _read_ws_text_frame(sock: socket.socket, initial: bytes = b""):
                 if not chunk:
                     return None, buf
                 buf += chunk
-            length = struct.unpack(">H", buf[header_len:header_len + 2])[0]
+            length = struct.unpack(">H", buf[header_len : header_len + 2])[0]
             header_len += 2
         elif length == 127:
             while len(buf) < header_len + 8:
@@ -150,15 +141,15 @@ def _read_ws_text_frame(sock: socket.socket, initial: bytes = b""):
                 if not chunk:
                     return None, buf
                 buf += chunk
-            length = struct.unpack(">Q", buf[header_len:header_len + 8])[0]
+            length = struct.unpack(">Q", buf[header_len : header_len + 8])[0]
             header_len += 8
         while len(buf) < header_len + length:
             chunk = sock.recv(4096)
             if not chunk:
                 return None, buf
             buf += chunk
-        payload = buf[header_len:header_len + length]
-        buf = buf[header_len + length:]
+        payload = buf[header_len : header_len + length]
+        buf = buf[header_len + length :]
         if opcode == 0x8:  # close
             return None, buf
         if opcode in (0x1, 0x2, 0x0):  # text / binary / continuation
@@ -310,7 +301,9 @@ class BossChannel(Channel):
             )
 
         cookie_note = (
-            "浏览器内有登录 cookie（wt2）" if browser_cookie else "浏览器登录 cookie 探测失败，登录态未知"
+            "浏览器内有登录 cookie（wt2）"
+            if browser_cookie
+            else "浏览器登录 cookie 探测失败，登录态未知"
         )
 
         if _security_check_blocks_all(pages):

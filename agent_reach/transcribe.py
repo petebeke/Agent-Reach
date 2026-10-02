@@ -113,31 +113,22 @@ def _probe_audio_duration(path: Path) -> float:
         )
     except subprocess.TimeoutExpired:
         raise TranscribeError(
-            "ffprobe timed out while reading audio duration "
-            f"after {FFPROBE_TIMEOUT_SECONDS}s"
+            f"ffprobe timed out while reading audio duration after {FFPROBE_TIMEOUT_SECONDS}s"
         ) from None
     except OSError as exc:
-        raise TranscribeError(
-            f"ffprobe could not read audio duration: {exc}"
-        ) from exc
+        raise TranscribeError(f"ffprobe could not read audio duration: {exc}") from exc
 
     if proc.returncode != 0:
         detail = proc.stderr.strip()[:300] or "unknown ffprobe error"
-        raise TranscribeError(
-            f"ffprobe failed while reading audio duration: {detail}"
-        )
+        raise TranscribeError(f"ffprobe failed while reading audio duration: {detail}")
 
     raw_duration = proc.stdout.strip()
     try:
         duration = float(raw_duration)
     except (TypeError, ValueError):
-        raise TranscribeError(
-            "ffprobe could not parse a valid audio duration"
-        ) from None
+        raise TranscribeError("ffprobe could not parse a valid audio duration") from None
     if not math.isfinite(duration) or duration <= 0:
-        raise TranscribeError(
-            "ffprobe could not parse a valid positive audio duration"
-        )
+        raise TranscribeError("ffprobe could not parse a valid positive audio duration")
     return duration
 
 
@@ -146,9 +137,7 @@ def _require_duration_within_budget(path: Path) -> float:
     duration = _probe_audio_duration(path)
     if duration > MAX_AUDIO_SECONDS:
         max_minutes = MAX_AUDIO_SECONDS // 60
-        raise TranscribeError(
-            f"audio duration exceeds safety limit of {max_minutes} minutes"
-        )
+        raise TranscribeError(f"audio duration exceeds safety limit of {max_minutes} minutes")
     return duration
 
 
@@ -312,9 +301,7 @@ def chunk_audio(src: Path, out_dir: Path, segment_seconds: int = CHUNK_SECONDS) 
     """Split src into segments. Re-encodes each segment so cuts align to keyframes."""
     if segment_seconds <= 0:
         raise TranscribeError("chunk segment duration must be positive")
-    possible_chunks = (
-        MAX_AUDIO_SECONDS + segment_seconds - 1
-    ) // segment_seconds
+    possible_chunks = (MAX_AUDIO_SECONDS + segment_seconds - 1) // segment_seconds
     if possible_chunks > MAX_CHUNKS:
         raise TranscribeError(
             f"chunk generation safety limit is {MAX_CHUNKS}; "
@@ -419,9 +406,7 @@ def transcribe(
     `out_dir` defaults to a fresh temp directory; intermediate files stay there.
     """
     if allow_provider_fallback and provider != "auto":
-        raise TranscribeError(
-            "allow_provider_fallback requires provider='auto'"
-        )
+        raise TranscribeError("allow_provider_fallback requires provider='auto'")
     cfg = config or Config()
     candidates = _provider_order(provider)
     configured = [p for p in candidates if _provider_key(p, cfg)]
@@ -466,15 +451,13 @@ def _transcribe_in_dir(source: str, order: List[str], cfg: Config, work_dir: Pat
             f"{MAX_CHUNKS} (~{max_minutes} minutes)"
         )
     chunk_sizes = [
-        _require_size_at_most(chunk, SIZE_LIMIT_BYTES, f"chunk {chunk.name}")
-        for chunk in chunks
+        _require_size_at_most(chunk, SIZE_LIMIT_BYTES, f"chunk {chunk.name}") for chunk in chunks
     ]
     total_chunk_bytes = sum(chunk_sizes)
     if total_chunk_bytes > MAX_TOTAL_CHUNK_BYTES:
         limit_mib = MAX_TOTAL_CHUNK_BYTES / (1024 * 1024)
         raise TranscribeError(
-            f"audio chunks total {total_chunk_bytes} bytes; "
-            f"safety limit is {limit_mib:g} MiB"
+            f"audio chunks total {total_chunk_bytes} bytes; safety limit is {limit_mib:g} MiB"
         )
 
     pieces: List[str] = []

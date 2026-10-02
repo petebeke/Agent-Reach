@@ -25,7 +25,10 @@ _CREDENTIAL_FILE = "~/.config/rdt-cli/credential.json"
 _CREDENTIAL_TTL_SECONDS = 7 * 86400
 _MAX_CREDENTIAL_BYTES = 1024 * 1024
 # Pinned to the 0.4.2 state — PyPI still only has 0.4.1 (upstream issue #10).
-_RDT_GIT_SOURCE = "git+https://github.com/public-clis/rdt-cli.git@5e4fb3720d5c174e976cd425ccc3b879d52cac66"
+_RDT_GIT_SOURCE = (
+    "git+https://github.com/public-clis/rdt-cli.git@5e4fb3720d5c174e976cd425ccc3b879d52cac66"
+)
+
 
 class RedditChannel(Channel):
     name = "reddit"
@@ -99,9 +102,7 @@ class RedditChannel(Channel):
                 max_bytes=_MAX_CREDENTIAL_BYTES,
             )
         except PrivatePathError as exc:
-            return "warn", (
-                f"rdt-cli 已安装，但 credential.json 无法安全读取：{exc}。"
-            )
+            return "warn", (f"rdt-cli 已安装，但 credential.json 无法安全读取：{exc}。")
         except OSError:
             return "warn", (
                 "rdt-cli 已安装，但 credential.json 无法安全读取；"

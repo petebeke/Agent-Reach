@@ -105,7 +105,10 @@ class Config:
     # Feature → required config keys
     FEATURE_REQUIREMENTS = {
         "exa_search": ["exa_api_key"],
-        "twitter_xreach": ["twitter_auth_token", "twitter_ct0"],  # legacy key name; used by twitter-cli
+        "twitter_xreach": [
+            "twitter_auth_token",
+            "twitter_ct0",
+        ],  # legacy key name; used by twitter-cli
         "groq_whisper": ["groq_api_key"],
         "openai_whisper": ["openai_api_key"],
         "github_token": ["github_token"],
@@ -203,10 +206,7 @@ class Config:
 
     def get_configured_features(self) -> dict:
         """Return status of all optional features."""
-        return {
-            feature: self.is_configured(feature)
-            for feature in self.FEATURE_REQUIREMENTS
-        }
+        return {feature: self.is_configured(feature) for feature in self.FEATURE_REQUIREMENTS}
 
     def to_dict(self) -> dict:
         """Return config as dict (masks sensitive values)."""

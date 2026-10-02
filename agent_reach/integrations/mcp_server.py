@@ -43,9 +43,11 @@ def create_server():
     @server.list_tools()
     async def list_tools():
         return [
-            Tool(name="get_status",
-                 description="Get Agent Reach status: which channels are installed and active.",
-                 inputSchema={"type": "object", "properties": {}}),
+            Tool(
+                name="get_status",
+                description="Get Agent Reach status: which channels are installed and active.",
+                inputSchema={"type": "object", "properties": {}},
+            ),
         ]
 
     @server.call_tool()
@@ -56,7 +58,11 @@ def create_server():
             else:
                 result = f"Unknown tool: {name}"
 
-            text = json.dumps(result, ensure_ascii=False, indent=2) if isinstance(result, (dict, list)) else str(result)
+            text = (
+                json.dumps(result, ensure_ascii=False, indent=2)
+                if isinstance(result, (dict, list))
+                else str(result)
+            )
             return [TextContent(type="text", text=text)]
         except Exception as e:
             return [

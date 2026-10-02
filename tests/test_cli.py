@@ -30,30 +30,32 @@ class TestCLI:
         assert exc_info.value.code == 0
 
     def test_doctor_runs(self, capsys):
-        with patch(
-            "agent_reach.doctor.check_all",
-            return_value={
-                "web": {
-                    "status": "ok",
-                    "name": "网页",
-                    "message": "可用",
-                    "tier": 0,
-                    "backends": ["Jina Reader"],
-                    "active_backend": "Jina Reader",
-                }
-            },
-        ), patch(
-            "agent_reach.doctor.format_report",
-            return_value="Agent Reach\n✅ 网页可用",
-        ), patch("sys.argv", ["agent-reach", "doctor"]):
+        with (
+            patch(
+                "agent_reach.doctor.check_all",
+                return_value={
+                    "web": {
+                        "status": "ok",
+                        "name": "网页",
+                        "message": "可用",
+                        "tier": 0,
+                        "backends": ["Jina Reader"],
+                        "active_backend": "Jina Reader",
+                    }
+                },
+            ),
+            patch(
+                "agent_reach.doctor.format_report",
+                return_value="Agent Reach\n✅ 网页可用",
+            ),
+            patch("sys.argv", ["agent-reach", "doctor"]),
+        ):
             main()
         captured = capsys.readouterr()
         assert "Agent Reach" in captured.out
         assert "✅" in captured.out
 
-    def test_doctor_is_read_only_and_never_installs_skill(
-        self, monkeypatch, tmp_path, capsys
-    ):
+    def test_doctor_is_read_only_and_never_installs_skill(self, monkeypatch, tmp_path, capsys):
         skill_dir = tmp_path / ".agents" / "skills" / "agent-reach"
         skill_dir.mkdir(parents=True)
         skill_file = skill_dir / "SKILL.md"
@@ -166,9 +168,7 @@ class TestCLI:
         monkeypatch.setattr(
             subprocess,
             "run",
-            lambda *_args, **_kwargs: pytest.fail(
-                "configure must not execute twitter status"
-            ),
+            lambda *_args, **_kwargs: pytest.fail("configure must not execute twitter status"),
         )
 
         cli._cmd_configure(
@@ -312,14 +312,13 @@ class TestCLI:
         monkeypatch.setattr(
             subprocess,
             "run",
-            lambda args, **_kwargs: calls.append(args)
-            or subprocess.CompletedProcess(args, 0, "", ""),
+            lambda args, **_kwargs: (
+                calls.append(args) or subprocess.CompletedProcess(args, 0, "", "")
+            ),
         )
 
         assert cli._install_opencli_deps() is True
-        assert calls == [
-            ["C:/Tools/npm.CMD", "install", "-g", backends.OPENCLI_PACKAGE]
-        ]
+        assert calls == [["C:/Tools/npm.CMD", "install", "-g", backends.OPENCLI_PACKAGE]]
 
     def test_install_facebook_instagram_routes_to_opencli_once(self, monkeypatch, capsys):
         calls = []
@@ -480,6 +479,7 @@ class TestVersionCompare:
 class TestWatchVersionCompare:
     def test_watch_does_not_prompt_downgrade(self, monkeypatch, capsys):
         """watch 与 check-update 同语义:本地领先远端 release 时不提示更新。"""
+
         class R:
             status_code = 200
             headers = {}
@@ -491,8 +491,16 @@ class TestWatchVersionCompare:
         monkeypatch.setattr(cli, "_github_get_with_retry", lambda *a, **k: (R(), None, 1))
         monkeypatch.setattr(
             "agent_reach.doctor.check_all",
-            lambda config: {"web": {"status": "ok", "name": "任意网页", "message": "ok",
-                            "tier": 0, "backends": ["Jina Reader"], "active_backend": "Jina Reader"}},
+            lambda config: {
+                "web": {
+                    "status": "ok",
+                    "name": "任意网页",
+                    "message": "ok",
+                    "tier": 0,
+                    "backends": ["Jina Reader"],
+                    "active_backend": "Jina Reader",
+                }
+            },
         )
         cli._cmd_watch()
         out = capsys.readouterr().out

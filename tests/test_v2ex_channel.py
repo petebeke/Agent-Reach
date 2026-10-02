@@ -25,6 +25,7 @@ from agent_reach.channels.v2ex import V2EXChannel
 
 # --- can_handle ---
 
+
 def test_can_handle_matches_v2ex_hosts():
     ch = V2EXChannel()
     for url in ["https://www.v2ex.com/t/123", "https://V2EX.COM/go/python"]:
@@ -34,6 +35,7 @@ def test_can_handle_matches_v2ex_hosts():
 
 
 # --- check() ---
+
 
 def test_check_ok_sets_active_backend():
     ch = V2EXChannel()
@@ -56,20 +58,18 @@ def test_check_warn_on_exception_clears_backend():
 def test_get_json_retries_unexpected_tls_eof_with_bounded_curl():
     payload = [{"id": 1}]
     tls_error = URLError(
-        ssl.SSLError(
-            "[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol"
-        )
+        ssl.SSLError("[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol")
     )
 
-    with patch.object(v2, "_get_json_with_urllib", side_effect=tls_error), patch.object(
-        v2.shutil, "which", return_value="C:/Windows/System32/curl.exe"
-    ), patch.object(
-        v2.subprocess,
-        "run",
-        return_value=subprocess.CompletedProcess(
-            ["curl"], 0, json.dumps(payload), ""
-        ),
-    ) as run:
+    with (
+        patch.object(v2, "_get_json_with_urllib", side_effect=tls_error),
+        patch.object(v2.shutil, "which", return_value="C:/Windows/System32/curl.exe"),
+        patch.object(
+            v2.subprocess,
+            "run",
+            return_value=subprocess.CompletedProcess(["curl"], 0, json.dumps(payload), ""),
+        ) as run,
+    ):
         assert v2._get_json("https://www.v2ex.com/api/topics/hot.json") == payload
 
     command = run.call_args.args[0]
@@ -87,13 +87,12 @@ def test_get_json_retries_unexpected_tls_eof_with_bounded_curl():
 
 
 def test_get_json_does_not_hide_certificate_verification_failures():
-    certificate_error = ssl.SSLCertVerificationError(
-        "certificate verify failed"
-    )
+    certificate_error = ssl.SSLCertVerificationError("certificate verify failed")
 
-    with patch.object(
-        v2, "_get_json_with_urllib", side_effect=certificate_error
-    ), patch.object(v2.subprocess, "run") as run:
+    with (
+        patch.object(v2, "_get_json_with_urllib", side_effect=certificate_error),
+        patch.object(v2.subprocess, "run") as run,
+    ):
         with pytest.raises(ssl.SSLCertVerificationError):
             v2._get_json("https://www.v2ex.com/api/topics/hot.json")
 
@@ -101,13 +100,12 @@ def test_get_json_does_not_hide_certificate_verification_failures():
 
 
 def test_get_json_does_not_fallback_for_plain_error_text():
-    fake_error = RuntimeError(
-        "UNEXPECTED_EOF_WHILE_READING appeared in an unrelated message"
-    )
+    fake_error = RuntimeError("UNEXPECTED_EOF_WHILE_READING appeared in an unrelated message")
 
-    with patch.object(
-        v2, "_get_json_with_urllib", side_effect=fake_error
-    ), patch.object(v2.subprocess, "run") as run:
+    with (
+        patch.object(v2, "_get_json_with_urllib", side_effect=fake_error),
+        patch.object(v2.subprocess, "run") as run,
+    ):
         with pytest.raises(RuntimeError, match="unrelated"):
             v2._get_json("https://www.v2ex.com/api/topics/hot.json")
 
@@ -125,9 +123,10 @@ def test_get_json_does_not_fallback_for_plain_error_text():
     ],
 )
 def test_get_json_rejects_non_api_targets_before_network(url):
-    with patch.object(v2.urllib.request, "urlopen") as urlopen, patch.object(
-        v2.subprocess, "run"
-    ) as run:
+    with (
+        patch.object(v2.urllib.request, "urlopen") as urlopen,
+        patch.object(v2.subprocess, "run") as run,
+    ):
         with pytest.raises(ValueError, match="V2EX HTTPS API"):
             v2._get_json(url)
 
@@ -141,12 +140,14 @@ def test_check_is_healthy_when_native_curl_recovers_tls_eof():
         "[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol"
     )
 
-    with patch.object(v2, "_get_json_with_urllib", side_effect=tls_error), patch.object(
-        v2.shutil, "which", return_value="/usr/bin/curl"
-    ), patch.object(
-        v2.subprocess,
-        "run",
-        return_value=subprocess.CompletedProcess(["curl"], 0, "[]", ""),
+    with (
+        patch.object(v2, "_get_json_with_urllib", side_effect=tls_error),
+        patch.object(v2.shutil, "which", return_value="/usr/bin/curl"),
+        patch.object(
+            v2.subprocess,
+            "run",
+            return_value=subprocess.CompletedProcess(["curl"], 0, "[]", ""),
+        ),
     ):
         status, _message = ch.check()
 
@@ -156,13 +157,19 @@ def test_check_is_healthy_when_native_curl_recovers_tls_eof():
 
 # --- get_hot_topics / get_node_topics ---
 
+
 def test_get_hot_topics_maps_node_and_truncates_content():
     ch = V2EXChannel()
-    items = [{
-        "id": 9, "title": "T", "url": "https://www.v2ex.com/t/9",
-        "replies": 12, "content": "x" * 300,
-        "node": {"name": "python", "title": "Python"},
-    }]
+    items = [
+        {
+            "id": 9,
+            "title": "T",
+            "url": "https://www.v2ex.com/t/9",
+            "replies": 12,
+            "content": "x" * 300,
+            "node": {"name": "python", "title": "Python"},
+        }
+    ]
     with patch.object(v2, "_get_json", return_value=items):
         topics = ch.get_hot_topics(limit=5)
     t = topics[0]
@@ -211,14 +218,20 @@ def test_get_node_topics_percent_encodes_node_name(node_name):
 
 # --- get_topic: list-or-dict shape + replies fetch + fallbacks ---
 
+
 def test_get_topic_unwraps_list_and_maps_replies():
     ch = V2EXChannel()
-    topic = [{
-        "id": 42, "title": "Hello", "url": "https://www.v2ex.com/t/42",
-        "content": "body", "replies": 2,
-        "node": {"name": "tech", "title": "Tech"},
-        "member": {"username": "op"},
-    }]
+    topic = [
+        {
+            "id": 42,
+            "title": "Hello",
+            "url": "https://www.v2ex.com/t/42",
+            "content": "body",
+            "replies": 2,
+            "node": {"name": "tech", "title": "Tech"},
+            "member": {"username": "op"},
+        }
+    ]
     replies = [
         {"member": {"username": "alice"}, "content": "nice", "created": 1},
         {"member": {"username": "bob"}, "content": "+1", "created": 2},
@@ -271,11 +284,15 @@ def test_get_topic_percent_encodes_topic_id_in_both_requests():
 
 # --- get_user: field mapping + avatar/url fallbacks ---
 
+
 def test_get_user_maps_fields_and_prefers_large_avatar():
     ch = V2EXChannel()
     data = {
-        "id": 1, "username": "neo", "github": "neo-gh",
-        "avatar_large": "/large.png", "avatar_normal": "/normal.png",
+        "id": 1,
+        "username": "neo",
+        "github": "neo-gh",
+        "avatar_large": "/large.png",
+        "avatar_normal": "/normal.png",
     }
     with patch.object(v2, "_get_json", return_value=data):
         user = ch.get_user("neo")
@@ -321,6 +338,7 @@ def test_fallback_display_urls_percent_encode_path_segments():
 
 
 # --- search: intentionally offline (no public search endpoint) ---
+
 
 def test_search_returns_guidance_without_network():
     ch = V2EXChannel()

@@ -158,9 +158,7 @@ class V2EXChannel(Channel):
 
     def check(self, config=None):
         try:
-            _get_json(
-                "https://www.v2ex.com/api/topics/show.json?node_name=python&page=1"
-            )
+            _get_json("https://www.v2ex.com/api/topics/show.json?node_name=python&page=1")
             self.active_backend = self.backends[0]
             return "ok", "公开 API 可用（热门主题、节点浏览、主题详情、用户信息）"
         except Exception as e:
@@ -243,9 +241,7 @@ class V2EXChannel(Channel):
           id, title, url, content, replies_count, node_name, node_title,
           author, created, replies (list of dicts with: author, content, created)
         """
-        topic_data = _get_json(
-            _v2ex_url("/api/topics/show.json", id=topic_id)
-        )
+        topic_data = _get_json(_v2ex_url("/api/topics/show.json", id=topic_id))
         # API returns a list even for single-ID queries
         if isinstance(topic_data, list):
             topic = topic_data[0] if topic_data else {}
@@ -302,9 +298,7 @@ class V2EXChannel(Channel):
           id, username, url, website, twitter, psn, github, btc,
           location, bio, avatar, created
         """
-        data = _get_json(
-            _v2ex_url("/api/members/show.json", username=username)
-        )
+        data = _get_json(_v2ex_url("/api/members/show.json", username=username))
         return {
             "id": data.get("id", 0),
             "username": data.get("username", username),

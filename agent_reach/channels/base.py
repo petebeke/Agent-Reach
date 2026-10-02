@@ -29,10 +29,10 @@ from typing import List, Optional, Tuple
 class Channel(ABC):
     """Base class for all channels."""
 
-    name: str = ""                    # e.g. "youtube"
-    description: str = ""             # e.g. "YouTube 视频和字幕"
-    backends: List[str] = []          # ordered candidates — backends[0] = preferred
-    tier: int = 0                     # 0=zero-config, 1=needs free key, 2=needs setup
+    name: str = ""  # e.g. "youtube"
+    description: str = ""  # e.g. "YouTube 视频和字幕"
+    backends: List[str] = []  # ordered candidates — backends[0] = preferred
+    tier: int = 0  # 0=zero-config, 1=needs free key, 2=needs setup
 
     #: Backend currently serving this channel; set by check(), None = unavailable.
     active_backend: Optional[str] = None

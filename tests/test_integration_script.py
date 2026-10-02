@@ -17,7 +17,7 @@ def test_integration_script_exercises_the_current_cli_contract():
     assert 'export HOME="$TEST_DIR/home"' in text
     assert "sys.version_info >= (3, 10)" in text
     assert 'PYTHON_CMD=("$REPO_ROOT/.venv/bin/python")' in text
-    assert 'venv/Scripts/activate' in text
+    assert "venv/Scripts/activate" in text
     assert "agent-reach install --env=auto --safe" in text
     assert "agent-reach install --env=auto --system --dry-run" in text
     assert "agent-reach doctor --json" in text

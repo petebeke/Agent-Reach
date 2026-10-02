@@ -67,9 +67,7 @@ def inspect_mcporter_config(
             # mcporter defaults to importing supported editor configs when the
             # key is omitted. Doctor intentionally does not open those files.
             imports_unchecked = True
-        elif not isinstance(imports, list) or not all(
-            isinstance(item, str) for item in imports
-        ):
+        elif not isinstance(imports, list) or not all(isinstance(item, str) for item in imports):
             raise McporterConfigError("mcporter imports 必须是字符串列表")
         elif imports:
             imports_unchecked = True
@@ -114,9 +112,7 @@ def _read_config_object(config_path: Path) -> dict:
             max_bytes=_MAX_CONFIG_BYTES,
         )
     except PrivatePathError as exc:
-        raise McporterConfigError(
-            f"mcporter 配置文件无法安全读取：{exc}"
-        ) from exc
+        raise McporterConfigError(f"mcporter 配置文件无法安全读取：{exc}") from exc
     except (OSError, UnicodeError) as exc:
         raise McporterConfigError("mcporter 配置文件无法安全读取") from exc
     if raw is None:

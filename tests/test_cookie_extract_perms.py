@@ -29,14 +29,7 @@ def _owner_only_dir(path: str) -> bool:
     mode = os.stat(path).st_mode
     return not (
         mode
-        & (
-            stat.S_IRGRP
-            | stat.S_IWGRP
-            | stat.S_IXGRP
-            | stat.S_IROTH
-            | stat.S_IWOTH
-            | stat.S_IXOTH
-        )
+        & (stat.S_IRGRP | stat.S_IWGRP | stat.S_IXGRP | stat.S_IROTH | stat.S_IWOTH | stat.S_IXOTH)
     )
 
 
@@ -111,10 +104,7 @@ def test_sync_bird_env_quotes_shell_metachars(tmp_path, monkeypatch):
 
     # Sourcing the file must NOT execute the injected payload. Read back the
     # exported values from a subshell instead — they should equal the originals.
-    probe = (
-        f". {env_path}; "
-        f'printf "AUTH=%s\\nCT0=%s\\n" "$AUTH_TOKEN" "$CT0"'
-    )
+    probe = f'. {env_path}; printf "AUTH=%s\\nCT0=%s\\n" "$AUTH_TOKEN" "$CT0"'
     result = subprocess.run(
         ["sh", "-c", probe],
         capture_output=True,
@@ -122,9 +112,7 @@ def test_sync_bird_env_quotes_shell_metachars(tmp_path, monkeypatch):
         timeout=5,
     )
     assert result.returncode == 0, result.stderr
-    lines = dict(
-        line.split("=", 1) for line in result.stdout.strip().splitlines() if "=" in line
-    )
+    lines = dict(line.split("=", 1) for line in result.stdout.strip().splitlines() if "=" in line)
     assert lines["AUTH"] == hostile_auth, "auth_token round-trip broke — injection possible"
     assert lines["CT0"] == hostile_ct0, "ct0 round-trip broke — injection possible"
     # And no side-effect files materialised.

@@ -47,9 +47,7 @@ def test_xiaohongshu_guidance_never_starts_implicit_login():
             if not any(marker in line for marker in xhs_markers):
                 continue
             if any(marker in line for marker in legacy_auth_markers):
-                violations.append(
-                    f"{path.relative_to(ROOT)}:{line_number}: {line.strip()}"
-                )
+                violations.append(f"{path.relative_to(ROOT)}:{line_number}: {line.strip()}")
 
     assert not violations, "\n".join(violations)
 
@@ -92,9 +90,9 @@ def test_twitter_operational_docs_explain_the_environment_boundary():
         assert "TWITTER_AUTH_TOKEN" in text, path.relative_to(ROOT)
         assert "TWITTER_CT0" in text, path.relative_to(ROOT)
 
-    twitter_guide = (
-        ROOT / "agent_reach" / "guides" / "setup-twitter.md"
-    ).read_text(encoding="utf-8")
+    twitter_guide = (ROOT / "agent_reach" / "guides" / "setup-twitter.md").read_text(
+        encoding="utf-8"
+    )
     assert "不会执行 `twitter status`" in twitter_guide
     assert "不会修改当前 Shell" in twitter_guide
     assert "Export → Header String" in twitter_guide
@@ -116,9 +114,7 @@ def test_twitter_operational_docs_explain_the_environment_boundary():
         "✅ Twitter/Xツイート",
         "✅ Twitter/X 트윗",
     )
-    all_text = "\n".join(
-        path.read_text(encoding="utf-8") for path in _policy_documents()
-    )
+    all_text = "\n".join(path.read_text(encoding="utf-8") for path in _policy_documents())
     assert not any(claim in all_text for claim in rendered_as_verified)
 
 
@@ -136,10 +132,9 @@ def test_localized_readmes_keep_current_bilibili_and_xhs_routes():
         assert "bilibili.py     → yt-dlp" not in text, path.relative_to(ROOT)
         assert "YouTube + Bilibili" not in text, path.relative_to(ROOT)
         assert "bili-cli" in text, path.relative_to(ROOT)
-        assert (
-            "xiaohongshu.py  → OpenCLI ▸ xiaohongshu-mcp ▸ xhs-cli"
-            in text
-        ), path.relative_to(ROOT)
+        assert "xiaohongshu.py  → OpenCLI ▸ xiaohongshu-mcp ▸ xhs-cli" in text, path.relative_to(
+            ROOT
+        )
 
 
 def test_localized_readmes_do_not_advertise_retired_channels():
@@ -161,15 +156,9 @@ def test_public_guidance_never_installs_the_unrelated_pypi_package():
     )
     violations = []
     for path in candidates:
-        for line_number, line in enumerate(
-            path.read_text(encoding="utf-8").splitlines(), 1
-        ):
-            if bare_install.search(line) and (
-                "github.com/Panniantong/agent-reach" not in line
-            ):
-                violations.append(
-                    f"{path.relative_to(ROOT)}:{line_number}: {line.strip()}"
-                )
+        for line_number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+            if bare_install.search(line) and ("github.com/Panniantong/agent-reach" not in line):
+                violations.append(f"{path.relative_to(ROOT)}:{line_number}: {line.strip()}")
 
     assert not violations, "\n".join(violations)
 
@@ -210,9 +199,7 @@ def test_skill_explains_unverified_backend_state():
 
 def test_video_reference_has_content_level_youtube_fallbacks():
     """Version-only health must not be presented as proof subtitles work."""
-    text = (
-        ROOT / "agent_reach" / "skill" / "references" / "video.md"
-    ).read_text(encoding="utf-8")
+    text = (ROOT / "agent_reach" / "skill" / "references" / "video.md").read_text(encoding="utf-8")
     assert "opencli youtube transcript" in text
     assert "最多重试 3 次" in text
     assert "agent-reach transcribe" in text

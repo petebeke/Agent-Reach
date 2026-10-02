@@ -84,8 +84,7 @@ def test_mcp_status_exception_credentials_are_scrubbed(monkeypatch):
 
         def doctor_report(self):
             raise RuntimeError(
-                "request https://alice:password@example.test/data"
-                "?token=top-secret failed"
+                "request https://alice:password@example.test/data?token=top-secret failed"
             )
 
     monkeypatch.setattr(mcp_server, "Config", _Config)

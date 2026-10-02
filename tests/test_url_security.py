@@ -118,9 +118,7 @@ def test_fixed_domain_channels_accept_subdomains_and_explicit_ports(
         (InstagramChannel(), "instagram.com"),
     ],
 )
-def test_fixed_domain_channels_reject_suffix_lookalikes_and_userinfo(
-    channel, official_domain
-):
+def test_fixed_domain_channels_reject_suffix_lookalikes_and_userinfo(channel, official_domain):
     assert not channel.can_handle(f"https://{official_domain}.evil.test/path")
     assert not channel.can_handle(f"https://{official_domain}@evil.test/path")
     assert not channel.can_handle(f"https://user:pass@{official_domain}/path")

@@ -48,8 +48,7 @@ def test_skill_frontmatter_uses_opencode_supported_fields():
         metadata = frontmatter.get("metadata", {})
         assert isinstance(metadata, dict), resource_name
         assert all(
-            isinstance(key, str) and isinstance(value, str)
-            for key, value in metadata.items()
+            isinstance(key, str) and isinstance(value, str) for key, value in metadata.items()
         ), resource_name
 
 
@@ -57,10 +56,13 @@ def test_install_skill_discovers_opencode_global_directory(tmp_path: Path):
     skill_parent = tmp_path / ".config" / "opencode" / "skills"
     skill_parent.mkdir(parents=True)
 
-    with patch(
-        "agent_reach.cli.os.path.expanduser",
-        side_effect=lambda value: value.replace("~", os.fspath(tmp_path)),
-    ), patch.dict(os.environ, {}, clear=True):
+    with (
+        patch(
+            "agent_reach.cli.os.path.expanduser",
+            side_effect=lambda value: value.replace("~", os.fspath(tmp_path)),
+        ),
+        patch.dict(os.environ, {}, clear=True),
+    ):
         _install_skill()
 
     installed = skill_parent / "agent-reach" / "SKILL.md"
@@ -73,10 +75,13 @@ def test_uninstall_skill_removes_opencode_global_directory(tmp_path: Path):
     installed.mkdir(parents=True)
     (installed / "SKILL.md").write_text("test", encoding="utf-8")
 
-    with patch(
-        "agent_reach.cli.os.path.expanduser",
-        side_effect=lambda value: value.replace("~", os.fspath(tmp_path)),
-    ), patch.dict(os.environ, {}, clear=True):
+    with (
+        patch(
+            "agent_reach.cli.os.path.expanduser",
+            side_effect=lambda value: value.replace("~", os.fspath(tmp_path)),
+        ),
+        patch.dict(os.environ, {}, clear=True),
+    ):
         _uninstall_skill()
 
     assert not installed.exists()
@@ -88,15 +93,15 @@ def test_full_uninstall_includes_opencode_directory(
     installed = tmp_path / ".config" / "opencode" / "skills" / "agent-reach"
     installed.mkdir(parents=True)
 
-    with patch(
-        "agent_reach.cli.os.path.expanduser",
-        side_effect=lambda value: os.fspath(
-            tmp_path / value.removeprefix("~/")
-        )
-        if value.startswith("~/")
-        else value,
-    ), patch("agent_reach.utils.paths.home_dir", return_value=tmp_path), patch(
-        "shutil.which", return_value=None
+    with (
+        patch(
+            "agent_reach.cli.os.path.expanduser",
+            side_effect=lambda value: (
+                os.fspath(tmp_path / value.removeprefix("~/")) if value.startswith("~/") else value
+            ),
+        ),
+        patch("agent_reach.utils.paths.home_dir", return_value=tmp_path),
+        patch("shutil.which", return_value=None),
     ):
         _cmd_uninstall(SimpleNamespace(dry_run=True, keep_config=True))
 

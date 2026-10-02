@@ -26,6 +26,7 @@ def _which(*present):
 
 # --- can_handle ---
 
+
 def test_can_handle_matches_youtube_hosts():
     ch = YouTubeChannel()
     for url in [
@@ -40,6 +41,7 @@ def test_can_handle_matches_youtube_hosts():
 
 
 # --- _has_js_runtime_config ---
+
 
 def test_has_js_runtime_config_missing_file_is_false(tmp_path):
     assert _has_js_runtime_config(tmp_path / "nope.conf") is False
@@ -68,6 +70,7 @@ def test_has_js_runtime_config_swallows_oserror(tmp_path):
 
 
 # --- check(): yt-dlp probe states ---
+
 
 def test_check_off_when_ytdlp_missing():
     ch = YouTubeChannel()
@@ -98,10 +101,13 @@ def test_check_error_when_ytdlp_unrunnable():
 
 # --- check(): JS runtime gating (backend stays yt-dlp once the probe is ok) ---
 
+
 def test_check_warn_when_no_js_runtime_but_backend_active():
     ch = YouTubeChannel()
-    with patch.object(yt, "probe_command", return_value=ProbeResult("ok")), \
-         patch("shutil.which", side_effect=_which()):  # no deno, no node
+    with (
+        patch.object(yt, "probe_command", return_value=ProbeResult("ok")),
+        patch("shutil.which", side_effect=_which()),
+    ):  # no deno, no node
         status, message = ch.check()
     assert status == "warn"
     assert "JS runtime" in message
@@ -111,9 +117,11 @@ def test_check_warn_when_no_js_runtime_but_backend_active():
 
 def test_check_warn_when_node_only_and_config_missing_flag():
     ch = YouTubeChannel()
-    with patch.object(yt, "probe_command", return_value=ProbeResult("ok")), \
-         patch("shutil.which", side_effect=_which("node")), \
-         patch.object(yt, "_has_js_runtime_config", return_value=False):
+    with (
+        patch.object(yt, "probe_command", return_value=ProbeResult("ok")),
+        patch("shutil.which", side_effect=_which("node")),
+        patch.object(yt, "_has_js_runtime_config", return_value=False),
+    ):
         status, message = ch.check()
     assert status == "warn"
     assert ch.active_backend == "yt-dlp"
@@ -122,9 +130,11 @@ def test_check_warn_when_node_only_and_config_missing_flag():
 def test_check_tells_user_to_upgrade_when_ytdlp_predates_js_runtimes():
     ch = YouTubeChannel()
     probe = ProbeResult("ok", output="2025.10.22")
-    with patch.object(yt, "probe_command", return_value=probe), \
-         patch("shutil.which", side_effect=_which("node")), \
-         patch.object(yt, "_has_js_runtime_config", return_value=False):
+    with (
+        patch.object(yt, "probe_command", return_value=probe),
+        patch("shutil.which", side_effect=_which("node")),
+        patch.object(yt, "_has_js_runtime_config", return_value=False),
+    ):
         status, message = ch.check()
 
     assert status == "warn"
@@ -136,9 +146,11 @@ def test_check_tells_user_to_upgrade_when_ytdlp_predates_js_runtimes():
 def test_check_does_not_prescribe_unverified_flag_when_version_is_unknown():
     ch = YouTubeChannel()
     probe = ProbeResult("ok", output="dev-build")
-    with patch.object(yt, "probe_command", return_value=probe), \
-         patch("shutil.which", side_effect=_which("node")), \
-         patch.object(yt, "_has_js_runtime_config", return_value=False):
+    with (
+        patch.object(yt, "probe_command", return_value=probe),
+        patch("shutil.which", side_effect=_which("node")),
+        patch.object(yt, "_has_js_runtime_config", return_value=False),
+    ):
         status, message = ch.check()
 
     assert status == "warn"
@@ -152,9 +164,11 @@ def test_check_does_not_prescribe_unverified_flag_when_version_is_unknown():
 def test_check_prescribes_js_runtimes_from_first_supported_stable_release():
     ch = YouTubeChannel()
     probe = ProbeResult("ok", output="2025.11.12")
-    with patch.object(yt, "probe_command", return_value=probe), \
-         patch("shutil.which", side_effect=_which("node")), \
-         patch.object(yt, "_has_js_runtime_config", return_value=False):
+    with (
+        patch.object(yt, "probe_command", return_value=probe),
+        patch("shutil.which", side_effect=_which("node")),
+        patch.object(yt, "_has_js_runtime_config", return_value=False),
+    ):
         status, message = ch.check()
 
     assert status == "warn"
@@ -184,8 +198,10 @@ def test_project_installs_official_ytdlp_default_dependencies():
 
 def test_check_ok_with_deno():
     ch = YouTubeChannel()
-    with patch.object(yt, "probe_command", return_value=ProbeResult("ok")), \
-         patch("shutil.which", side_effect=_which("deno")):
+    with (
+        patch.object(yt, "probe_command", return_value=ProbeResult("ok")),
+        patch("shutil.which", side_effect=_which("deno")),
+    ):
         status, message = ch.check()
     assert status == "ok"
     assert message == "可提取视频信息和字幕"
@@ -194,12 +210,15 @@ def test_check_ok_with_deno():
 
 # --- check(): transcription readiness surfaced (deno present so JS path is ok) ---
 
+
 def test_check_ok_reports_transcription_when_provider_and_ffmpeg_present():
     ch = YouTubeChannel()
     cfg = Mock()
     cfg.is_configured = lambda key: key == "groq_whisper"
-    with patch.object(yt, "probe_command", return_value=ProbeResult("ok")), \
-         patch("shutil.which", side_effect=_which("deno", "ffmpeg", "ffprobe")):
+    with (
+        patch.object(yt, "probe_command", return_value=ProbeResult("ok")),
+        patch("shutil.which", side_effect=_which("deno", "ffmpeg", "ffprobe")),
+    ):
         status, message = ch.check(config=cfg)
     assert status == "ok"
     assert "groq" in message
@@ -210,8 +229,10 @@ def test_check_lists_multiple_transcription_providers_without_implying_fallback(
     ch = YouTubeChannel()
     cfg = Mock()
     cfg.is_configured = lambda key: key in {"groq_whisper", "openai_whisper"}
-    with patch.object(yt, "probe_command", return_value=ProbeResult("ok")), \
-         patch("shutil.which", side_effect=_which("deno", "ffmpeg", "ffprobe")):
+    with (
+        patch.object(yt, "probe_command", return_value=ProbeResult("ok")),
+        patch("shutil.which", side_effect=_which("deno", "ffmpeg", "ffprobe")),
+    ):
         status, message = ch.check(config=cfg)
 
     assert status == "ok"
@@ -223,8 +244,10 @@ def test_check_ok_flags_missing_ffmpeg_for_transcription():
     ch = YouTubeChannel()
     cfg = Mock()
     cfg.is_configured = lambda key: key == "openai_whisper"
-    with patch.object(yt, "probe_command", return_value=ProbeResult("ok")), \
-         patch("shutil.which", side_effect=_which("deno")):  # provider yes, ffmpeg no
+    with (
+        patch.object(yt, "probe_command", return_value=ProbeResult("ok")),
+        patch("shutil.which", side_effect=_which("deno")),
+    ):  # provider yes, ffmpeg no
         status, message = ch.check(config=cfg)
     assert status == "ok"
     assert "ffmpeg" in message
@@ -234,8 +257,10 @@ def test_check_ok_flags_missing_ffprobe_for_transcription():
     ch = YouTubeChannel()
     cfg = Mock()
     cfg.is_configured = lambda key: key == "openai_whisper"
-    with patch.object(yt, "probe_command", return_value=ProbeResult("ok")), \
-         patch("shutil.which", side_effect=_which("deno", "ffmpeg")):
+    with (
+        patch.object(yt, "probe_command", return_value=ProbeResult("ok")),
+        patch("shutil.which", side_effect=_which("deno", "ffmpeg")),
+    ):
         status, message = ch.check(config=cfg)
     assert status == "ok"
     assert "ffprobe" in message

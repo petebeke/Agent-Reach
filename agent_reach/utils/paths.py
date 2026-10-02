@@ -53,11 +53,7 @@ def make_private_dir(path: str | Path) -> Path:
     target.mkdir(mode=0o700, parents=True, exist_ok=True)
     ensure_no_symlink_path(target, "私密目录")
     if sys.platform != "win32":
-        flags = (
-            os.O_RDONLY
-            | getattr(os, "O_DIRECTORY", 0)
-            | getattr(os, "O_NOFOLLOW", 0)
-        )
+        flags = os.O_RDONLY | getattr(os, "O_DIRECTORY", 0) | getattr(os, "O_NOFOLLOW", 0)
         dir_fd = os.open(target, flags)
         try:
             ensure_no_symlink_path(target, "私密目录")
@@ -112,9 +108,7 @@ def atomic_write_private_text(
             try:
                 dir_fd = os.open(
                     parent,
-                    os.O_RDONLY
-                    | os.O_DIRECTORY
-                    | getattr(os, "O_NOFOLLOW", 0),
+                    os.O_RDONLY | os.O_DIRECTORY | getattr(os, "O_NOFOLLOW", 0),
                 )
                 try:
                     os.fsync(dir_fd)

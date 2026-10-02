@@ -25,9 +25,7 @@ def test_atomic_private_text_write_is_0600(tmp_path):
     assert stat.S_IMODE(target.parent.stat().st_mode) == 0o700
 
 
-def test_atomic_private_text_write_preserves_old_file_on_replace_failure(
-    tmp_path, monkeypatch
-):
+def test_atomic_private_text_write_preserves_old_file_on_replace_failure(tmp_path, monkeypatch):
     target = tmp_path / "private" / "secret.txt"
     target.parent.mkdir()
     target.write_text("keep-old", encoding="utf-8")
@@ -92,9 +90,7 @@ def test_legacy_xfetch_sync_refuses_ancestor_symlink(tmp_path, monkeypatch):
     assert config_dir.is_symlink()
 
 
-def test_credential_writes_honor_home_when_expanduser_disagrees(
-    tmp_path, monkeypatch
-):
+def test_credential_writes_honor_home_when_expanduser_disagrees(tmp_path, monkeypatch):
     """Windows expanduser ignores HOME; private writes must not escape it."""
     intended_home = tmp_path / "isolated-home"
     windows_profile = tmp_path / "windows-profile"
@@ -124,9 +120,7 @@ def test_credential_writes_honor_home_when_expanduser_disagrees(
     assert list(windows_profile.rglob("*")) == []
 
 
-def test_expanduser_fallback_still_refuses_symlinked_profile(
-    tmp_path, monkeypatch
-):
+def test_expanduser_fallback_still_refuses_symlinked_profile(tmp_path, monkeypatch):
     """Without HOME, the USERPROFILE fallback remains guarded end to end."""
     victim_dir = tmp_path / "victim-profile"
     victim_dir.mkdir()
@@ -148,9 +142,7 @@ def test_expanduser_fallback_still_refuses_symlinked_profile(
     assert list(victim_dir.rglob("*")) == []
 
 
-def test_legacy_xfetch_sync_refuses_oversized_existing_session(
-    tmp_path, monkeypatch
-):
+def test_legacy_xfetch_sync_refuses_oversized_existing_session(tmp_path, monkeypatch):
     monkeypatch.setenv("HOME", str(tmp_path))
     session_path = tmp_path / ".config" / "xfetch" / "session.json"
     session_path.parent.mkdir(parents=True)
@@ -177,9 +169,7 @@ def test_legacy_bird_sync_refuses_target_symlink(tmp_path, monkeypatch):
     assert env_path.is_symlink()
 
 
-def test_xhs_cookie_editor_json_ignores_non_xhs_domains(
-    tmp_path, monkeypatch, capsys
-):
+def test_xhs_cookie_editor_json_ignores_non_xhs_domains(tmp_path, monkeypatch, capsys):
     monkeypatch.setenv("HOME", str(tmp_path))
     monkeypatch.setattr("shutil.which", lambda name: None)
     exported = [
@@ -219,9 +209,7 @@ def test_xhs_cookie_editor_json_ignores_non_xhs_domains(
     assert "2" in output
 
 
-def test_xhs_cookie_editor_json_fails_without_valid_xhs_cookie(
-    tmp_path, monkeypatch, capsys
-):
+def test_xhs_cookie_editor_json_fails_without_valid_xhs_cookie(tmp_path, monkeypatch, capsys):
     monkeypatch.setenv("HOME", str(tmp_path))
     monkeypatch.setattr(
         "shutil.which",
@@ -257,9 +245,7 @@ def test_xhs_cookie_editor_json_fails_without_valid_xhs_cookie(
     assert "没有有效的 xiaohongshu.com" in output
 
 
-def test_xhs_local_fallback_refuses_target_symlink(
-    tmp_path, monkeypatch, capsys
-):
+def test_xhs_local_fallback_refuses_target_symlink(tmp_path, monkeypatch, capsys):
     monkeypatch.setenv("HOME", str(tmp_path))
     monkeypatch.setattr("shutil.which", lambda name: None)
     cookie_path = tmp_path / ".agent-reach" / "xhs-cookies.json"
@@ -279,9 +265,7 @@ def test_xhs_local_fallback_refuses_target_symlink(
     assert "Could not save cookies" in capsys.readouterr().out
 
 
-def test_xhs_docker_success_via_configure_command_does_not_exit(
-    monkeypatch, capsys
-):
+def test_xhs_docker_success_via_configure_command_does_not_exit(monkeypatch, capsys):
     monkeypatch.setattr("agent_reach.config.Config", lambda: object())
     monkeypatch.setattr(
         "shutil.which",
@@ -290,9 +274,7 @@ def test_xhs_docker_success_via_configure_command_does_not_exit(
 
     def fake_run(args, **_kwargs):
         if args[1] == "ps":
-            return subprocess.CompletedProcess(
-                args, 0, stdout="xiaohongshu-mcp\n", stderr=""
-            )
+            return subprocess.CompletedProcess(args, 0, stdout="xiaohongshu-mcp\n", stderr="")
         if args[1:3] == ["exec", "xiaohongshu-mcp"]:
             return subprocess.CompletedProcess(
                 args, 0, stdout="/app/data/cookies.json\n", stderr=""
@@ -313,9 +295,7 @@ def test_xhs_docker_success_via_configure_command_does_not_exit(
     assert "Cookies written to" in capsys.readouterr().out
 
 
-def test_xhs_docker_failure_via_configure_command_exits_one(
-    monkeypatch, capsys
-):
+def test_xhs_docker_failure_via_configure_command_exits_one(monkeypatch, capsys):
     monkeypatch.setattr("agent_reach.config.Config", lambda: object())
     monkeypatch.setattr(
         "shutil.which",
@@ -324,17 +304,13 @@ def test_xhs_docker_failure_via_configure_command_exits_one(
 
     def fake_run(args, **_kwargs):
         if args[1] == "ps":
-            return subprocess.CompletedProcess(
-                args, 0, stdout="xiaohongshu-mcp\n", stderr=""
-            )
+            return subprocess.CompletedProcess(args, 0, stdout="xiaohongshu-mcp\n", stderr="")
         if args[1:3] == ["exec", "xiaohongshu-mcp"]:
             return subprocess.CompletedProcess(
                 args, 0, stdout="/app/data/cookies.json\n", stderr=""
             )
         if args[1] == "cp":
-            return subprocess.CompletedProcess(
-                args, 1, stdout="", stderr="copy failed"
-            )
+            return subprocess.CompletedProcess(args, 1, stdout="", stderr="copy failed")
         return subprocess.CompletedProcess(args, 0, stdout="", stderr="")
 
     monkeypatch.setattr(subprocess, "run", fake_run)
@@ -353,9 +329,7 @@ def test_xhs_docker_failure_via_configure_command_exits_one(
     assert "Failed to copy cookies" in capsys.readouterr().out
 
 
-def test_ytdlp_config_write_refuses_target_symlink(
-    tmp_path, monkeypatch, capsys
-):
+def test_ytdlp_config_write_refuses_target_symlink(tmp_path, monkeypatch, capsys):
     import shutil
 
     import agent_reach.utils.paths as paths
@@ -383,9 +357,7 @@ def test_ytdlp_config_write_refuses_target_symlink(
 
     def fake_run(args, **_kwargs):
         if args[-1:] == ["--version"] and args[0].endswith("yt-dlp"):
-            return subprocess.CompletedProcess(
-                args, 0, stdout="2026.07.04\n", stderr=""
-            )
+            return subprocess.CompletedProcess(args, 0, stdout="2026.07.04\n", stderr="")
         stdout = "/tmp/npm-root\n" if args[1:3] == ["root", "-g"] else ""
         return subprocess.CompletedProcess(args, 0, stdout=stdout, stderr="")
 
@@ -399,20 +371,13 @@ def test_ytdlp_config_write_refuses_target_symlink(
     assert "Could not configure yt-dlp JS runtime" in capsys.readouterr().out
 
 
-def test_transcribe_cli_scrubs_credentials_from_errors(
-    monkeypatch, capsys
-):
+def test_transcribe_cli_scrubs_credentials_from_errors(monkeypatch, capsys):
     import agent_reach.transcribe as transcribe_module
 
-    secret_url = (
-        "https://alice:super-secret@example.test/audio"
-        "?access_token=hidden-token"
-    )
+    secret_url = "https://alice:super-secret@example.test/audio?access_token=hidden-token"
 
     def fail_transcribe(*_args, **_kwargs):
-        raise transcribe_module.TranscribeError(
-            f"yt-dlp failed for {secret_url}"
-        )
+        raise transcribe_module.TranscribeError(f"yt-dlp failed for {secret_url}")
 
     monkeypatch.setattr(transcribe_module, "transcribe", fail_transcribe)
 
@@ -432,9 +397,7 @@ def test_transcribe_cli_scrubs_credentials_from_errors(
     assert "***" in output
 
 
-def test_safe_install_with_proxy_makes_no_persistent_writes(
-    isolated_home, monkeypatch, capsys
-):
+def test_safe_install_with_proxy_makes_no_persistent_writes(isolated_home, monkeypatch, capsys):
     observed_configs = []
     skill_calls = []
 
@@ -515,9 +478,7 @@ def test_install_is_safe_by_default(isolated_home, monkeypatch, capsys):
     assert "No changes were made" in output
 
 
-def test_install_system_flag_explicitly_enables_writes(
-    isolated_home, monkeypatch, capsys
-):
+def test_install_system_flag_explicitly_enables_writes(isolated_home, monkeypatch, capsys):
     """The legacy write path remains available only through --system."""
     calls = []
     monkeypatch.setattr(cli, "_configure_logging", lambda _verbose=False: None)
@@ -554,9 +515,7 @@ def test_install_system_flag_explicitly_enables_writes(
     assert "Installation complete" in capsys.readouterr().out
 
 
-def test_install_system_exits_nonzero_when_core_steps_fail(
-    isolated_home, monkeypatch, capsys
-):
+def test_install_system_exits_nonzero_when_core_steps_fail(isolated_home, monkeypatch, capsys):
     """Automation must not receive exit zero after failed core installation."""
     monkeypatch.setattr(cli, "_configure_logging", lambda _verbose=False: None)
     monkeypatch.setattr(cli, "_install_system_deps", lambda: False)
@@ -615,9 +574,7 @@ def test_install_system_exits_nonzero_when_requested_channel_fails(
     assert "Installation incomplete" in capsys.readouterr().out
 
 
-def test_install_system_exits_nonzero_when_skill_install_fails(
-    isolated_home, monkeypatch, capsys
-):
+def test_install_system_exits_nonzero_when_skill_install_fails(isolated_home, monkeypatch, capsys):
     monkeypatch.setattr(cli, "_configure_logging", lambda _verbose=False: None)
     monkeypatch.setattr(cli, "_install_system_deps", lambda: True)
     monkeypatch.setattr(cli, "_install_mcporter", lambda: True)

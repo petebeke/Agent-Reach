@@ -25,19 +25,21 @@ def _status_with(
         calls.append(list(args))
         return version_probe
 
-    with patch("agent_reach.backends.opencli.probe_command", side_effect=fake_probe), \
-         patch(
-             "agent_reach.backends.opencli._fetch_daemon_status",
-             return_value=daemon_status,
-         ), \
-         patch(
-             "agent_reach.backends.opencli._extension_installed_on_disk",
-             return_value=ext_on_disk,
-         ), \
-         patch(
-             "agent_reach.backends.opencli._unpacked_extension_files_present",
-             return_value=unpacked_files,
-         ):
+    with (
+        patch("agent_reach.backends.opencli.probe_command", side_effect=fake_probe),
+        patch(
+            "agent_reach.backends.opencli._fetch_daemon_status",
+            return_value=daemon_status,
+        ),
+        patch(
+            "agent_reach.backends.opencli._extension_installed_on_disk",
+            return_value=ext_on_disk,
+        ),
+        patch(
+            "agent_reach.backends.opencli._unpacked_extension_files_present",
+            return_value=unpacked_files,
+        ),
+    ):
         return opencli_status(), calls
 
 
@@ -149,12 +151,16 @@ def test_opencli_probes_strip_deprecated_app_env_only_from_children(monkeypatch)
             )
         return ProbeResult("ok", output="1.8.6")
 
-    with patch("agent_reach.backends.opencli.probe_command", side_effect=fake_probe), patch(
-        "agent_reach.backends.opencli._fetch_daemon_status",
-        return_value=None,
-    ), patch(
-        "agent_reach.backends.opencli._extension_installed_on_disk",
-        return_value=False,
+    with (
+        patch("agent_reach.backends.opencli.probe_command", side_effect=fake_probe),
+        patch(
+            "agent_reach.backends.opencli._fetch_daemon_status",
+            return_value=None,
+        ),
+        patch(
+            "agent_reach.backends.opencli._extension_installed_on_disk",
+            return_value=False,
+        ),
     ):
         status = opencli_status()
 
@@ -167,13 +173,7 @@ def test_opencli_probes_strip_deprecated_app_env_only_from_children(monkeypatch)
 
 def test_store_install_scan_includes_edge_profiles(tmp_path, monkeypatch):
     edge_root = tmp_path / "Microsoft Edge"
-    (
-        edge_root
-        / "Default"
-        / "Extensions"
-        / OPENCLI_EXTENSION_ID
-        / "1.0.0"
-    ).mkdir(parents=True)
+    (edge_root / "Default" / "Extensions" / OPENCLI_EXTENSION_ID / "1.0.0").mkdir(parents=True)
 
     monkeypatch.setattr(
         "agent_reach.backends.opencli._CHROME_PROFILE_ROOTS",
@@ -184,9 +184,7 @@ def test_store_install_scan_includes_edge_profiles(tmp_path, monkeypatch):
     assert _extension_installed_on_disk()
 
 
-def test_unpacked_scan_requires_manifest_but_does_not_claim_browser_load(
-    tmp_path, monkeypatch
-):
+def test_unpacked_scan_requires_manifest_but_does_not_claim_browser_load(tmp_path, monkeypatch):
     unpacked = tmp_path / ".opencli" / "extension"
     unpacked.mkdir(parents=True)
     monkeypatch.setattr(

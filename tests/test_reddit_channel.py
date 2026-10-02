@@ -53,9 +53,7 @@ def test_check_rdt_saved_credential_is_unverified_not_false_ok(
         ),
         encoding="utf-8",
     )
-    with patch("shutil.which", return_value="/usr/local/bin/rdt"), patch(
-        "subprocess.run"
-    ) as run:
+    with patch("shutil.which", return_value="/usr/local/bin/rdt"), patch("subprocess.run") as run:
         status, message = RedditChannel()._check_rdt()
 
     assert status == "warn"
@@ -76,9 +74,7 @@ def test_check_rdt_stale_credential_is_not_refreshed(isolated_home):
         encoding="utf-8",
     )
     before = path.read_bytes()
-    with patch("shutil.which", return_value="/usr/local/bin/rdt"), patch(
-        "subprocess.run"
-    ) as run:
+    with patch("shutil.which", return_value="/usr/local/bin/rdt"), patch("subprocess.run") as run:
         status, message = RedditChannel()._check_rdt()
 
     assert status == "warn"
@@ -176,10 +172,9 @@ def test_check_opencli_installed_not_ready_is_warn():
 
 def test_check_prefers_ok_over_warn_regardless_of_probe_order():
     channel = RedditChannel()
-    with patch.object(
-        channel, "_check_opencli", return_value=("warn", "opencli sleepy")
-    ), patch.object(
-        channel, "_check_rdt", return_value=("ok", "rdt ready")
+    with (
+        patch.object(channel, "_check_opencli", return_value=("warn", "opencli sleepy")),
+        patch.object(channel, "_check_rdt", return_value=("ok", "rdt ready")),
     ):
         status, message = channel.check()
 
@@ -190,10 +185,9 @@ def test_check_prefers_ok_over_warn_regardless_of_probe_order():
 
 def test_check_warn_has_no_active_backend():
     channel = RedditChannel()
-    with patch.object(
-        channel, "_check_opencli", return_value=("warn", "not ready")
-    ), patch.object(
-        channel, "_check_rdt", return_value=("warn", "unverified")
+    with (
+        patch.object(channel, "_check_opencli", return_value=("warn", "not ready")),
+        patch.object(channel, "_check_rdt", return_value=("warn", "unverified")),
     ):
         status, message = channel.check()
 
@@ -204,9 +198,10 @@ def test_check_warn_has_no_active_backend():
 
 def test_check_all_errors_returns_error_and_no_active_backend():
     channel = RedditChannel()
-    with patch.object(
-        channel, "_check_opencli", return_value=("error", "e1")
-    ), patch.object(channel, "_check_rdt", return_value=("error", "e2")):
+    with (
+        patch.object(channel, "_check_opencli", return_value=("error", "e1")),
+        patch.object(channel, "_check_rdt", return_value=("error", "e2")),
+    ):
         status, message = channel.check()
 
     assert status == "error"
@@ -216,8 +211,9 @@ def test_check_all_errors_returns_error_and_no_active_backend():
 
 def test_check_no_backend_installed_is_off():
     channel = RedditChannel()
-    with patch.object(channel, "_check_opencli", return_value=None), patch.object(
-        channel, "_check_rdt", return_value=None
+    with (
+        patch.object(channel, "_check_opencli", return_value=None),
+        patch.object(channel, "_check_rdt", return_value=None),
     ):
         status, message = channel.check()
 

@@ -125,9 +125,7 @@ class GitHubChannel(Channel):
             return "error", f"gh CLI 版本检查失败：{detail}"
 
         try:
-            configured = _explicit_github_credentials(
-                config
-            ) or _saved_github_host_configured()
+            configured = _explicit_github_credentials(config) or _saved_github_host_configured()
         except GitHubConfigError as exc:
             return "warn", (
                 f"gh CLI 可执行，但认证配置无法安全确认：{exc}。"

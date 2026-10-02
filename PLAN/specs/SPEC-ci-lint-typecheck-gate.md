@@ -1,7 +1,7 @@
 # SPEC-ci-lint-typecheck-gate — Make CI actually run the checks CONTRIBUTING.md promises
 
 **Source:** PLAN/dumps/202610011705-estate-intake-onboarding.md
-**Status:** READY
+**Status:** ADOPTED — became PRJ-001 on 2026-10-02
 
 ## Goal
 A PR that fails `ruff check`, `ruff format --check`, or `mypy agent_reach` shows a red CI check, the same

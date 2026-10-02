@@ -1,0 +1,16 @@
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.1
+    hooks:
+      - id: ruff-check
+        args: [agent_reach, tests]
+      - id: ruff-format
+        args: [agent_reach, tests]
+
+  - repo: local
+    hooks:
+      - id: mypy
+        name: mypy
+        entry: mypy agent_reach
+        language: system
+        pass_filenames: false

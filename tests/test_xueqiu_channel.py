@@ -22,15 +22,21 @@ from agent_reach.channels.xueqiu import XueqiuChannel, _strip_html
 
 # --- can_handle ---
 
+
 def test_can_handle_matches_xueqiu_hosts():
     ch = XueqiuChannel()
-    for url in ["https://xueqiu.com/S/SH600519", "https://XUEQIU.COM/u/123", "https://www.xueqiu.com"]:
+    for url in [
+        "https://xueqiu.com/S/SH600519",
+        "https://XUEQIU.COM/u/123",
+        "https://www.xueqiu.com",
+    ]:
         assert ch.can_handle(url) is True, url
     for url in ["https://example.com", "https://twitter.com", ""]:
         assert ch.can_handle(url) is False, url
 
 
 # --- _strip_html (pure helper) ---
+
 
 def test_strip_html_removes_tags_and_decodes_entities():
     assert _strip_html("<p>hello&nbsp;<b>world</b></p>") == "hello world"
@@ -40,22 +46,23 @@ def test_strip_html_removes_tags_and_decodes_entities():
 
 # --- check(): single public endpoint, items present/empty/error ---
 
+
 def test_check_validates_detail_quote_endpoint():
     ch = XueqiuChannel()
     requested = []
     with patch.object(
         xq,
         "_get_json",
-        side_effect=lambda url, config=None: requested.append(url)
-        or {"data": {"quote": {"symbol": "SH601138", "pe_ttm": 38.1}}},
+        side_effect=lambda url, config=None: (
+            requested.append(url) or {"data": {"quote": {"symbol": "SH601138", "pe_ttm": 38.1}}}
+        ),
     ):
         status, message = ch.check()
 
     assert status == "ok"
     assert ch.active_backend == ch.backends[0]
     assert requested == [
-        "https://stock.xueqiu.com/v5/stock/quote.json"
-        "?symbol=SH601138&extend=detail"
+        "https://stock.xueqiu.com/v5/stock/quote.json?symbol=SH601138&extend=detail"
     ]
 
 
@@ -70,6 +77,7 @@ def test_check_warn_when_quote_empty():
 
 def test_check_warn_on_exception():
     import urllib.error
+
     ch = XueqiuChannel()
     with patch.object(xq, "_get_json", side_effect=urllib.error.URLError("refused")):
         status, message = ch.check()
@@ -111,22 +119,30 @@ def test_check_never_reads_browser_cookie_store_implicitly(monkeypatch):
 
 # --- get_stock_quote: field mapping + missing-data fallback ---
 
+
 def test_get_stock_quote_maps_fields():
     ch = XueqiuChannel()
-    payload = {"data": {"quote": {
-        "symbol": "SH600519", "name": "贵州茅台", "current": 1700.5,
-        "percent": 1.23, "volume": 1234, "pe_ttm": 30.1,
-        "pe_forecast": 27.4, "pb": 8.2, "eps": 59.0,
-    }}}
+    payload = {
+        "data": {
+            "quote": {
+                "symbol": "SH600519",
+                "name": "贵州茅台",
+                "current": 1700.5,
+                "percent": 1.23,
+                "volume": 1234,
+                "pe_ttm": 30.1,
+                "pe_forecast": 27.4,
+                "pb": 8.2,
+                "eps": 59.0,
+            }
+        }
+    }
     requested = []
-    with patch.object(
-        xq, "_get_json", side_effect=lambda url: requested.append(url) or payload
-    ):
+    with patch.object(xq, "_get_json", side_effect=lambda url: requested.append(url) or payload):
         q = ch.get_stock_quote("SH600519")
 
     assert requested == [
-        "https://stock.xueqiu.com/v5/stock/quote.json"
-        "?symbol=SH600519&extend=detail"
+        "https://stock.xueqiu.com/v5/stock/quote.json?symbol=SH600519&extend=detail"
     ]
     assert q["symbol"] == "SH600519"
     assert q["name"] == "贵州茅台"
@@ -149,6 +165,7 @@ def test_get_stock_quote_falls_back_when_no_items():
 
 # --- search_stock: mapping + limit ---
 
+
 def test_search_stock_maps_and_respects_limit():
     ch = XueqiuChannel()
     stocks = [
@@ -170,13 +187,16 @@ def test_search_stock_handles_missing_stocks_key():
 
 # --- get_hot_posts: JSON-in-JSON unwrap, html strip, url build, bad data ---
 
+
 def test_get_hot_posts_unwraps_and_shapes():
     ch = XueqiuChannel()
     inner = {
-        "id": 42, "title": "茅台大涨",
+        "id": 42,
+        "title": "茅台大涨",
         "text": "<p>今天<b>大涨</b>&nbsp;了</p>",
         "user": {"screen_name": "韭菜王"},
-        "like_count": 99, "target": "/SH600519/123",
+        "like_count": 99,
+        "target": "/SH600519/123",
     }
     payload = {"list": [{"data": json.dumps(inner, ensure_ascii=False)}]}
     with patch.object(xq, "_get_json", return_value=payload):
@@ -185,7 +205,7 @@ def test_get_hot_posts_unwraps_and_shapes():
     p = posts[0]
     assert p["id"] == 42
     assert p["title"] == "茅台大涨"
-    assert p["text"] == "今天大涨 了"          # html stripped, entity decoded
+    assert p["text"] == "今天大涨 了"  # html stripped, entity decoded
     assert p["author"] == "韭菜王"
     assert p["likes"] == 99
     assert p["url"] == "https://xueqiu.com/SH600519/123"
@@ -261,6 +281,7 @@ def test_get_hot_posts_rejects_negative_limit():
 
 
 # --- get_hot_stocks: ranking + code/symbol fallback ---
+
 
 def test_get_hot_stocks_ranks_and_falls_back_to_symbol():
     ch = XueqiuChannel()

@@ -95,9 +95,7 @@ class TestConfig:
             "!@#$%^&*",
         ),
     )
-    def test_to_dict_redacts_short_secrets_without_leaking_value(
-        self, tmp_config, secret
-    ):
+    def test_to_dict_redacts_short_secrets_without_leaking_value(self, tmp_config, secret):
         tmp_config.set("api_key", secret)
 
         masked = tmp_config.to_dict()
@@ -106,9 +104,7 @@ class TestConfig:
         assert secret not in str(masked)
 
     @pytest.mark.parametrize("empty_value", (None, ""))
-    def test_to_dict_keeps_empty_sensitive_values_as_none(
-        self, tmp_config, empty_value
-    ):
+    def test_to_dict_keeps_empty_sensitive_values_as_none(self, tmp_config, empty_value):
         tmp_config.set("api_key", empty_value)
 
         assert tmp_config.to_dict()["api_key"] is None
@@ -139,6 +135,7 @@ class TestConfig:
     def test_save_creates_file_with_restricted_permissions(self, tmp_path):
         import stat
         import sys
+
         config_file = tmp_path / "secure_config.yaml"
         config = Config(config_path=config_file)
         config.set("secret_key", "my-secret")
@@ -257,9 +254,7 @@ class TestConfig:
         with pytest.raises(ConfigSecurityError, match="大小上限"):
             Config(config_path=config_file)
 
-    def test_save_preserves_previous_file_on_serialization_failure(
-        self, tmp_path, monkeypatch
-    ):
+    def test_save_preserves_previous_file_on_serialization_failure(self, tmp_path, monkeypatch):
         config_file = tmp_path / "config.yaml"
         config = Config(config_path=config_file)
         config.set("keep_key", "keep_value")
@@ -276,9 +271,7 @@ class TestConfig:
         assert config.get("new_key") is None
         assert list(tmp_path.glob(".config.yaml.*.tmp")) == []
 
-    def test_atomic_temp_file_is_created_next_to_custom_config_path(
-        self, tmp_path, monkeypatch
-    ):
+    def test_atomic_temp_file_is_created_next_to_custom_config_path(self, tmp_path, monkeypatch):
         import tempfile
 
         config_file = tmp_path / "custom" / "nested" / "settings.yaml"

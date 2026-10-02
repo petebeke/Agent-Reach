@@ -26,6 +26,7 @@ def _ok_probe():
 
 # --- can_handle ---
 
+
 def test_can_handle_matches_zhipin_hosts():
     ch = BossChannel()
     for url in [
@@ -43,6 +44,7 @@ def test_can_handle_matches_zhipin_hosts():
 
 
 # --- check() 四分支 ---
+
 
 def test_check_off_when_cli_missing():
     ch = BossChannel()
@@ -64,8 +66,9 @@ def test_check_error_when_cli_broken():
 
 def test_check_off_when_cdp_unreachable():
     ch = BossChannel()
-    with patch.object(boss_mod, "probe_command", return_value=_ok_probe()), patch.object(
-        boss_mod, "_cdp_json", return_value=None
+    with (
+        patch.object(boss_mod, "probe_command", return_value=_ok_probe()),
+        patch.object(boss_mod, "_cdp_json", return_value=None),
     ):
         status, message = ch.check()
     assert status == "off"
@@ -96,9 +99,11 @@ def test_check_warn_when_no_zhipin_page():
             return {"Browser": "Chrome"}
         return [{"type": "page", "url": "https://example.com"}]
 
-    with patch.object(boss_mod, "probe_command", return_value=_ok_probe()), patch.object(
-        boss_mod, "_cdp_json", side_effect=fake_cdp
-    ), patch.object(boss_mod, "_cdp_zhipin_login_cookie", return_value=None):
+    with (
+        patch.object(boss_mod, "probe_command", return_value=_ok_probe()),
+        patch.object(boss_mod, "_cdp_json", side_effect=fake_cdp),
+        patch.object(boss_mod, "_cdp_zhipin_login_cookie", return_value=None),
+    ):
         status, message = ch.check()
     assert status == "warn"
     assert ch.active_backend is None
@@ -112,9 +117,11 @@ def test_check_warn_when_ready():
             return {"Browser": "Chrome"}
         return [{"type": "page", "url": "https://www.zhipin.com/web/geek/job"}]
 
-    with patch.object(boss_mod, "probe_command", return_value=_ok_probe()), patch.object(
-        boss_mod, "_cdp_json", side_effect=fake_cdp
-    ), patch.object(boss_mod, "_cdp_zhipin_login_cookie", return_value=True):
+    with (
+        patch.object(boss_mod, "probe_command", return_value=_ok_probe()),
+        patch.object(boss_mod, "_cdp_json", side_effect=fake_cdp),
+        patch.object(boss_mod, "_cdp_zhipin_login_cookie", return_value=True),
+    ):
         status, message = ch.check()
     assert status == "warn"
     assert "boss-agent-cli #403-#407" in message
@@ -134,9 +141,11 @@ def test_check_warn_when_cookie_probe_fails():
             return {"Browser": "Chrome"}
         return [{"type": "page", "url": "https://www.zhipin.com/web/geek/job"}]
 
-    with patch.object(boss_mod, "probe_command", return_value=_ok_probe()), patch.object(
-        boss_mod, "_cdp_json", side_effect=fake_cdp
-    ), patch.object(boss_mod, "_cdp_zhipin_login_cookie", return_value=None):
+    with (
+        patch.object(boss_mod, "probe_command", return_value=_ok_probe()),
+        patch.object(boss_mod, "_cdp_json", side_effect=fake_cdp),
+        patch.object(boss_mod, "_cdp_zhipin_login_cookie", return_value=None),
+    ):
         status, message = ch.check()
     assert status == "warn"
     assert "登录态未知" in message
@@ -153,9 +162,11 @@ def test_check_warn_when_browser_not_logged_in():
             return {"Browser": "Chrome"}
         return [{"type": "page", "url": "https://www.zhipin.com/web/geek/job"}]
 
-    with patch.object(boss_mod, "probe_command", return_value=_ok_probe()), patch.object(
-        boss_mod, "_cdp_json", side_effect=fake_cdp
-    ), patch.object(boss_mod, "_cdp_zhipin_login_cookie", return_value=False):
+    with (
+        patch.object(boss_mod, "probe_command", return_value=_ok_probe()),
+        patch.object(boss_mod, "_cdp_json", side_effect=fake_cdp),
+        patch.object(boss_mod, "_cdp_zhipin_login_cookie", return_value=False),
+    ):
         status, message = ch.check()
     assert status == "warn"
     assert "AUTH_EXPIRED" in message
@@ -177,9 +188,11 @@ def test_check_warn_when_stuck_on_security_check():
             }
         ]
 
-    with patch.object(boss_mod, "probe_command", return_value=_ok_probe()), patch.object(
-        boss_mod, "_cdp_json", side_effect=fake_cdp
-    ), patch.object(boss_mod, "_cdp_zhipin_login_cookie", return_value=True):
+    with (
+        patch.object(boss_mod, "probe_command", return_value=_ok_probe()),
+        patch.object(boss_mod, "_cdp_json", side_effect=fake_cdp),
+        patch.object(boss_mod, "_cdp_zhipin_login_cookie", return_value=True),
+    ):
         status, message = ch.check()
     assert status == "warn"
     assert "安全校验" in message
@@ -227,12 +240,7 @@ def _ws_frame(payload: dict) -> bytes:
 
 
 def _handshake(status_line: bytes) -> bytes:
-    return (
-        status_line
-        + b"\r\nSec-WebSocket-Accept: "
-        + _FIXED_ACCEPT.encode()
-        + b"\r\n\r\n"
-    )
+    return status_line + b"\r\nSec-WebSocket-Accept: " + _FIXED_ACCEPT.encode() + b"\r\n\r\n"
 
 
 class _FakeSock:
@@ -263,9 +271,7 @@ def _run_ws_probe(monkeypatch, chunks, ws_url="ws://127.0.0.1:9222/devtools/brow
     sock = _FakeSock(chunks)
     monkeypatch.setattr(boss_mod.os, "urandom", lambda n: _FIXED_KEY16)
     monkeypatch.setattr(boss_mod.socket, "create_connection", lambda *a, **k: sock)
-    monkeypatch.setattr(
-        boss_mod, "_cdp_json", lambda path: {"webSocketDebuggerUrl": ws_url}
-    )
+    monkeypatch.setattr(boss_mod, "_cdp_json", lambda path: {"webSocketDebuggerUrl": ws_url})
     return boss_mod._cdp_zhipin_login_cookie(), sock
 
 

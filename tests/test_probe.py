@@ -25,9 +25,7 @@ def test_missing_command():
 @pytest.mark.skipif(sys.platform == "win32", reason="shebang semantics are POSIX-only")
 def test_broken_shebang_detected_as_broken(tmp_path, monkeypatch):
     """A stale venv shim: which() finds it, exec raises FileNotFoundError."""
-    _make_executable(
-        tmp_path / "stale-tool", "#!/nonexistent/venv/bin/python\nprint('hi')\n"
-    )
+    _make_executable(tmp_path / "stale-tool", "#!/nonexistent/venv/bin/python\nprint('hi')\n")
     monkeypatch.setenv("PATH", str(tmp_path) + os.pathsep + os.environ.get("PATH", ""))
 
     r = probe_command("stale-tool", package="stale-tool-pkg")
@@ -38,9 +36,7 @@ def test_broken_shebang_detected_as_broken(tmp_path, monkeypatch):
 
 @pytest.mark.skipif(sys.platform == "win32", reason="shell script fixture is POSIX-only")
 def test_healthy_command_returns_ok_with_output(tmp_path, monkeypatch):
-    _make_executable(
-        tmp_path / "healthy-tool", "#!/bin/sh\necho 'healthy-tool 1.2.3'\n"
-    )
+    _make_executable(tmp_path / "healthy-tool", "#!/bin/sh\necho 'healthy-tool 1.2.3'\n")
     monkeypatch.setenv("PATH", str(tmp_path) + os.pathsep + os.environ.get("PATH", ""))
 
     r = probe_command("healthy-tool")
@@ -75,9 +71,7 @@ def test_probe_child_env_can_add_and_remove_without_mutating_parent(tmp_path, mo
 
 @pytest.mark.skipif(sys.platform == "win32", reason="shell script fixture is POSIX-only")
 def test_nonzero_exit_classified_as_error(tmp_path, monkeypatch):
-    _make_executable(
-        tmp_path / "failing-tool", "#!/bin/sh\necho 'boom' >&2\nexit 3\n"
-    )
+    _make_executable(tmp_path / "failing-tool", "#!/bin/sh\necho 'boom' >&2\nexit 3\n")
     monkeypatch.setenv("PATH", str(tmp_path) + os.pathsep + os.environ.get("PATH", ""))
 
     r = probe_command("failing-tool")

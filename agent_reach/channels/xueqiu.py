@@ -96,9 +96,7 @@ def _ensure_cookies(config=None) -> None:
 def _get_json(url: str, config=None) -> Any:
     """Fetch *url* with Xueqiu session cookies and return parsed JSON."""
     _ensure_cookies(config)
-    req = urllib.request.Request(
-        url, headers={"User-Agent": _UA, "Referer": _REFERER}
-    )
+    req = urllib.request.Request(url, headers={"User-Agent": _UA, "Referer": _REFERER})
     with _opener.open(req, timeout=_TIMEOUT) as resp:
         return json.loads(resp.read().decode("utf-8"))
 
@@ -134,8 +132,7 @@ class XueqiuChannel(Channel):
         self.active_backend = None
         try:
             data = _get_json(
-                "https://stock.xueqiu.com/v5/stock/quote.json"
-                "?symbol=SH601138&extend=detail",
+                "https://stock.xueqiu.com/v5/stock/quote.json?symbol=SH601138&extend=detail",
                 config,
             )
             quote = (data.get("data") or {}).get("quote") or {}
@@ -171,8 +168,7 @@ class XueqiuChannel(Channel):
         """
         encoded_symbol = urllib.parse.quote(symbol, safe="")
         data = _get_json(
-            "https://stock.xueqiu.com/v5/stock/quote.json"
-            f"?symbol={encoded_symbol}&extend=detail"
+            f"https://stock.xueqiu.com/v5/stock/quote.json?symbol={encoded_symbol}&extend=detail"
         )
         q = (data.get("data") or {}).get("quote") or {}
         return {
@@ -207,8 +203,7 @@ class XueqiuChannel(Channel):
           symbol, name, exchange
         """
         data = _get_json(
-            f"https://xueqiu.com/stock/search.json"
-            f"?code={urllib.parse.quote(query)}&size={limit}"
+            f"https://xueqiu.com/stock/search.json?code={urllib.parse.quote(query)}&size={limit}"
         )
         stocks = data.get("stocks") or []
         results = []
@@ -249,17 +244,11 @@ class XueqiuChannel(Channel):
         for item in items[:limit]:
             # Each item.data is a JSON string containing the real post payload
             try:
-                post = (
-                    json.loads(item["data"])
-                    if isinstance(item.get("data"), str)
-                    else {}
-                )
+                post = json.loads(item["data"]) if isinstance(item.get("data"), str) else {}
             except (json.JSONDecodeError, KeyError):
                 post = {}
             user = post.get("user") or {}
-            text = _strip_html(
-                post.get("text") or post.get("description") or ""
-            )
+            text = _strip_html(post.get("text") or post.get("description") or "")
             target = post.get("target", "")
             results.append(
                 {
@@ -284,8 +273,7 @@ class XueqiuChannel(Channel):
           symbol, name, current, percent, rank
         """
         data = _get_json(
-            f"https://stock.xueqiu.com/v5/stock/hot_stock/list.json"
-            f"?size={limit}&type={stock_type}"
+            f"https://stock.xueqiu.com/v5/stock/hot_stock/list.json?size={limit}&type={stock_type}"
         )
         items = (data.get("data") or {}).get("items") or []
         results = []

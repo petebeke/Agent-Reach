@@ -27,9 +27,7 @@ class _MemoryConfig:
         self.data[key] = value
 
 
-def test_configure_reads_secret_from_stdin_without_echoing_it(
-    monkeypatch, capsys
-):
+def test_configure_reads_secret_from_stdin_without_echoing_it(monkeypatch, capsys):
     import agent_reach.config as config_module
 
     secret = "gsk-secret-from-stdin"
@@ -51,9 +49,7 @@ def test_configure_reads_secret_from_stdin_without_echoing_it(
     assert secret not in output.err
 
 
-def test_configure_uses_hidden_prompt_when_no_value_is_given(
-    monkeypatch, capsys
-):
+def test_configure_uses_hidden_prompt_when_no_value_is_given(monkeypatch, capsys):
     import getpass
 
     import agent_reach.config as config_module
@@ -118,9 +114,7 @@ def test_setup_uses_hidden_prompts_for_secrets(monkeypatch, capsys):
     assert groq_secret not in output.err
 
 
-def test_configure_positional_secret_warns_to_use_safe_input(
-    monkeypatch, capsys
-):
+def test_configure_positional_secret_warns_to_use_safe_input(monkeypatch, capsys):
     import agent_reach.config as config_module
 
     config = _MemoryConfig()
@@ -141,9 +135,7 @@ def test_configure_positional_secret_warns_to_use_safe_input(
     assert "legacy-secret" not in error
 
 
-def test_configure_rejects_stdin_combined_with_positional_value(
-    monkeypatch, capsys
-):
+def test_configure_rejects_stdin_combined_with_positional_value(monkeypatch, capsys):
     monkeypatch.setattr(
         cli,
         "_cmd_configure",
@@ -192,9 +184,7 @@ def test_browser_cookie_import_requires_explicit_platform(monkeypatch):
     assert exc.value.code == 2
 
 
-def test_browser_cookie_import_passes_explicit_platform_and_profile(
-    monkeypatch, capsys
-):
+def test_browser_cookie_import_passes_explicit_platform_and_profile(monkeypatch, capsys):
     """The CLI forwards an allowed minimal-cookie platform and exact profile."""
     import agent_reach.config as config_module
     import agent_reach.cookie_extract as cookie_extract
@@ -241,9 +231,7 @@ def test_browser_cookie_import_without_cookie_exits_one(monkeypatch, capsys):
     monkeypatch.setattr(
         cookie_extract,
         "configure_from_browser",
-        lambda *_args, **_kwargs: [
-            ("Xueqiu", False, "No Xueqiu cookies found")
-        ],
+        lambda *_args, **_kwargs: [("Xueqiu", False, "No Xueqiu cookies found")],
     )
     monkeypatch.setattr(
         sys,
@@ -365,9 +353,7 @@ def test_install_rejects_safe_and_system_together(monkeypatch, capsys):
     assert "not allowed with argument" in capsys.readouterr().err
 
 
-def test_install_rejects_unknown_channel_before_side_effects(
-    monkeypatch, capsys
-):
+def test_install_rejects_unknown_channel_before_side_effects(monkeypatch, capsys):
     """A typo in --channels fails before config or system installation starts."""
     import agent_reach.config as config_module
 
@@ -387,9 +373,7 @@ def test_install_rejects_unknown_channel_before_side_effects(
     monkeypatch.setattr(
         cli.os,
         "makedirs",
-        lambda *_args, **_kwargs: pytest.fail(
-            "install directories must not be created"
-        ),
+        lambda *_args, **_kwargs: pytest.fail("install directories must not be created"),
     )
     monkeypatch.setattr(
         sys,
@@ -451,9 +435,7 @@ def test_install_all_includes_boss_on_desktop(monkeypatch, capsys):
 
 
 @pytest.mark.parametrize("sync_legacy", [False, True])
-def test_manual_twitter_cookie_legacy_copies_are_opt_in(
-    monkeypatch, capsys, sync_legacy
-):
+def test_manual_twitter_cookie_legacy_copies_are_opt_in(monkeypatch, capsys, sync_legacy):
     """The source-of-truth config is always written; legacy copies are optional."""
     import shutil
 
@@ -540,9 +522,7 @@ def test_legacy_twitter_sync_reports_only_confirmed_results(
     assert output.count("  failed:") == failed_count
 
 
-def test_twitter_configure_never_runs_upstream_browser_fallback(
-    monkeypatch, capsys
-):
+def test_twitter_configure_never_runs_upstream_browser_fallback(monkeypatch, capsys):
     import shutil
 
     import agent_reach.config as config_module
@@ -552,9 +532,7 @@ def test_twitter_configure_never_runs_upstream_browser_fallback(
     monkeypatch.setattr(
         subprocess,
         "run",
-        lambda *_args, **_kwargs: pytest.fail(
-            "configure must not execute twitter status"
-        ),
+        lambda *_args, **_kwargs: pytest.fail("configure must not execute twitter status"),
     )
 
     cli._cmd_configure(
@@ -639,9 +617,7 @@ def _docker_result(args, returncode=0, stdout="", stderr=""):
     return subprocess.CompletedProcess(args, returncode, stdout, stderr)
 
 
-def test_xhs_docker_cookie_copy_succeeds_without_local_os_binding_error(
-    monkeypatch, capsys
-):
+def test_xhs_docker_cookie_copy_succeeds_without_local_os_binding_error(monkeypatch, capsys):
     """The Docker branch must be able to unlink its temporary file."""
     calls = []
 
@@ -730,9 +706,7 @@ def test_xhs_docker_restart_failure_returns_failure(monkeypatch, capsys):
     assert "done" not in output
 
 
-def test_system_install_uses_ytdlp_first_user_config(
-    monkeypatch, tmp_path
-):
+def test_system_install_uses_ytdlp_first_user_config(monkeypatch, tmp_path):
     """Installer writes the first config directory that real yt-dlp reads."""
     import shutil
 
@@ -743,16 +717,16 @@ def test_system_install_uses_ytdlp_first_user_config(
     monkeypatch.setattr(
         cli.os.path,
         "expanduser",
-        lambda value: str(tmp_path / ".legacy-config")
-        if value == "~/.config/yt-dlp"
-        else value.replace("~", str(tmp_path)),
+        lambda value: (
+            str(tmp_path / ".legacy-config")
+            if value == "~/.config/yt-dlp"
+            else value.replace("~", str(tmp_path))
+        ),
     )
     monkeypatch.setattr(
         shutil,
         "which",
-        lambda name: f"/usr/bin/{name}"
-        if name in {"gh", "node", "npm", "yt-dlp"}
-        else None,
+        lambda name: f"/usr/bin/{name}" if name in {"gh", "node", "npm", "yt-dlp"} else None,
     )
 
     def fake_run(args, **_kwargs):
@@ -760,9 +734,7 @@ def test_system_install_uses_ytdlp_first_user_config(
             return _docker_result(args, stdout="2026.07.04\n")
         return _docker_result(
             args,
-            stdout="/tmp/npm-root\n"
-            if args[1:3] == ["root", "-g"]
-            else "",
+            stdout="/tmp/npm-root\n" if args[1:3] == ["root", "-g"] else "",
         )
 
     monkeypatch.setattr(subprocess, "run", fake_run)
@@ -888,9 +860,7 @@ def test_system_install_uses_brew_and_checks_each_result(monkeypatch, capsys):
     assert "✅ Node.js installed" not in output
 
 
-def test_system_install_stops_undici_setup_when_npm_root_fails(
-    monkeypatch, capsys
-):
+def test_system_install_stops_undici_setup_when_npm_root_fails(monkeypatch, capsys):
     """A failed discovery step must not trigger a global npm write."""
     import shutil
 
@@ -898,9 +868,7 @@ def test_system_install_stops_undici_setup_when_npm_root_fails(
     monkeypatch.setattr(
         shutil,
         "which",
-        lambda name: f"/usr/bin/{name}"
-        if name in {"gh", "node", "npm", "deno"}
-        else None,
+        lambda name: f"/usr/bin/{name}" if name in {"gh", "node", "npm", "deno"} else None,
     )
 
     def fake_run(args, **_kwargs):
@@ -922,17 +890,13 @@ def test_system_install_stops_undici_setup_when_npm_root_fails(
     assert "Could not inspect global npm packages" in output
 
 
-def test_system_install_does_not_report_failed_undici_as_success(
-    monkeypatch, capsys
-):
+def test_system_install_does_not_report_failed_undici_as_success(monkeypatch, capsys):
     import shutil
 
     monkeypatch.setattr(
         shutil,
         "which",
-        lambda name: f"/usr/bin/{name}"
-        if name in {"gh", "node", "npm", "deno"}
-        else None,
+        lambda name: f"/usr/bin/{name}" if name in {"gh", "node", "npm", "deno"} else None,
     )
 
     def fake_run(args, **_kwargs):
@@ -959,9 +923,7 @@ def test_system_install_does_not_report_failed_undici_as_success(
     assert "undici install failed" in output
 
 
-def test_install_dry_run_never_suggests_remote_setup_scripts(
-    monkeypatch, capsys
-):
+def test_install_dry_run_never_suggests_remote_setup_scripts(monkeypatch, capsys):
     import shutil
 
     monkeypatch.setattr(shutil, "which", lambda _name: None)
@@ -979,9 +941,7 @@ def test_install_dry_run_never_suggests_remote_setup_scripts(
     "helper",
     [cli._install_system_deps_safe, cli._install_system_deps_dryrun],
 )
-def test_system_dependency_checks_require_both_node_and_npm(
-    monkeypatch, capsys, helper
-):
+def test_system_dependency_checks_require_both_node_and_npm(monkeypatch, capsys, helper):
     import shutil
 
     monkeypatch.setattr(
@@ -1002,9 +962,7 @@ def test_system_dependency_checks_require_both_node_and_npm(
     "yt_dlp_version",
     [None, "2025.10.22", "not-a-stable-version"],
 )
-def test_system_install_never_writes_unsupported_ytdlp_flag(
-    monkeypatch, tmp_path, yt_dlp_version
-):
+def test_system_install_never_writes_unsupported_ytdlp_flag(monkeypatch, tmp_path, yt_dlp_version):
     """A missing, old, or unknown yt-dlp must not receive a fatal option."""
     import shutil
 
@@ -1026,9 +984,7 @@ def test_system_install_never_writes_unsupported_ytdlp_flag(
             return _docker_result(args, stdout=f"{yt_dlp_version}\n")
         return _docker_result(
             args,
-            stdout="/tmp/npm-root\n"
-            if args[1:3] == ["root", "-g"]
-            else "",
+            stdout="/tmp/npm-root\n" if args[1:3] == ["root", "-g"] else "",
         )
 
     monkeypatch.setattr(shutil, "which", fake_which)
@@ -1042,12 +998,8 @@ def test_system_install_never_writes_unsupported_ytdlp_flag(
 
 def test_update_guide_preserves_ytdlp_default_extra():
     """Every documented upgrade path keeps yt-dlp's default/EJS dependencies."""
-    guide = (
-        Path(__file__).resolve().parents[1] / "docs" / "update.md"
-    ).read_text(encoding="utf-8")
-    update_line = next(
-        line for line in guide.splitlines() if line.startswith("which yt-dlp")
-    )
+    guide = (Path(__file__).resolve().parents[1] / "docs" / "update.md").read_text(encoding="utf-8")
+    update_line = next(line for line in guide.splitlines() if line.startswith("which yt-dlp"))
 
     assert update_line.count("yt-dlp[default]") == 3
     assert "pipx install --force 'yt-dlp[default]'" in update_line
@@ -1170,9 +1122,7 @@ def test_mcporter_install_uses_resolved_windows_command_paths(monkeypatch):
     ]
 
 
-def test_server_xhs_install_never_recommends_qr_or_browser_extraction(
-    monkeypatch, capsys
-):
+def test_server_xhs_install_never_recommends_qr_or_browser_extraction(monkeypatch, capsys):
     """Project policy requires an explicit Cookie-Editor export for XHS."""
     monkeypatch.setattr(cli, "_detect_environment", lambda: "server")
 
@@ -1242,9 +1192,7 @@ def test_twitter_cookie_parse_failure_exits_one(monkeypatch, capsys):
     assert config.data == {}
 
 
-def test_profile_rejects_unsupported_browser_before_cookie_backend(
-    monkeypatch, capsys
-):
+def test_profile_rejects_unsupported_browser_before_cookie_backend(monkeypatch, capsys):
     import agent_reach.cookie_extract as cookie_extract
 
     monkeypatch.setattr(cli, "_configure_logging", lambda _verbose=False: None)
@@ -1277,9 +1225,7 @@ def test_profile_rejects_unsupported_browser_before_cookie_backend(
     assert "Chrome/Edge/Brave" in capsys.readouterr().err
 
 
-def test_missing_profile_is_clean_cli_error_without_traceback(
-    monkeypatch, capsys
-):
+def test_missing_profile_is_clean_cli_error_without_traceback(monkeypatch, capsys):
     import agent_reach.config as config_module
     import agent_reach.cookie_extract as cookie_extract
 
@@ -1315,9 +1261,7 @@ def test_missing_profile_is_clean_cli_error_without_traceback(
     assert "***" in error
 
 
-def test_install_dry_run_does_not_create_agent_reach_directory(
-    isolated_home, monkeypatch
-):
+def test_install_dry_run_does_not_create_agent_reach_directory(isolated_home, monkeypatch):
     monkeypatch.setattr(cli, "_install_system_deps_dryrun", lambda: None)
 
     cli._cmd_install(
@@ -1334,9 +1278,7 @@ def test_install_dry_run_does_not_create_agent_reach_directory(
     assert not (isolated_home / ".agent-reach").exists()
 
 
-def test_uninstall_warns_about_opt_in_legacy_credential_copies(
-    isolated_home, capsys
-):
+def test_uninstall_warns_about_opt_in_legacy_credential_copies(isolated_home, capsys):
     xfetch = isolated_home / ".config" / "xfetch" / "session.json"
     bird = isolated_home / ".config" / "bird" / "credentials.env"
     xfetch.parent.mkdir(parents=True)

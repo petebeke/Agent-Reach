@@ -56,12 +56,9 @@ class WebChannel(Channel):
         with urllib.request.urlopen(req, timeout=30) as resp:
             body = resp.read(_MAX_RESPONSE_BYTES + 1)
         if len(body) > _MAX_RESPONSE_BYTES:
-            raise ValueError(
-                f"Jina Reader response exceeds {_MAX_RESPONSE_BYTES} byte limit"
-            )
+            raise ValueError(f"Jina Reader response exceeds {_MAX_RESPONSE_BYTES} byte limit")
         if _is_antibot_page(body):
             raise RuntimeError(
-                "Jina Reader 返回了反爬验证页，未获取到目标内容；"
-                "请改用站点专用工具或浏览器读取"
+                "Jina Reader 返回了反爬验证页，未获取到目标内容；请改用站点专用工具或浏览器读取"
             )
         return body.decode("utf-8")

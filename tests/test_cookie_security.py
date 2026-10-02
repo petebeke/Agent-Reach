@@ -45,9 +45,7 @@ def test_rookiepy_is_limited_at_source_to_the_requested_platform(monkeypatch):
     extracted = cookie_extract.extract_all("chrome", platform="bilibili")
 
     assert calls == [[".bilibili.com"]]
-    assert extracted == {
-        "bilibili": {"SESSDATA": "session", "bili_jct": "csrf"}
-    }
+    assert extracted == {"bilibili": {"SESSDATA": "session", "bili_jct": "csrf"}}
 
 
 def test_xueqiu_collects_only_xq_a_token(monkeypatch):
@@ -115,9 +113,7 @@ def test_explicit_profile_uses_only_that_cookie_database(tmp_path, monkeypatch):
     cookie_db = tmp_path / "Profile 1" / "Network" / "Cookies"
     cookie_db.parent.mkdir(parents=True)
     cookie_db.write_bytes(b"test database placeholder")
-    monkeypatch.setattr(
-        cookie_extract, "_chromium_user_data_dir", lambda browser: tmp_path
-    )
+    monkeypatch.setattr(cookie_extract, "_chromium_user_data_dir", lambda browser: tmp_path)
     monkeypatch.setitem(sys.modules, "rookiepy", None)
 
     calls = []
@@ -135,9 +131,7 @@ def test_explicit_profile_uses_only_that_cookie_database(tmp_path, monkeypatch):
     )
     monkeypatch.setitem(sys.modules, "browser_cookie3", fake_browser_cookie3)
 
-    cookie_extract.extract_all(
-        "chrome", platform="xueqiu", profile="Profile 1"
-    )
+    cookie_extract.extract_all("chrome", platform="xueqiu", profile="Profile 1")
 
     assert calls == [
         (str(cookie_db), ".xueqiu.com"),
@@ -148,14 +142,10 @@ def test_missing_explicit_profile_fails_instead_of_falling_back(tmp_path, monkey
     default_db = tmp_path / "Default" / "Network" / "Cookies"
     default_db.parent.mkdir(parents=True)
     default_db.write_bytes(b"default profile")
-    monkeypatch.setattr(
-        cookie_extract, "_chromium_user_data_dir", lambda browser: tmp_path
-    )
+    monkeypatch.setattr(cookie_extract, "_chromium_user_data_dir", lambda browser: tmp_path)
 
     with pytest.raises(ValueError, match="Profile 7.*not found"):
-        cookie_extract.extract_all(
-            "chrome", platform="xueqiu", profile="Profile 7"
-        )
+        cookie_extract.extract_all("chrome", platform="xueqiu", profile="Profile 7")
 
 
 def test_configure_requires_platform_before_reading_browser():
@@ -179,9 +169,7 @@ def test_invalid_platform_error_does_not_echo_url_secrets():
 @pytest.mark.parametrize("platform", ["twitter", "xhs"])
 def test_configure_from_browser_rejects_cookie_editor_platforms(platform):
     with pytest.raises(ValueError, match="Cookie-Editor"):
-        cookie_extract.configure_from_browser(
-            "chrome", RecordingConfig(), platform=platform
-        )
+        cookie_extract.configure_from_browser("chrome", RecordingConfig(), platform=platform)
 
 
 def test_xueqiu_config_persists_only_xq_a_token(monkeypatch):
@@ -192,9 +180,7 @@ def test_xueqiu_config_persists_only_xq_a_token(monkeypatch):
     )
     config = RecordingConfig()
 
-    result = cookie_extract.configure_from_browser(
-        "chrome", config, platform="xueqiu"
-    )
+    result = cookie_extract.configure_from_browser("chrome", config, platform="xueqiu")
 
     assert config.values == {"xueqiu_cookie": "xq_a_token=needed"}
     assert result[0].targets == ("xueqiu_cookie",)
@@ -204,15 +190,11 @@ def test_bilibili_config_reports_each_written_key(monkeypatch):
     monkeypatch.setattr(
         cookie_extract,
         "extract_all",
-        lambda browser, **kwargs: {
-            "bilibili": {"SESSDATA": "session", "bili_jct": "csrf"}
-        },
+        lambda browser, **kwargs: {"bilibili": {"SESSDATA": "session", "bili_jct": "csrf"}},
     )
     config = RecordingConfig()
 
-    result = cookie_extract.configure_from_browser(
-        "chrome", config, platform="bilibili"
-    )
+    result = cookie_extract.configure_from_browser("chrome", config, platform="bilibili")
 
     assert config.values == {
         "bilibili_sessdata": "session",

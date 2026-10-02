@@ -69,30 +69,27 @@ class TestSkillCommand(unittest.TestCase):
             career_reference,
         )
         self.assertIn(
-            'linkedin.search_people keywords="AI engineer" '
-            'location="Shanghai"',
+            'linkedin.search_people keywords="AI engineer" location="Shanghai"',
             career_reference,
         )
         self.assertIn(
-            'linkedin.get_company_profile company_name="openai" '
-            'sections="posts,jobs"',
+            'linkedin.get_company_profile company_name="openai" sections="posts,jobs"',
             career_reference,
         )
         self.assertIn(
-            'linkedin.search_jobs keywords="software engineer" '
-            'location="Remote" max_pages=2',
+            'linkedin.search_jobs keywords="software engineer" location="Remote" max_pages=2',
             career_reference,
         )
         self.assertNotIn("linkedin-scraper.", career_reference)
 
     def test_linkedin_install_docs_use_current_stdio_contract(self):
         """LinkedIn install guidance should use uvx over stdio."""
-        install_doc = (
-            Path(__file__).resolve().parents[1] / "docs" / "install.md"
-        ).read_text(encoding="utf-8")
-        linkedin_section = install_doc.split(
-            "**LinkedIn (", maxsplit=1
-        )[1].split("### Step 4:", maxsplit=1)[0]
+        install_doc = (Path(__file__).resolve().parents[1] / "docs" / "install.md").read_text(
+            encoding="utf-8"
+        )
+        linkedin_section = install_doc.split("**LinkedIn (", maxsplit=1)[1].split(
+            "### Step 4:", maxsplit=1
+        )[0]
 
         self.assertIn(
             "uvx mcp-server-linkedin@latest --login",
@@ -112,12 +109,10 @@ class TestSkillCommand(unittest.TestCase):
     def test_boss_setup_is_agent_driven_and_reproducible(self):
         root = Path(__file__).resolve().parents[1]
         install_doc = (root / "docs" / "install.md").read_text(encoding="utf-8")
-        skill = (root / "agent_reach" / "skill" / "SKILL.md").read_text(
+        skill = (root / "agent_reach" / "skill" / "SKILL.md").read_text(encoding="utf-8")
+        career = (root / "agent_reach" / "skill" / "references" / "career.md").read_text(
             encoding="utf-8"
         )
-        career = (
-            root / "agent_reach" / "skill" / "references" / "career.md"
-        ).read_text(encoding="utf-8")
         readme = (root / "README.md").read_text(encoding="utf-8")
 
         for content in (install_doc, skill, readme):
@@ -127,9 +122,7 @@ class TestSkillCommand(unittest.TestCase):
         self.assertIn("用户手动登录", install_doc)
         self.assertIn("完全控制", install_doc)
 
-        self.assertIn(
-            'auth = AuthManager(Path.home() / ".boss-agent")', career
-        )
+        self.assertIn('auth = AuthManager(Path.home() / ".boss-agent")', career)
         self.assertIn('browser_source="existing-browser"', career)
         self.assertIn("job_card_browser", career)
         self.assertIn("4c991b77086a203173bf08a4cb64a23af6514fe6", career)
@@ -159,10 +152,13 @@ class TestSkillCommand(unittest.TestCase):
             skill_dir = os.path.join(tmpdir, "skills")
             os.makedirs(skill_dir)
 
-            with patch(
-                "agent_reach.cli.os.path.expanduser",
-                side_effect=lambda p: p.replace("~", tmpdir),
-            ), patch.dict(os.environ, {}, clear=False):
+            with (
+                patch(
+                    "agent_reach.cli.os.path.expanduser",
+                    side_effect=lambda p: p.replace("~", tmpdir),
+                ),
+                patch.dict(os.environ, {}, clear=False),
+            ):
                 # Remove OPENCLAW_HOME to avoid interference
                 env = os.environ.copy()
                 env.pop("OPENCLAW_HOME", None)
@@ -190,10 +186,13 @@ class TestSkillCommand(unittest.TestCase):
 
             self.assertTrue(os.path.exists(skill_path))
 
-            with patch(
-                "agent_reach.cli.os.path.expanduser",
-                side_effect=lambda p: p.replace("~", tmpdir),
-            ), patch.dict(os.environ, {}, clear=False):
+            with (
+                patch(
+                    "agent_reach.cli.os.path.expanduser",
+                    side_effect=lambda p: p.replace("~", tmpdir),
+                ),
+                patch.dict(os.environ, {}, clear=False),
+            ):
                 env = os.environ.copy()
                 env.pop("OPENCLAW_HOME", None)
                 with patch.dict(os.environ, env, clear=True):
@@ -208,10 +207,13 @@ class TestSkillCommand(unittest.TestCase):
             skill_parent = os.path.join(tmpdir, ".openclaw", "skills")
             os.makedirs(skill_parent)
 
-            with patch(
-                "agent_reach.cli.os.path.expanduser",
-                side_effect=lambda p: p.replace("~", tmpdir),
-            ), patch.dict(os.environ, {}, clear=False):
+            with (
+                patch(
+                    "agent_reach.cli.os.path.expanduser",
+                    side_effect=lambda p: p.replace("~", tmpdir),
+                ),
+                patch.dict(os.environ, {}, clear=False),
+            ):
                 env = os.environ.copy()
                 env.pop("OPENCLAW_HOME", None)
                 with patch.dict(os.environ, env, clear=True):
@@ -246,9 +248,7 @@ class TestSkillCommand(unittest.TestCase):
             self.assertTrue(content.strip())
             self.assertIn("Xiaoyuzhou Podcast, LinkedIn", content)
             self.assertNotIn("搜推特", content)
-            self.assertTrue(
-                os.path.exists(os.path.join(skill_parent, "agent-reach", "references"))
-            )
+            self.assertTrue(os.path.exists(os.path.join(skill_parent, "agent-reach", "references")))
 
 
 if __name__ == "__main__":

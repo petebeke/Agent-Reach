@@ -168,9 +168,7 @@ def _profile_cookie_file(browser: str, profile: str) -> str:
         if candidate["folder"] == profile:
             return candidate["cookies_path"]
 
-    available = ", ".join(
-        scrub_url_credentials(item["folder"]) for item in profiles
-    )
+    available = ", ".join(scrub_url_credentials(item["folder"]) for item in profiles)
     hint = f" Available profiles: {available}." if available else ""
     raise ValueError(
         f"Profile '{scrub_url_credentials(profile)}' not found for "
@@ -232,15 +230,14 @@ def extract_all(
     cookie_file = _profile_cookie_file(browser, profile) if profile else None
     needed_cookies = spec["cookies"]
     if needed_cookies is None:
-        raise ValueError(
-            f"Automatic full-domain extraction is disabled for {spec['name']}."
-        )
+        raise ValueError(f"Automatic full-domain extraction is disabled for {spec['name']}.")
 
     # Try rookiepy first (Rust-based, more stable), fallback to browser_cookie3
     use_rookiepy = False
     if cookie_file is None:
         try:
             import rookiepy
+
             use_rookiepy = True
         except ImportError:
             pass
@@ -249,9 +246,7 @@ def extract_all(
             import browser_cookie3
         except ImportError:
             profile_hint = (
-                f" for profile '{scrub_url_credentials(profile)}'"
-                if profile is not None
-                else ""
+                f" for profile '{scrub_url_credentials(profile)}'" if profile is not None else ""
             )
             raise RuntimeError(
                 f"Cookie extraction{profile_hint} requires browser_cookie3"
@@ -270,12 +265,14 @@ def extract_all(
                 "opera": rookiepy.opera,
             }
             raw_cookies = browser_funcs[browser](list(spec["domains"]))
+
             # Wrap into objects with .name, .value, .domain for compatibility
             class _Cookie:
                 def __init__(self, d):
                     self.name = d.get("name", "")
                     self.value = d.get("value", "")
                     self.domain = d.get("domain", "")
+
             cookie_jar = [_Cookie(c) for c in raw_cookies]
         except Exception as e:
             raise RuntimeError(
@@ -398,8 +395,7 @@ def _sync_bird_env(auth_token: str, ct0: str) -> bool:
         env_path = bird_dir / "credentials.env"
         atomic_write_private_text(
             env_path,
-            f"AUTH_TOKEN={shlex.quote(auth_token)}\n"
-            f"CT0={shlex.quote(ct0)}\n",
+            f"AUTH_TOKEN={shlex.quote(auth_token)}\nCT0={shlex.quote(ct0)}\n",
         )
         return True
     except Exception:
@@ -438,11 +434,7 @@ def configure_from_browser(
     except ValueError:
         raise
     except Exception as e:
-        return [
-            BrowserConfigResult(
-                "Browser", False, scrub_url_credentials(e)
-            )
-        ]
+        return [BrowserConfigResult("Browser", False, scrub_url_credentials(e))]
 
     config_key = spec["config_key"]
     if config_key not in extracted:
@@ -476,8 +468,7 @@ def configure_from_browser(
                 BrowserConfigResult(
                     "Bilibili",
                     False,
-                    f"No SESSDATA found. "
-                    f"Make sure you're logged into bilibili.com in {browser}.",
+                    f"No SESSDATA found. Make sure you're logged into bilibili.com in {browser}.",
                 )
             )
 

@@ -26,6 +26,7 @@ def _resp(body=b"# Example\nfull text\n"):
 
 # --- can_handle: universal fallback contract ---
 
+
 def test_can_handle_accepts_any_url():
     channel = WebChannel()
     for sample in [
@@ -41,6 +42,7 @@ def test_can_handle_accepts_any_url():
 
 # --- check: ready without any network probe (零开销兜底) ---
 
+
 def test_check_is_ok_and_touches_no_network():
     channel = WebChannel()
     with patch("urllib.request.urlopen") as mock_open:
@@ -53,6 +55,7 @@ def test_check_is_ok_and_touches_no_network():
 
 
 # --- read: URL normalisation + Jina Reader request shape ---
+
 
 def test_read_prepends_https_for_schemeless_url():
     channel = WebChannel()
@@ -148,9 +151,7 @@ def test_read_accepts_response_at_exact_size_limit():
         out = channel.read("https://example.com/exact")
 
     assert len(out) == _MAX_RESPONSE_BYTES
-    response.__enter__.return_value.read.assert_called_once_with(
-        _MAX_RESPONSE_BYTES + 1
-    )
+    response.__enter__.return_value.read.assert_called_once_with(_MAX_RESPONSE_BYTES + 1)
 
 
 def test_read_rejects_oversized_reader_response():
@@ -161,9 +162,7 @@ def test_read_rejects_oversized_reader_response():
         with pytest.raises(ValueError, match="response exceeds"):
             channel.read("https://example.com/large")
 
-    response.__enter__.return_value.read.assert_called_once_with(
-        _MAX_RESPONSE_BYTES + 1
-    )
+    response.__enter__.return_value.read.assert_called_once_with(_MAX_RESPONSE_BYTES + 1)
 
 
 @pytest.mark.parametrize(
@@ -185,9 +184,7 @@ def test_read_rejects_oversized_reader_response():
 def test_read_rejects_high_confidence_antibot_pages(body):
     channel = WebChannel()
 
-    with patch(
-        "urllib.request.urlopen", return_value=_resp(body.encode("utf-8"))
-    ) as mock_open:
+    with patch("urllib.request.urlopen", return_value=_resp(body.encode("utf-8"))) as mock_open:
         with pytest.raises(RuntimeError, match="反爬验证页"):
             channel.read("https://example.com/protected")
 

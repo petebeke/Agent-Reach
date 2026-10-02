@@ -91,9 +91,7 @@ class TwitterChannel(Channel):
             return None
 
         child_env = twitter_cli_child_env(config)
-        auth_token = os.environ.get("TWITTER_AUTH_TOKEN") or child_env.get(
-            "TWITTER_AUTH_TOKEN"
-        )
+        auth_token = os.environ.get("TWITTER_AUTH_TOKEN") or child_env.get("TWITTER_AUTH_TOKEN")
         ct0 = os.environ.get("TWITTER_CT0") or child_env.get("TWITTER_CT0")
         if auth_token and ct0:
             return "warn", (
@@ -136,7 +134,6 @@ class TwitterChannel(Channel):
                     "浏览器 Cookie 回退，不执行 `check`，未实时验证。",
                 )
             return "warn", (
-                f"{cmd} 已安装但未检测到显式 AUTH_TOKEN/CT0；"
-                "仅使用 Cookie-Editor 手动导出的凭据。"
+                f"{cmd} 已安装但未检测到显式 AUTH_TOKEN/CT0；仅使用 Cookie-Editor 手动导出的凭据。"
             )
         return None

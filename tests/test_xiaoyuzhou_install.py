@@ -19,16 +19,15 @@ class _DummyConfig:
         return None
 
 
-def test_install_xiaoyuzhou_deps_does_not_raise_when_no_groq_key(
-    monkeypatch, tmp_path, capsys
-):
+def test_install_xiaoyuzhou_deps_does_not_raise_when_no_groq_key(monkeypatch, tmp_path, capsys):
     monkeypatch.setattr(
         cli.os.path,
         "expanduser",
         lambda value: value.replace("~", str(tmp_path)),
     )
-    with patch("agent_reach.config.Config", return_value=_DummyConfig()), patch(
-        "shutil.which", return_value=None
+    with (
+        patch("agent_reach.config.Config", return_value=_DummyConfig()),
+        patch("shutil.which", return_value=None),
     ):
         cli._install_xiaoyuzhou_deps()
 
@@ -37,9 +36,7 @@ def test_install_xiaoyuzhou_deps_does_not_raise_when_no_groq_key(
     assert "Groq API key not set" in out
 
 
-def test_install_xiaoyuzhou_deps_replaces_stale_managed_script(
-    monkeypatch, tmp_path, capsys
-):
+def test_install_xiaoyuzhou_deps_replaces_stale_managed_script(monkeypatch, tmp_path, capsys):
     import stat
 
     installed = tmp_path / ".agent-reach" / "tools" / "xiaoyuzhou" / "transcribe.sh"
@@ -56,9 +53,7 @@ def test_install_xiaoyuzhou_deps_replaces_stale_managed_script(
 
     cli._install_xiaoyuzhou_deps()
 
-    assert installed.read_text(encoding="utf-8") == TRANSCRIBE_SCRIPT.read_text(
-        encoding="utf-8"
-    )
+    assert installed.read_text(encoding="utf-8") == TRANSCRIBE_SCRIPT.read_text(encoding="utf-8")
     if os.name != "nt":
         assert installed.stat().st_mode & stat.S_IXUSR
     assert "script updated" in capsys.readouterr().out
@@ -98,9 +93,7 @@ def _append_bash_function(path: Path, name: str, script: str) -> None:
         handle.write(f"{name}() {{\n{body}\n}}\n")
 
 
-def _script_env(
-    tmp_path: Path, curl_script: str
-) -> tuple[dict[str, str], Path, Path, Path]:
+def _script_env(tmp_path: Path, curl_script: str) -> tuple[dict[str, str], Path, Path, Path]:
     curl_log = tmp_path / "curl.log"
     temp_root = tmp_path / "tmp"
     temp_root.mkdir()
@@ -108,12 +101,14 @@ def _script_env(
     _append_bash_function(bash_env, "curl", curl_script)
 
     env = os.environ.copy()
-    env.update({
-        "BASH_ENV": _bash_path(bash_env),
-        "CURL_LOG": _bash_path(curl_log),
-        "GROQ_API_KEY": "test-key",
-        "TMPDIR": _bash_path(temp_root),
-    })
+    env.update(
+        {
+            "BASH_ENV": _bash_path(bash_env),
+            "CURL_LOG": _bash_path(curl_log),
+            "GROQ_API_KEY": "test-key",
+            "TMPDIR": _bash_path(temp_root),
+        }
+    )
     return env, curl_log, temp_root, bash_env
 
 
@@ -130,9 +125,7 @@ def _assert_work_dir_cleaned(temp_root: Path) -> None:
         "https://evil.example/episode/123?next=xiaoyuzhoufm.com",
     ],
 )
-def test_transcribe_script_rejects_non_xiaoyuzhou_urls_before_curl(
-    tmp_path, url, bash_executable
-):
+def test_transcribe_script_rejects_non_xiaoyuzhou_urls_before_curl(tmp_path, url, bash_executable):
     env, curl_log, temp_root, _ = _script_env(
         tmp_path,
         "#!/bin/sh\nprintf 'called\\n' >> \"$CURL_LOG\"\nexit 42\n",
@@ -165,12 +158,10 @@ def test_transcribe_script_rejects_non_xiaoyuzhou_urls_before_curl(
         "https://www.xiaoyuzhoufm.com/episode/123",
     ],
 )
-def test_transcribe_script_accepts_http_xiaoyuzhou_hosts(
-    tmp_path, url, bash_executable
-):
+def test_transcribe_script_accepts_http_xiaoyuzhou_hosts(tmp_path, url, bash_executable):
     env, curl_log, temp_root, _ = _script_env(
         tmp_path,
-        "#!/bin/sh\nprintf '%s\\n' \"$*\" >> \"$CURL_LOG\"\nexit 42\n",
+        '#!/bin/sh\nprintf \'%s\\n\' "$*" >> "$CURL_LOG"\nexit 42\n',
     )
 
     result = subprocess.run(

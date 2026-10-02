@@ -21,9 +21,7 @@ def _write_config(path, servers, *, imports=()):
     )
 
 
-def test_home_and_project_layers_are_merged(
-    monkeypatch, tmp_path, isolated_home
-):
+def test_home_and_project_layers_are_merged(monkeypatch, tmp_path, isolated_home):
     monkeypatch.chdir(tmp_path)
     _write_config(
         isolated_home / ".mcporter" / "mcporter.json",
@@ -51,9 +49,7 @@ def test_home_and_project_layers_are_merged(
     assert inspection.imports_unchecked is False
 
 
-def test_explicit_config_is_the_only_layer(
-    monkeypatch, tmp_path, isolated_home
-):
+def test_explicit_config_is_the_only_layer(monkeypatch, tmp_path, isolated_home):
     monkeypatch.chdir(tmp_path)
     _write_config(
         isolated_home / ".mcporter" / "mcporter.json",
@@ -128,9 +124,7 @@ def test_invalid_json_fails_closed(monkeypatch, tmp_path):
         inspect_mcporter_config()
 
 
-def test_omitted_imports_are_reported_but_not_expanded(
-    monkeypatch, tmp_path
-):
+def test_omitted_imports_are_reported_but_not_expanded(monkeypatch, tmp_path):
     monkeypatch.chdir(tmp_path)
     config_path = tmp_path / "config" / "mcporter.json"
     config_path.parent.mkdir()

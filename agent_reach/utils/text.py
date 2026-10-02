@@ -5,12 +5,8 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-_URL_CREDENTIALS_RE = re.compile(
-    r"([A-Za-z][A-Za-z0-9+.\-]{0,19}://)[^/\s@]+@"
-)
-_BARE_USERINFO_RE = re.compile(
-    r"(?<![A-Za-z0-9._%+\-])[^:/\s@]+:[^/\s@]+@(?=[A-Za-z0-9.\-\[])"
-)
+_URL_CREDENTIALS_RE = re.compile(r"([A-Za-z][A-Za-z0-9+.\-]{0,19}://)[^/\s@]+@")
+_BARE_USERINFO_RE = re.compile(r"(?<![A-Za-z0-9._%+\-])[^:/\s@]+:[^/\s@]+@(?=[A-Za-z0-9.\-\[])")
 _URL_QUERY_SECRET_RE = re.compile(
     r"([?&#](?:"
     r"access[_-]?token|auth[_-]?token|token|bearer|"

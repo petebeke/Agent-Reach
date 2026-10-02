@@ -16,8 +16,9 @@ from agent_reach.config import Config
 
 
 class _StubChannel:
-    def __init__(self, name, description, tier, status, message, backends=None,
-                 active_backend=None):
+    def __init__(
+        self, name, description, tier, status, message, backends=None, active_backend=None
+    ):
         self.name = name
         self.description = description
         self.tier = tier
@@ -41,8 +42,9 @@ class TestDoctor:
             doctor,
             "get_all_channels",
             lambda: [
-                _StubChannel("web", "网页", 0, "ok", "可抓取网页", ["requests"],
-                             active_backend="requests"),
+                _StubChannel(
+                    "web", "网页", 0, "ok", "可抓取网页", ["requests"], active_backend="requests"
+                ),
                 _StubChannel("github", "GitHub", 0, "warn", "gh 未安装", ["gh"]),
                 _StubChannel("exa_search", "全网语义搜索", 1, "off", "mcporter 未配置", ["Exa"]),
             ],
@@ -106,6 +108,7 @@ class TestDoctor:
 
         # Strip Rich markup tags for assertion (PR #170 added [bold], [yellow] etc.)
         import re
+
         plain = re.sub(r"\[[^\]]*\]", "", report)
         assert "Agent Reach" in plain
         assert "装好即用：" in plain
@@ -146,8 +149,7 @@ def test_channel_exception_credentials_are_scrubbed(monkeypatch):
 
         def check(self, config=None):
             raise RuntimeError(
-                "request https://alice:password@example.test/data"
-                "?access_token=top-secret failed"
+                "request https://alice:password@example.test/data?access_token=top-secret failed"
             )
 
     monkeypatch.setattr(doctor, "get_all_channels", lambda: [_ExplodingChannel()])
@@ -167,10 +169,7 @@ def test_channel_success_message_credentials_are_scrubbed(monkeypatch):
         "已配置渠道",
         0,
         "warn",
-        (
-            "upstream returned https://alice:password@example.test/data"
-            "?api_key=top-secret"
-        ),
+        ("upstream returned https://alice:password@example.test/data?api_key=top-secret"),
         ["upstream"],
     )
     monkeypatch.setattr(doctor, "get_all_channels", lambda: [channel])
@@ -288,20 +287,14 @@ def test_real_doctor_path_is_zero_write_and_never_runs_risky_status_commands(
     monkeypatch.setattr(subprocess, "run", fake_run)
     monkeypatch.setattr(opencli, "_fetch_daemon_status", lambda timeout=2: None)
     monkeypatch.setattr(opencli, "_extension_installed_on_disk", lambda: False)
-    monkeypatch.setattr(
-        opencli, "_unpacked_extension_files_present", lambda: False
-    )
+    monkeypatch.setattr(opencli, "_unpacked_extension_files_present", lambda: False)
     monkeypatch.setattr(bilibili, "_search_api_ok", lambda: False)
-    monkeypatch.setattr(
-        xiaohongshu, "_mcp_service_reachable", lambda timeout=3: False
-    )
+    monkeypatch.setattr(xiaohongshu, "_mcp_service_reachable", lambda timeout=3: False)
     monkeypatch.setattr(v2ex, "_get_json", lambda _url: [])
     monkeypatch.setattr(
         xueqiu,
         "_get_json",
-        lambda _url, _config=None: {
-            "data": {"quote": {"symbol": "SH601138"}}
-        },
+        lambda _url, _config=None: {"data": {"quote": {"symbol": "SH601138"}}},
     )
 
     before = _snapshot_user_roots()

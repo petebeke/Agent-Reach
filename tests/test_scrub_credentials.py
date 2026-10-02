@@ -32,17 +32,11 @@ def test_scrubs_userinfo_and_sensitive_query_values():
 
 
 def test_scrubs_multiple_schemes_and_fragment_tokens():
-    raw = (
-        "socks5://token@host:1080 "
-        "https://example.test/#auth_token=fragment-secret"
-    )
+    raw = "socks5://token@host:1080 https://example.test/#auth_token=fragment-secret"
 
     scrubbed = scrub_url_credentials(ValueError(raw))
 
-    assert scrubbed == (
-        "socks5://***@host:1080 "
-        "https://example.test/#auth_token=***"
-    )
+    assert scrubbed == ("socks5://***@host:1080 https://example.test/#auth_token=***")
 
 
 def test_scrubs_bare_user_password_host_diagnostics():
@@ -81,8 +75,7 @@ def test_channel_health_messages_scrub_url_secrets(module, channel, monkeypatch)
 def test_browser_backend_errors_scrub_url_secrets(monkeypatch):
     def chrome(_domains):
         raise RuntimeError(
-            "failed via http://user:pass@proxy.test "
-            "https://api.test/?token=top-secret"
+            "failed via http://user:pass@proxy.test https://api.test/?token=top-secret"
         )
 
     fake_rookiepy = SimpleNamespace(
