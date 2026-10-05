@@ -1,7 +1,7 @@
 # SPEC-PRJ-001-land-ci-lint-gate — Push the already-built CI lint/type gate to GitHub and observe one real red PR check
 
 **Source:** PLAN/HANDOFF-2026-10-02-ci-lint-typecheck-gate.md + PROJECT-LEDGER.md PRJ-001 (originally adopted from PLAN/specs/SPEC-ci-lint-typecheck-gate.md on 2026-10-02)
-**Status:** READY -- accepted by founder on the Completion Status page, 2026-10-03
+**Status:** ADOPTED — became PRJ-002 on 2026-10-05
 
 ## Goal
 A PR opened against the real GitHub repo (github.com/Panniantong/Agent-Reach) that fails `ruff check`,
@@ -81,7 +81,13 @@ behavior per the goal, not a defect, but the founder should know a new check wil
   already happened by some other path. No founder ruling is needed on *whether* to do this — the fix is
   already built, tested, and clean; this is a mechanical permissions gate, not a judgment call.
   **BLOCKED ON YOU:** only you (or a session you explicitly authorize with push access) can run
-  `git push origin main` from a terminal that has it.
+  `git push origin main` from a terminal that has it. **Resolved:** this is an execution gate with no
+  decision pending, not a judgment call — it clears via Build order step 1, whose own gate is `git show
+  origin/main:.github/workflows/pytest.yml | grep -n "ruff check\|ruff format --check\|mypy agent_reach"`
+  exiting 0. No `OPEN-DECISIONS.md` entry exists or is needed for this — there is nothing to rule on,
+  only Item 1 below to execute; once this spec is adopted, Item 1 becomes the ledger row
+  (`PROJECT-LEDGER.md`, next ID `OI-0013` per the ledger's own counter) and marking that row done is the
+  literal clearing action.
 - **BLOCKER:** even after push, the goal's literal claim — "a PR that fails ... shows a red CI check" —
   has never actually been observed in GitHub's real Checks UI (no `act`/local runner exists in this
   environment, confirmed in the original spec's own Blockers section). Local command-line passes, which
@@ -90,7 +96,11 @@ behavior per the goal, not a defect, but the founder should know a new check wil
   `types-requests==2.32.4.20260107`, `types-PyYAML==6.0.12.20250915` from `constraints.txt:15-18`), are
   necessary but not sufficient proof of the actual goal. **Resolved via Build order step 2 below** — a
   one-off throwaway PR with a deliberate violation is the only way to observe this, and it also requires
-  push access.
+  push access. **Resolved:** this likewise clears via Build order step 2, whose own gate is the
+  throwaway PR's `lint` check showing red in GitHub's Checks tab, then green after reverting the
+  violation. Same as above: no `OPEN-DECISIONS.md` entry is needed since nothing is ambiguous, only an
+  action only you can take; once adopted, this becomes Item 2's ledger row (`OI-0014` following the
+  ledger's counter) and marking that row done clears the blocker.
 
 ## Questions
 None beyond the push-access blocker above, which is a permissions fact, not an ambiguity — there is
