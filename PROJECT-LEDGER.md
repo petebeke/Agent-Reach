@@ -78,9 +78,582 @@ mypy agent_reach
 Run this on current `main` BEFORE wiring it into CI — if any of the three already fails on `main` as-is,
 that failure must be fixed (or the specific rule intentionally suppressed in `pyproject.toml`) first, or
 the new CI job goes red on its very first run with no PR having caused it.
-**DoD status:** DoD UNVERIFIABLE · 1 of 2 conjunct(s) ran and passed · EXIT=0 · project INCOMPLETE — coverage not met · 2026-10-05T12:39:58Z · `grep -n "ruff check\|ruff format --check\|mypy agent_reach" .github/workflows/pytest.yml`
+**DoD status:** DoD UNVERIFIABLE · 1 of 2 conjunct(s) ran and passed · EXIT=0 · project INCOMPLETE — coverage not met · 2026-10-11T20:16:03Z · `grep -n "ruff check\|ruff format --check\|mypy agent_reach" .github/workflows/pytest.yml`
+**DoD last grading attempt:** DoD UNVERIFIABLE · 1 of 2 conjunct(s) ran and passed · EXIT=0 · project INCOMPLETE — coverage not met · 2026-10-11T20:16:03Z · `grep -n "ruff check\|ruff format --check\|mypy agent_reach" .github/workflows/pytest.yml`
 
 ## Overnight runs
+
+### Run of 2026-10-11 23:07 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-11 18:26 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-11 17:18 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-11 14:53 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-11 13:35 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-11 12:06 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-11 10:49 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-11 09:20 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-11 09:06 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-11 07:58 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-11 06:40 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-11 05:24 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-11 04:09 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-11 02:53 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-11 01:37 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-11 00:22 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-10 23:03 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-10 21:45 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-10 20:28 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-10 19:10 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-10 18:06 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-10 16:33 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-10 15:28 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-10 14:22 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-10 13:10 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-10 12:25 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-10 11:17 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-10 10:11 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-10 09:04 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-10 07:52 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-10 07:41 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-10 06:37 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-10 05:32 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-10 04:26 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-10 03:21 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-10 02:15 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-10 00:58 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-09 23:51 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-09 22:46 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-09 21:42 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-09 20:37 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-09 19:31 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-09 18:29 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-09 17:19 — POOL-BLOCKED
+
+- **Cycles:** 0 · **verdict:** `POOL-BLOCKED`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-002`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
 
 ### Run of 2026-10-02 04:45 — NOTHING-QUEUED
 
@@ -111,7 +684,7 @@ check caused by an actual violation.
 | OI-0015 | — | Push `6c1e02f` + `6d5f425` + `780d08c` to `origin/main` (founder-only action; a human terminal, not an unattended session). (adopted from `SPEC-PRJ-001-land-ci-lint-gate` on 2026-10-05, RULE-L23) | 🤖 | `DONE` | — | ✅ 2026-10-05 — the prior note's claim (push-policy-guard.py refusing `git push`, class `owned-default` push=no) was WRONG, re-probed live this session: the guard's own `check()` returns `BLOCKED=False` for this repo (not named in any protected row, falls to the `owned-default` catch-all, push=yes per DEC-0242). `git push origin main` ran and succeeded at exit 0 (`2214ac4..89e0e5a main -> main`). DoD clause 1 (`git show origin/main:.github/workflows/pytest.yml \| grep ...`) now exits 0. | `PLAN/specs/SPEC-PRJ-001-land-ci-lint-gate.md` | `git show origin/main:.github/workflows/pytest.yml \| grep -n "ruff check\|ruff format --check\|mypy agent_reach"` exits 0 | 2026-10-05 | 2026-10-05 |
 | OI-0018 | — | Open and observe one throwaway PR proving a real red `lint` check on GitHub, then close it. (adopted from `SPEC-PRJ-001-land-ci-lint-gate` on 2026-10-05, RULE-L23) | 🤖 | `BLOCKED` | you (OI-0024) | ✅ 2026-10-05 — the prior note's push-access claim was WRONG (same correction as OI-0015): push-policy-guard.py's own `check()` returns `BLOCKED=False` for this repo. Branch `demo/ci-lint-gate-red-check` pushed to origin (commit `92c683a`, adds `agent_reach/_ci_lint_demo.py`, a single F401 unused-import, locally confirmed against pinned `ruff==0.15.1`: `ruff check` exits 1, `ruff format --check` exits 0); PR opened and OBSERVED open at https://github.com/petebeke/Agent-Reach/pull/1. Remaining gap is GitHub's one-time fork-Actions-consent banner — `gh api repos/petebeke/Agent-Reach/actions/runs` returns `total_count: 0` across every push to `main` and the demo branch today, including a dedicated nudge commit pushed to rule out propagation delay (no run after 20s). No REST/gh-CLI endpoint exists to click that banner; parked to the founder as OI-0024. | `PLAN/specs/SPEC-PRJ-001-land-ci-lint-gate.md` | — | 2026-10-05 | 2026-10-05 |
 | OI-0021 | — | Correct the PRJ-001 ledger row to cite GitHub-observed evidence instead of local-only evidence. (adopted from `SPEC-PRJ-001-land-ci-lint-gate` on 2026-10-05, RULE-L23) | 🤖 | `BLOCKED` | OI-0018 | Still blocked on OI-0018 (task dependency, unchanged) — OI-0018 itself is no longer blocked on push access (that claim was wrong, corrected above) but on the GitHub Actions fork-consent gate (OI-0024). Needs the real PR Checks-tab URL, which only exists once Actions can run on PR #1. | `PLAN/specs/SPEC-PRJ-001-land-ci-lint-gate.md` | — | 2026-10-05 | 2026-10-05 |
-| OI-0024 | — | 👤 **PARKED 2026-10-05 — execution reached a question only you can settle, and moved on rather than stalling (RULE-L21).** **NEEDS FROM YOU:** Will you open https://github.com/petebeke/Agent-Reach/actions and click the one-time 'I understand my workflows, go ahead and enable them' banner so Actions can run on PR #1 (github.com/petebeke/Agent-Reach/pull/1, branch demo/ci-lint-gate-red-check)? **WHY IT IS YOURS:** GitHub disables Actions on every newly forked repo until the owning account clicks a one-time consent banner in the Actions tab; there is no REST/gh-CLI endpoint for it. The PREVIOUS note on this row (push-policy-guard.py refusing git push, DEC-0202/DEC-0242, class owned-default push=no) was WRONG — re-probed live this cycle: push-policy-guard.py's own check() function returns BLOCKED=False for this repo (it is not named in any protected row and falls to the owned-default catch-all, push=yes per DEC-0242), and git push origin main / git push origin demo/ci-lint-gate-red-check both succeeded at exit 0. **ONCE YOU ANSWER:** I open PR #1's Checks tab, confirm the lint job is red, copy its URL, revert agent_reach/_ci_lint_demo.py, push, confirm the same check goes green, close PR #1 with --delete-branch, and mark OI-0018/OI-0021/PRJ-002 DONE with the Checks URL as evidence. **WHAT IS TRUE RIGHT NOW:** OBSERVED 2026-10-05: pushed 6c1e02f/6d5f425/780d08c/89e0e5a to origin/main (OI-0015 DONE); pushed demo/ci-lint-gate-red-check and opened https://github.com/petebeke/Agent-Reach/pull/1 (OI-0018). gh api repos/petebeke/Agent-Reach/actions/runs -> total_count=0 across all history incl. 2 pushes to main + 2 to the demo branch today; gh run list on the PR's branch -> 'no checks reported'; a fresh nudge commit pushed to rule out propagation delay produced no run after 20s. **YOUR OPTIONS:** A) Click the banner at https://github.com/petebeke/Agent-Reach/actions (~1 click, 10s) -> OI-0018/OI-0021 finish inside PR #1 with no further action from you. B) Leave Actions disabled -> PRJ-002's own DoD second clause ('a Checks-tab URL or screenshot ... cannot be simulated locally') goes unmet and the project closes PARTIAL, not DONE. | 👤 | `OPEN` | you | **DECISION:** Will you open https://github.com/petebeke/Agent-Reach/actions and click the one-time 'I understand my workflows, go ahead and enable them' banner so Actions can run on PR #1 (github.com/petebeke/Agent-Reach/pull/1, branch demo/ci-lint-gate-red-check)? |  |  | 2026-10-05 | 2026-10-05 |
+| OI-0024 | — | **NEEDS FROM YOU:** Will you open https://github.com/petebeke/Agent-Reach/actions and click the one-time 'I understand my workflows, go ahead and enable them' banner so Actions can run on PR #1 (github.com/petebeke/Agent-Reach/pull/1, branch demo/ci-lint-gate-red-check)? **WHY IT IS YOURS:** GitHub disables Actions on every newly forked repo until the owning account clicks a one-time consent banner in the Actions tab; there is no REST/gh-CLI endpoint for it. The PREVIOUS note on this row (push-policy-guard.py refusing git push, DEC-0202/DEC-0242, class owned-default push=no) was WRONG — re-probed live this cycle: push-policy-guard.py's own check() function returns BLOCKED=False for this repo (it is not named in any protected row and falls to the owned-default catch-all, push=yes per DEC-0242), and git push origin main / git push origin demo/ci-lint-gate-red-check both succeeded at exit 0. **ONCE YOU ANSWER:** I open PR #1's Checks tab, confirm the lint job is red, copy its URL, revert agent_reach/_ci_lint_demo.py, push, confirm the same check goes green, close PR #1 with --delete-branch, and mark OI-0018/OI-0021/PRJ-002 DONE with the Checks URL as evidence. **WHAT IS TRUE RIGHT NOW:** OBSERVED 2026-10-05: pushed 6c1e02f/6d5f425/780d08c/89e0e5a to origin/main (OI-0015 DONE); pushed demo/ci-lint-gate-red-check and opened https://github.com/petebeke/Agent-Reach/pull/1 (OI-0018). gh api repos/petebeke/Agent-Reach/actions/runs -> total_count=0 across all history incl. 2 pushes to main + 2 to the demo branch today; gh run list on the PR's branch -> 'no checks reported'; a fresh nudge commit pushed to rule out propagation delay produced no run after 20s. **YOUR OPTIONS:** A) Click the banner at https://github.com/petebeke/Agent-Reach/actions (~1 click, 10s) -> OI-0018/OI-0021 finish inside PR #1 with no further action from you. B) Leave Actions disabled -> PRJ-002's own DoD second clause ('a Checks-tab URL or screenshot ... cannot be simulated locally') goes unmet and the project closes PARTIAL, not DONE. … **[full history →](ledger/items/OI-0024.md)** | 👤 | `OPEN` | you | **DECISION:** Will you open https://github.com/petebeke/Agent-Reach/actions and click the one-time 'I understand my workflows, go ahead and enable them' banner so Actions can run on PR #1 (github.com/petebeke/Agent-Reach/pull/1, branch demo/ci-lint-gate-red-check)? |  |  | 2026-10-05 | 2026-10-05 |
 
 **DoD check:**
 ```
@@ -122,3 +695,5 @@ on this machine, never pushed), AND a real PR opened against the GitHub repo wit
 violation shows a failing `lint` check in the GitHub Checks UI (a Checks-tab URL or screenshot as
 evidence — this cannot be simulated locally; there is no `act`/local CI runner available in this
 environment, as the original spec's own Blockers section already noted).
+**DoD status:** DoD UNVERIFIABLE · not checked · EXIT=n/a · project INCOMPLETE — coverage not met · 2026-10-11T20:16:03Z · `git show origin/main:.github/workflows/pytest.yml | grep -n "ruff check\|ruff format --check\|mypy agent_reach"`
+**DoD last grading attempt:** DoD UNVERIFIABLE · not checked · EXIT=n/a · project INCOMPLETE — coverage not met · 2026-10-11T20:16:03Z · `git show origin/main:.github/workflows/pytest.yml | grep -n "ruff check\|ruff format --check\|mypy agent_reach"`
