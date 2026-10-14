@@ -78,10 +78,88 @@ mypy agent_reach
 Run this on current `main` BEFORE wiring it into CI — if any of the three already fails on `main` as-is,
 that failure must be fixed (or the specific rule intentionally suppressed in `pyproject.toml`) first, or
 the new CI job goes red on its very first run with no PR having caused it.
-**DoD status:** DoD UNVERIFIABLE · 1 of 2 conjunct(s) ran and passed · EXIT=0 · project INCOMPLETE — coverage not met · 2026-10-12T21:09:05Z · `grep -n "ruff check\|ruff format --check\|mypy agent_reach" .github/workflows/pytest.yml`
-**DoD last grading attempt:** DoD UNVERIFIABLE · 1 of 2 conjunct(s) ran and passed · EXIT=0 · project INCOMPLETE — coverage not met · 2026-10-12T21:09:05Z · `grep -n "ruff check\|ruff format --check\|mypy agent_reach" .github/workflows/pytest.yml`
+**DoD status:** DoD UNVERIFIABLE · 1 of 2 conjunct(s) ran and passed · EXIT=0 · project INCOMPLETE — coverage not met · 2026-10-14T14:50:47Z · `grep -n "ruff check\|ruff format --check\|mypy agent_reach" .github/workflows/pytest.yml`
+**DoD last grading attempt:** DoD UNVERIFIABLE · 1 of 2 conjunct(s) ran and passed · EXIT=0 · project INCOMPLETE — coverage not met · 2026-10-14T14:50:47Z · `grep -n "ruff check\|ruff format --check\|mypy agent_reach" .github/workflows/pytest.yml`
 
 ## Overnight runs
+
+### Run of 2026-10-14 07:51 — NOTHING-LIVE
+
+- **Cycles:** 0 · **verdict:** `NOTHING-LIVE`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-001`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-13 13:45 — NOTHING-LIVE
+
+- **Cycles:** 0 · **verdict:** `NOTHING-LIVE`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-001`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-13 05:28 — NOTHING-LIVE
+
+- **Cycles:** 0 · **verdict:** `NOTHING-LIVE`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-001`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-13 05:06 — NOTHING-LIVE
+
+- **Cycles:** 0 · **verdict:** `NOTHING-LIVE`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-001`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-13 00:38 — NOTHING-LIVE
+
+- **Cycles:** 0 · **verdict:** `NOTHING-LIVE`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-001`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-12 22:33 — NOTHING-LIVE
+
+- **Cycles:** 0 · **verdict:** `NOTHING-LIVE`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-001`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
 
 ### Run of 2026-10-12 07:37 — NOTHING-LIVE
 
@@ -151,5 +229,5 @@ on this machine, never pushed), AND a real PR opened against the GitHub repo wit
 violation shows a failing `lint` check in the GitHub Checks UI (a Checks-tab URL or screenshot as
 evidence — this cannot be simulated locally; there is no `act`/local CI runner available in this
 environment, as the original spec's own Blockers section already noted).
-**DoD status:** DoD UNVERIFIABLE · not checked · EXIT=n/a · project INCOMPLETE — coverage not met · 2026-10-12T21:09:05Z · `git show origin/main:.github/workflows/pytest.yml | grep -n "ruff check\|ruff format --check\|mypy agent_reach"`
-**DoD last grading attempt:** DoD UNVERIFIABLE · not checked · EXIT=n/a · project INCOMPLETE — coverage not met · 2026-10-12T21:09:05Z · `git show origin/main:.github/workflows/pytest.yml | grep -n "ruff check\|ruff format --check\|mypy agent_reach"`
+**DoD status:** DoD UNVERIFIABLE · not checked · EXIT=n/a · project INCOMPLETE — coverage not met · 2026-10-14T14:50:47Z · `git show origin/main:.github/workflows/pytest.yml | grep -n "ruff check\|ruff format --check\|mypy agent_reach"`
+**DoD last grading attempt:** DoD UNVERIFIABLE · not checked · EXIT=n/a · project INCOMPLETE — coverage not met · 2026-10-14T14:50:47Z · `git show origin/main:.github/workflows/pytest.yml | grep -n "ruff check\|ruff format --check\|mypy agent_reach"`
