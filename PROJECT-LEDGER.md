@@ -83,6 +83,19 @@ the new CI job goes red on its very first run with no PR having caused it.
 
 ## Overnight runs
 
+### Run of 2026-10-15 16:19 — NOTHING-LIVE
+
+- **Cycles:** 0 · **verdict:** `NOTHING-LIVE`
+- **Order now:** `PRJ-002`=BLOCKED
+- **Still buildable:** `PRJ-001`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
 ### Run of 2026-10-14 07:51 — NOTHING-LIVE
 
 - **Cycles:** 0 · **verdict:** `NOTHING-LIVE`
