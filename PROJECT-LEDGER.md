@@ -78,8 +78,8 @@ mypy agent_reach
 Run this on current `main` BEFORE wiring it into CI — if any of the three already fails on `main` as-is,
 that failure must be fixed (or the specific rule intentionally suppressed in `pyproject.toml`) first, or
 the new CI job goes red on its very first run with no PR having caused it.
-**DoD status:** DoD UNVERIFIABLE · 1 of 2 conjunct(s) ran and passed · EXIT=0 · project INCOMPLETE — coverage not met · 2026-10-17T07:08:58Z · `grep -n "ruff check\|ruff format --check\|mypy agent_reach" .github/workflows/pytest.yml`
-**DoD last grading attempt:** DoD UNVERIFIABLE · 1 of 2 conjunct(s) ran and passed · EXIT=0 · project INCOMPLETE — coverage not met · 2026-10-17T07:08:58Z · `grep -n "ruff check\|ruff format --check\|mypy agent_reach" .github/workflows/pytest.yml`
+**DoD status:** DoD UNVERIFIABLE · 1 of 2 conjunct(s) ran and passed · EXIT=0 · project INCOMPLETE — coverage not met · 2026-10-17T10:12:13Z · `grep -n "ruff check\|ruff format --check\|mypy agent_reach" .github/workflows/pytest.yml`
+**DoD last grading attempt:** DoD UNVERIFIABLE · 1 of 2 conjunct(s) ran and passed · EXIT=0 · project INCOMPLETE — coverage not met · 2026-10-17T10:12:13Z · `grep -n "ruff check\|ruff format --check\|mypy agent_reach" .github/workflows/pytest.yml`
 
 ## Overnight runs
 
@@ -242,5 +242,5 @@ on this machine, never pushed), AND a real PR opened against the GitHub repo wit
 violation shows a failing `lint` check in the GitHub Checks UI (a Checks-tab URL or screenshot as
 evidence — this cannot be simulated locally; there is no `act`/local CI runner available in this
 environment, as the original spec's own Blockers section already noted).
-**DoD status:** DoD UNVERIFIABLE · not checked · EXIT=n/a · project INCOMPLETE — coverage not met · 2026-10-17T07:08:58Z · `git show origin/main:.github/workflows/pytest.yml | grep -n "ruff check\|ruff format --check\|mypy agent_reach"`
-**DoD last grading attempt:** DoD UNVERIFIABLE · not checked · EXIT=n/a · project INCOMPLETE — coverage not met · 2026-10-17T07:08:58Z · `git show origin/main:.github/workflows/pytest.yml | grep -n "ruff check\|ruff format --check\|mypy agent_reach"`
+**DoD status:** DoD UNVERIFIABLE · not checked · EXIT=n/a · project INCOMPLETE — coverage not met · 2026-10-17T10:12:13Z · `git show origin/main:.github/workflows/pytest.yml | grep -n "ruff check\|ruff format --check\|mypy agent_reach"`
+**DoD last grading attempt:** DoD UNVERIFIABLE · not checked · EXIT=n/a · project INCOMPLETE — coverage not met · 2026-10-17T10:12:13Z · `git show origin/main:.github/workflows/pytest.yml | grep -n "ruff check\|ruff format --check\|mypy agent_reach"`
