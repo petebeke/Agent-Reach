@@ -36,7 +36,7 @@
 | Seq | Item | Status | Note |
 |---|---|---|---|
 | 1 | `PRJ-002` | BLOCKED | · 🔴 STUCK — was BLOCKED and is none of the four outcomes: not complete, no question raised, no existing prerequisite named. Needs a read to finish it, ask him, or name its blocker. Evidence is in this row's own note below. adopted from `SPEC-PRJ-001-land-ci-lint-gate` on 2026-10-05 — he ticked Adopt on the page, which is the approval for this item; queued by `adopt-specs.py` directly into the live order (PRJ-040 T-03) ⏸ 🔵 blocked on another item — automated diagnosis is suspended by its own cost ceiling — diagnoser hit the 104s bound (rc=124) — no judgement was reached. Nothing is needed from you: the hourly window refills and this row releases itself. ⏸ 🔓 founder action pending — already ruled, waiting on his hands — DEC-0202 (ruled 2026-08-11, reaffirmed DEC-0242): push-policy-guard.py refused `git push origin main` live this session — Agent-Reach is class 'owned-default' in ~/.claude/state/repo-intake-policy.tsv, push=no, no override token by design. All 3 residual rows (OI-0015, OI-0018, OI-0021) need push/PR access; everything buildable without it is built: 3 commits clean fast-forward ready, a throwaway demo branch (demo/ci-lint-gate-red-check, commit f1c60f0) with a locally-confirmed F401 violation is staged, and PLAN/HANDOFF-2026-10-05-ci-lint-gate-push-and-throwaway-pr.md has the exact remaining commands. (DEC-0202 answered — run: `git push origin main`) ⏸ 👤 NEEDS FROM YOU — 🔴 BLOCKED ON YOU — GitHub disables Actions on every newly forked repo until the owning account clicks a one-time consent banner in the Actions tab; there is no REST/gh-CLI endpoint for it. The PREVIOUS note on this row (push-policy-guard.py refusing git push, DEC-0202/DEC-0242, class owned-default push=no) was WRONG — re-probed live this cycle: push-policy-guard.py's own check() function returns BLOCKED=False for this repo (it is not named in any protected row and falls to the owned-default catch-all, push=yes per DEC-0242), and git push origin main / git push origin demo/ci-lint-gate-red-check both succeeded at exit 0. |
-
+| 2 | `OI-0021` | QUEUED | queued by `order-triage.py` 2026-10-16 — 🤖, buildable, was in no build order |
 # PRJ-000 — Unfiled
 
 > The mandatory residual. Items land here when their project is genuinely unclear, **with the reason
@@ -78,8 +78,8 @@ mypy agent_reach
 Run this on current `main` BEFORE wiring it into CI — if any of the three already fails on `main` as-is,
 that failure must be fixed (or the specific rule intentionally suppressed in `pyproject.toml`) first, or
 the new CI job goes red on its very first run with no PR having caused it.
-**DoD status:** DoD UNVERIFIABLE · 1 of 2 conjunct(s) ran and passed · EXIT=0 · project INCOMPLETE — coverage not met · 2026-10-17T01:16:28Z · `grep -n "ruff check\|ruff format --check\|mypy agent_reach" .github/workflows/pytest.yml`
-**DoD last grading attempt:** DoD UNVERIFIABLE · 1 of 2 conjunct(s) ran and passed · EXIT=0 · project INCOMPLETE — coverage not met · 2026-10-17T01:16:28Z · `grep -n "ruff check\|ruff format --check\|mypy agent_reach" .github/workflows/pytest.yml`
+**DoD status:** DoD UNVERIFIABLE · 1 of 2 conjunct(s) ran and passed · EXIT=0 · project INCOMPLETE — coverage not met · 2026-10-17T04:11:09Z · `grep -n "ruff check\|ruff format --check\|mypy agent_reach" .github/workflows/pytest.yml`
+**DoD last grading attempt:** DoD UNVERIFIABLE · 1 of 2 conjunct(s) ran and passed · EXIT=0 · project INCOMPLETE — coverage not met · 2026-10-17T04:11:09Z · `grep -n "ruff check\|ruff format --check\|mypy agent_reach" .github/workflows/pytest.yml`
 
 ## Overnight runs
 
@@ -242,5 +242,5 @@ on this machine, never pushed), AND a real PR opened against the GitHub repo wit
 violation shows a failing `lint` check in the GitHub Checks UI (a Checks-tab URL or screenshot as
 evidence — this cannot be simulated locally; there is no `act`/local CI runner available in this
 environment, as the original spec's own Blockers section already noted).
-**DoD status:** DoD UNVERIFIABLE · not checked · EXIT=n/a · project INCOMPLETE — coverage not met · 2026-10-17T01:16:28Z · `git show origin/main:.github/workflows/pytest.yml | grep -n "ruff check\|ruff format --check\|mypy agent_reach"`
-**DoD last grading attempt:** DoD UNVERIFIABLE · not checked · EXIT=n/a · project INCOMPLETE — coverage not met · 2026-10-17T01:16:28Z · `git show origin/main:.github/workflows/pytest.yml | grep -n "ruff check\|ruff format --check\|mypy agent_reach"`
+**DoD status:** DoD UNVERIFIABLE · not checked · EXIT=n/a · project INCOMPLETE — coverage not met · 2026-10-17T04:11:09Z · `git show origin/main:.github/workflows/pytest.yml | grep -n "ruff check\|ruff format --check\|mypy agent_reach"`
+**DoD last grading attempt:** DoD UNVERIFIABLE · not checked · EXIT=n/a · project INCOMPLETE — coverage not met · 2026-10-17T04:11:09Z · `git show origin/main:.github/workflows/pytest.yml | grep -n "ruff check\|ruff format --check\|mypy agent_reach"`
