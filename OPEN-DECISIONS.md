@@ -3,7 +3,6 @@
 One block per 👤 row. Five fields, every one required — a decision brief with a missing field renders as `MISSING` on his page.
 
 None open. `DEC-0012` (the only one filed) was withdrawn 2026-10-02 — its underlying cause (`ruff format --check` failing on 54 files on `main`) was fixed in the same build cycle with `ruff format agent_reach tests`, so no ruling was needed. See `PROJECT-LEDGER.md` (`OI-0012`, `WITHDRAWN`) and `LEDGER-ARCHIVE.md` for evidence.
-
 ## DEC-0024 — Will you open https://github.com/petebeke/Agent-Reach/actions and click the one-time 'I understand my workflows, go ahead and…?
 
 <!-- park-key: gh-actions-fork-enable-agent-reach -->
@@ -13,6 +12,11 @@ None open. `DEC-0012` (the only one filed) was withdrawn 2026-10-02 — its unde
 **Your options:** A) Click the banner at https://github.com/petebeke/Agent-Reach/actions (~1 click, 10s) -> OI-0018/OI-0021 finish inside PR #1 with no further action from you. B) Leave Actions disabled -> PRJ-002's own DoD second clause ('a Checks-tab URL or screenshot ... cannot be simulated locally') goes unmet and the project closes PARTIAL, not DONE.
 **The moment you answer:** I open PR #1's Checks tab, confirm the lint job is red, copy its URL, revert agent_reach/_ci_lint_demo.py, push, confirm the same check goes green, close PR #1 with --delete-branch, and mark OI-0018/OI-0021/PRJ-002 DONE with the Checks URL as evidence.
 
+
+## Settled decisions (history)
+
+> Decisions whose work is complete. Kept for the record; nothing here is waiting on you.
+
 ## DEC-0027 — Which of them should go into the build order?
 
 <!-- park-key: overnight-run:Agent-Reach:ORDER-EXHAUSTED-WORK-REMAINS -->
@@ -21,3 +25,10 @@ None open. `DEC-0012` (the only one filed) was withdrawn 2026-10-02 — its unde
 **What is true right now:** The repo is NOT building. Its supervisor stands down immediately with verdict ORDER-EXHAUSTED-WORK-REMAINS, 0 cycles.
 **Your options:** No discrete options — your call in your own words.
 **The moment you answer:** The moment any of those rows is in the approved order, the repo builds it on the next tick and this question withdraws itself.
+
+**Withdrawn:** the condition this question was raised about no longer holds, so there is nothing left for you to decide.
+
+**The probe that established that:** probed: the repo has a live item its order can reach, and is building
+
+Withdrawn automatically by the loop that raised it (`park-question.py --withdraw`, key `overnight-run:Agent-Reach:ORDER-EXHAUSTED-WORK-REMAINS`). Row(s) restamped `WITHDRAWN`: `OI-0027`. The question and its five fields are kept above, unchanged, as the record.
+
