@@ -15,7 +15,7 @@
 |----|---------|--------|----|----|----|----|----|-----------|-------------|--------------|
 | PRJ-000 | Unfiled | STANDING | W0 | 0 | 0 | 0 | 0 | 0 | — | 2026-10-01 |
 | PRJ-001 | SPEC-ci-lint-typecheck-gate — Make CI actually run the check | DONE |  | 0 | 0 | 0 | 0 | 0 | — | 2026-10-02 |
-| PRJ-002 | SPEC-PRJ-001-land-ci-lint-gate — Push the already-built CI l | ACTIVE |  | 2 | 2 | 0 | 0 | 4 | 2026-10-05 | 2026-10-10 **Blocked by:** founder |
+| PRJ-002 | SPEC-PRJ-001-land-ci-lint-gate — Push the already-built CI l | ACTIVE |  | 1 | 2 | 0 | 0 | 3 | 2026-10-05 | 2026-10-19 **Blocked by:** founder |
 
 **Reconciliation:** Σ project open totals = 3 · non-terminal rows in typed tables = 3 ✅
 
