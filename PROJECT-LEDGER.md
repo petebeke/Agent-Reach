@@ -7,7 +7,7 @@
 **Page:** (set on first publish)
 **Installed:** 2026-10-01 (oil-install.py)
 **Last reconciled:** never — the first /wrap performs the first reconcile
-**Next IDs:** PRJ-001 · OI-0037 · XA-001
+**Next IDs:** PRJ-001 · OI-0040 · XA-001
 
 ## Portfolio
 
@@ -15,7 +15,7 @@
 |----|---------|--------|----|----|----|----|----|-----------|-------------|--------------|
 | PRJ-000 | Unfiled | STANDING | W0 | 0 | 0 | 0 | 0 | 0 | — | 2026-10-01 |
 | PRJ-001 | SPEC-ci-lint-typecheck-gate — Make CI actually run the check | DONE |  | 0 | 0 | 0 | 0 | 0 | — | 2026-10-02 |
-| PRJ-002 | SPEC-PRJ-001-land-ci-lint-gate — Push the already-built CI l | ACTIVE |  | 2 | 2 | 0 | 0 | 4 | 2026-10-05 | 2026-10-19 **Blocked by:** founder |
+| PRJ-002 | SPEC-PRJ-001-land-ci-lint-gate — Push the already-built CI l | ACTIVE |  | 3 | 2 | 0 | 0 | 5 | 2026-10-05 | 2026-10-19 **Blocked by:** founder |
 
 **Reconciliation:** Σ project open totals = 3 · non-terminal rows in typed tables = 3 ✅
 
@@ -82,6 +82,19 @@ the new CI job goes red on its very first run with no PR having caused it.
 **DoD last grading attempt:** DoD UNVERIFIABLE · 1 of 2 conjunct(s) ran and passed · EXIT=0 · project INCOMPLETE — coverage not met · 2026-10-20T08:17:44Z · `grep -n "ruff check\|ruff format --check\|mypy agent_reach" .github/workflows/pytest.yml`
 
 ## Overnight runs
+
+### Run of 2026-10-20 05:20 — ORDER-EXHAUSTED-WORK-REMAINS
+
+- **Cycles:** 0 · **verdict:** `ORDER-EXHAUSTED-WORK-REMAINS`
+- **Order now:** `PRJ-002`=BLOCKED, `OI-0021`=BLOCKED
+- **Still buildable:** `OI-0021`, `PRJ-001`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
 
 ### Run of 2026-10-19 23:41 — REMEDY-EXHAUSTED
 
@@ -338,6 +351,7 @@ check caused by an actual violation.
 | OI-0030 | — | 👤 **PARKED 2026-10-18 — execution reached a question only you can settle, and moved on rather than stalling (RULE-L21).** **NEEDS FROM YOU:** Every item in this repo's APPROVED build order is withheld (OI-0021), but 1 buildable row(s) sit outside the order: PRJ-001. Which of them should go into the build order? **WHY IT IS YOURS:** Only you may change an approved build order — the estate promotes what you ticked and never adds to it. So this repo has work it is not allowed to start, and no mechanism here can release it. **ONCE YOU ANSWER:** The moment any of those rows is in the approved order, the repo builds it on the next tick and this question withdraws itself. **WHAT IS TRUE RIGHT NOW:** The repo is NOT building. Its supervisor stands down immediately with verdict ORDER-EXHAUSTED-WORK-REMAINS, 0 cycles. Raised while working `OI-0018`. · 🔁 WITHDRAWN 2026-10-19: probed: the repo has a live item its order can reach, and is building | 👤 | `WITHDRAWN` | you | **DECISION:** Every item in this repo's APPROVED build order is withheld (OI-0021), but 1 buildable row(s) sit outside the order: PRJ-001. Which of them should go into the build order? |  |  | 2026-10-18 | 2026-10-18 |
 | OI-0033 | — | 👤 **PARKED 2026-10-19 — execution reached a question only you can settle, and moved on rather than stalling (RULE-L21).** **NEEDS FROM YOU:** Every item in this repo's APPROVED build order is withheld (OI-0021), but 1 buildable row(s) sit outside the order: PRJ-001. Which of them should go into the build order? **WHY IT IS YOURS:** Only you may change an approved build order — the estate promotes what you ticked and never adds to it. So this repo has work it is not allowed to start, and no mechanism here can release it. **ONCE YOU ANSWER:** The moment any of those rows is in the approved order, the repo builds it on the next tick and this question withdraws itself. **WHAT IS TRUE RIGHT NOW:** The repo is NOT building. Its supervisor stands down immediately with verdict ORDER-EXHAUSTED-WORK-REMAINS, 0 cycles. Raised while working `OI-0018`. · 🔁 WITHDRAWN 2026-10-19: probed: the repo has a live item its order can reach, and is building | 👤 | `WITHDRAWN` | you | **DECISION:** Every item in this repo's APPROVED build order is withheld (OI-0021), but 1 buildable row(s) sit outside the order: PRJ-001. Which of them should go into the build order? |  |  | 2026-10-19 | 2026-10-19 |
 | OI-0036 | — | **NEEDS FROM YOU:** OI-0021 — "Still blocked on OI-0018 (task dependency, unchanged) — OI-0018 itself is no longer blocked on push access (that claim was wrong, corrected above) but on the…" has exhausted every distinct remedy this estate knows for its failure class. Should it be dropped, re-scoped, or do you want to unblock it yourself? **WHY IT IS YOURS:** the remedy ladder is spent for CLEAN-NOOP after 12 prior cycle(s) (2 re-escalation(s) of the same incident) and keeps producing nothing. **ONCE YOU ANSWER:** the item is re-queued and built normally — the withhold clears itself the moment it produces real output again **WHAT IS TRUE RIGHT NOW:** OI-0021 is "Still blocked on OI-0018 (task dependency, unchanged) — OI-0018 itself is no longer blocked on push access (that claim was wrong, corrected above) but on the…". the remedy ladder is spent for CLEAN-NOOP after 12 prior cycle(s) (2 re-escalation(s) of the same incident) and keeps producing nothing. **YOUR OPTIONS:** (a) Drop OI-0021 — COST: its cycles stop being spent estate-wide, and whatever is still sitting unfiled or unbuilt in it stays that way. (b) Re-scope OI-0021 (currently: "Still blocked on OI-0018 (task dependency, unchanged) — OI-0018 itself is no longer blocked on push access (that claim was wrong, corrected above) but on the…") — COST: narrow what it is allowed to hold or attempt, so a remedy this estate already knows can actually clear it; needs a read from you on the new scope. (c) Tell me what to try — COST: you name a remedy, I run it, and it counts as a genuinely new attempt rather than a repeat of one already spent. Raised while working `OI-0021`. … **[full history →](ledger/items/OI-0036.md)** | 👤 | `OPEN` | you | **DECISION:** OI-0021 — "Still blocked on OI-0018 (task dependency, unchanged) — OI-0018 itself is no longer blocked on push access (that claim was wrong, corrected above) but on the…" has exhausted every distinct remedy this estate knows for its failure class. Should it be dropped, re-scoped, or do you want to unblock it yourself? |  |  | 2026-10-20 | 2026-10-20 |
+| OI-0039 | — | 👤 **PARKED 2026-10-20 — execution reached a question only you can settle, and moved on rather than stalling (RULE-L21).** **NEEDS FROM YOU:** Every item in this repo's APPROVED build order is withheld (OI-0021), but 1 buildable row(s) sit outside the order: PRJ-001. Which of them should go into the build order? **WHY IT IS YOURS:** Only you may change an approved build order — the estate promotes what you ticked and never adds to it. So this repo has work it is not allowed to start, and no mechanism here can release it. **ONCE YOU ANSWER:** The moment any of those rows is in the approved order, the repo builds it on the next tick and this question withdraws itself. **WHAT IS TRUE RIGHT NOW:** The repo is NOT building. Its supervisor stands down immediately with verdict ORDER-EXHAUSTED-WORK-REMAINS, 0 cycles. Raised while working `OI-0018`. | 👤 | `OPEN` | you | **DECISION:** Every item in this repo's APPROVED build order is withheld (OI-0021), but 1 buildable row(s) sit outside the order: PRJ-001. Which of them should go into the build order? |  |  | 2026-10-20 | 2026-10-20 |
 
 **DoD check:**
 ```

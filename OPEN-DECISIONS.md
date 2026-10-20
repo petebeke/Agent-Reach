@@ -20,6 +20,15 @@ None open. `DEC-0012` (the only one filed) was withdrawn 2026-10-02 — its unde
 **Your options:** (a) Drop OI-0021 — COST: its cycles stop being spent estate-wide, and whatever is still sitting unfiled or unbuilt in it stays that way. (b) Re-scope OI-0021 (currently: "Still blocked on OI-0018 (task dependency, unchanged) — OI-0018 itself is no longer blocked on push access (that claim was wrong, corrected above) but on the…") — COST: narrow what it is allowed to hold or attempt, so a remedy this estate already knows can actually clear it; needs a read from you on the new scope. (c) Tell me what to try — COST: you name a remedy, I run it, and it counts as a genuinely new attempt rather than a repeat of one already spent.
 **The moment you answer:** the item is re-queued and built normally — the withhold clears itself the moment it produces real output again
 
+## DEC-0039 — Which of them should go into the build order?
+
+<!-- park-key: overnight-run:Agent-Reach:ORDER-EXHAUSTED-WORK-REMAINS -->
+**Row:** OI-0039 (PRJ-002)
+**Clock:** not urgent, but it blocks the row above until answered
+**What is true right now:** The repo is NOT building. Its supervisor stands down immediately with verdict ORDER-EXHAUSTED-WORK-REMAINS, 0 cycles.
+**Your options:** No discrete options — your call in your own words.
+**The moment you answer:** The moment any of those rows is in the approved order, the repo builds it on the next tick and this question withdraws itself.
+
 ## Settled decisions (history)
 
 > Decisions whose work is complete. Kept for the record; nothing here is waiting on you.
