@@ -12,6 +12,13 @@ None open. `DEC-0012` (the only one filed) was withdrawn 2026-10-02 — its unde
 **Your options:** A) Click the banner at https://github.com/petebeke/Agent-Reach/actions (~1 click, 10s) -> OI-0018/OI-0021 finish inside PR #1 with no further action from you. B) Leave Actions disabled -> PRJ-002's own DoD second clause ('a Checks-tab URL or screenshot ... cannot be simulated locally') goes unmet and the project closes PARTIAL, not DONE.
 **The moment you answer:** I open PR #1's Checks tab, confirm the lint job is red, copy its URL, revert agent_reach/_ci_lint_demo.py, push, confirm the same check goes green, close PR #1 with --delete-branch, and mark OI-0018/OI-0021/PRJ-002 DONE with the Checks URL as evidence.
 
+## DEC-0036 — Should it be dropped, re-scoped, or do you want to unblock it yourself?
+
+**Row:** OI-0036 (PRJ-002)
+**Clock:** not urgent, but it blocks the row above until answered
+**What is true right now:** OI-0021 is "Still blocked on OI-0018 (task dependency, unchanged) — OI-0018 itself is no longer blocked on push access (that claim was wrong, corrected above) but on the…". the remedy ladder is spent for CLEAN-NOOP after 12 prior cycle(s) (2 re-escalation(s) of the same incident) and keeps producing nothing.
+**Your options:** (a) Drop OI-0021 — COST: its cycles stop being spent estate-wide, and whatever is still sitting unfiled or unbuilt in it stays that way. (b) Re-scope OI-0021 (currently: "Still blocked on OI-0018 (task dependency, unchanged) — OI-0018 itself is no longer blocked on push access (that claim was wrong, corrected above) but on the…") — COST: narrow what it is allowed to hold or attempt, so a remedy this estate already knows can actually clear it; needs a read from you on the new scope. (c) Tell me what to try — COST: you name a remedy, I run it, and it counts as a genuinely new attempt rather than a repeat of one already spent.
+**The moment you answer:** the item is re-queued and built normally — the withhold clears itself the moment it produces real output again
 
 ## Settled decisions (history)
 
