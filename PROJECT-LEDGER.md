@@ -7,7 +7,7 @@
 **Page:** (set on first publish)
 **Installed:** 2026-10-01 (oil-install.py)
 **Last reconciled:** never — the first /wrap performs the first reconcile
-**Next IDs:** PRJ-001 · OI-0040 · XA-001
+**Next IDs:** PRJ-001 · OI-0043 · XA-001
 
 ## Portfolio
 
@@ -16,6 +16,7 @@
 | PRJ-000 | Unfiled | STANDING | W0 | 0 | 0 | 0 | 0 | 0 | — | 2026-10-01 |
 | PRJ-001 | SPEC-ci-lint-typecheck-gate — Make CI actually run the check | DONE |  | 0 | 0 | 0 | 0 | 0 | — | 2026-10-02 |
 | PRJ-002 | SPEC-PRJ-001-land-ci-lint-gate — Push the already-built CI l | ACTIVE |  | 3 | 2 | 0 | 0 | 5 | 2026-10-05 | 2026-10-19 **Blocked by:** founder |
+| PRJ-003 | UI & live verification coverage | ACTIVE |  | 0 | 1 | 0 | 0 | 1 | 2026-10-20 | 2026-10-20 |
 
 **Reconciliation:** Σ project open totals = 3 · non-terminal rows in typed tables = 3 ✅
 
@@ -364,3 +365,22 @@ evidence — this cannot be simulated locally; there is no `act`/local CI runner
 environment, as the original spec's own Blockers section already noted).
 **DoD status:** DoD UNVERIFIABLE · not checked · EXIT=n/a · project INCOMPLETE — evidence, coverage not met · 2026-10-20T17:49:27Z · `git show origin/main:.github/workflows/pytest.yml | grep -n "ruff check\|ruff format --check\|mypy agent_reach"`
 **DoD last grading attempt:** DoD UNVERIFIABLE · not checked · EXIT=n/a · project INCOMPLETE — evidence, coverage not met · 2026-10-20T17:49:27Z · `git show origin/main:.github/workflows/pytest.yml | grep -n "ruff check\|ruff format --check\|mypy agent_reach"`
+
+# PRJ-003 — UI & live verification coverage
+
+**Goal:** A non-technical person can open a deployed UI for Agent-Reach, log in with no terminal, and see + (where applicable) operate every feature this repo's specs promise, each carrying a live, real test-status element.
+**Definition of done:** Agent-Reach already has its own UI. ADD a new screen/section to that EXISTING UI — matching its current design and navigation, never a disconnected new app — showing every feature below that currently has no visible element, and letting a human operate the ones the spec implies they should control:
+1. [PLAN/specs/SPEC-cut-pending-release.md] Bump version in `pyproject.toml` and `agent_reach/__init__.py` to 1.6.0
+2. [PLAN/specs/SPEC-cut-pending-release.md] Promote `CHANGELOG.md`'s `[Unreleased]` section to a dated `[1.6.0]` section, backfilled with the other 95 commits' user-facing changes since v1.5.0
+3. [PLAN/specs/SPEC-cut-pending-release.md] Fix the stale "13 internet platforms" and "three places must match" lines in `CLAUDE.md`
+4. [PLAN/specs/SPEC-cut-pending-release.md] Tag `v1.6.0` and publish a matching GitHub Release so `_cmd_check_update` (`agent_reach/cli.py:2273`) starts reporting it to existing installs
+
+Each listed feature needs a visible element a non-technical person can see without a terminal, reachable via a real login/access path (not a bare JSON endpoint). Each element shows live test status read from this project's own `**DoD status:** PASS|FAIL · EXIT=n · <date> · <command>` line (the same convention SPEC-016/SPEC-039 already write and `render-open-ledger.py`'s `dod_unmet` already reads) — never a typed-in label. Where the right control shape is ambiguous, default to exposing it as a configurable setting rather than guessing or omitting it.
+**Status:** ACTIVE
+**Source:** filed by `ui-project-governor.py` on 2026-10-20 (`estatehub/PLAN/specs/SPEC-estate-ui-project-governance.md`) — this repo had no deployed, verified UI project covering its specs' features; this is the estate's retrofit governance mechanism, not a manually written project.
+**Scope:** EXISTING_APP
+
+| ID | Ws | Item — Residual Scope Only | Type | Status | Blocked By | Next Action | Where | Verified By | Raised | Last Checked |
+|---|---|---|---|---|---|---|---|---|---|---|
+| OI-0042 | — | UI coverage for Agent-Reach's spec'd features. Agent-Reach already has its own UI. ADD a new screen/section to that EXISTING UI — matching its current design and navigation, never a disconnected new app — showing every feature below that currently has no visible element, and letting a human operate the ones the spec implies they should control:\n1. [PLAN/specs/SPEC-cut-pending-release.md] Bump version in `pyproject.toml` and `agent_reach/__init__.py` to 1.6.0\n2. [PLAN/specs/SPEC-cut-pending-release.md] Promote `CHANGELOG.md`'s `[Unreleased]` section to a dated `[1.6.0]` section, backfilled with the other 95 commits' user-facing changes since v1.5.0\n3. [PLAN/specs/SPEC-cut-pending-release.md] Fix the stale "13 internet platforms" and "three places must match" lines in `CLAUDE.md`\n4. [PLAN/specs/SPEC-cut-pending-release.md] Tag `v1.6.0` and publish a matching GitHub Release so `_cmd_check_update` (`agent_reach/cli.py:2273`) starts reporting it to existing installs\n\nEach listed feature needs a visible element a non-technical person can see without a terminal, reachable via a real login/access path (not a bare JSON endpoint). Each element shows live test status read from this project's own `**DoD status:** PASS\|FAIL · EXIT=n · <date> · <command>` line (the same convention SPEC-016/SPEC-039 already write and `render-open-ledger.py`'s `dod_unmet` already reads) — never a typed-in label. Where the right control shape is ambiguous, default to exposing it as a configurable setting rather than guessing or omitting it. | 🤖 | `OPEN` | — | build the UI section, then `ui-project-governor.py --check .` must report DONE | `estatehub/PLAN/specs/SPEC-estate-ui-project-governance.md` | — | 2026-10-20 | 2026-10-20 |
+
