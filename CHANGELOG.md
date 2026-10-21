@@ -6,12 +6,54 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [Unreleased]
+## [1.6.0] - 2026-10-21
+
+### 🆕 New Channels / 新增渠道
+
+#### 🎯 Boss直聘 channel
+- 新增 `boss` channel：经 boss-agent-cli + CDP 真 Chrome 搜岗位、取 JD 全文。
+- `check()` 四层只读探测（boss-agent-cli 装没装 → 9222 端口通不通 → 有无 zhipin 页签
+  → 浏览器内有无 `wt2` 登录 cookie）。
+- 抓取走公开 API（`search_jobs` + `job_card_browser` + `browser_source="existing-browser"`）。
+- `agent-reach install --system --channels=boss` 可安装锁定上游 boss-agent-cli
+  （#403–#407 已合并入 master）固定提交的后端；上游发布正式版后切回版本约束。
+- Skill 与安装指南支持"帮我配 Boss直聘"：Agent 启动仅监听回环地址的专用 Chrome，
+  用户只负责手动登录，最后由 Agent 验证登录态与 CDP 链路。
+- 固定依赖从 fork 快照 `8ff6bd3` 切换到上游 commit `4c991b7`（#403–#407 已合并入
+  master）：已登录 CDP 会话可直接复用，搜索可通过 `--browser-source existing-browser`
+  禁止 headless 降级。
+- code 37 按原始文案分类：环境异常为 `ENVIRONMENT_RISK` 并立即停止；只有明确
+  token/stoken 过期才允许一次刷新。专用 Chrome profile 应长期复用并降低频率。
+
+#### 📘 Facebook & 📷 Instagram (opencli)
+- New `facebook` and `instagram` channels via OpenCLI, reusing the user's existing Chrome
+  login session (no separate credential flow): search, home feed, groups (Facebook);
+  user search, profile, recent posts, Explore (Instagram).
+- 新增 `facebook`、`instagram` channel，通过 OpenCLI 复用用户已有的 Chrome 登录态：
+  Facebook 支持搜索、主页、Feed、群组列表；Instagram 支持用户搜索、Profile、
+  最近帖子、Explore。
+- Channel count: 14 → 16.
+
+### 🔐 Security Hardening / 安全加固
+- Closed remaining trust-boundary gaps and hardened local credential handling and storage
+  paths (honors `HOME`, hides setup credentials from logs/output, enforces least-privilege
+  credential boundaries, fails closed on credential setup errors).
+- Made `doctor` and other diagnostics provably read-only — isolated pytest from the real
+  user home so tests can't touch live credentials, and added read-only assertions for the
+  diagnostic paths.
+- Bounded media processing for transcription (rejects oversized media before processing,
+  decodes subprocess output as UTF-8, blocks shorthand IPv4 spellings of internal hosts).
+- Hardened the `web` channel's reader against malicious input/response boundaries.
+- 收紧剩余的信任边界，加固本地凭据的存储与读取路径（遵循 `HOME`、日志/输出不回显凭据、
+  最小权限边界、凭据配置失败时安全失败）。
+- 让 `doctor` 及其他诊断确定性只读——测试环境与真实用户 home 隔离，诊断路径新增只读断言。
+- 收紧转写流程的媒体处理边界（处理前拒绝超大媒体、子进程输出按 UTF-8 解码、
+  拦截指向内部主机的简写 IPv4 地址）。
+- 加固 `web` channel 的 reader 输入/响应边界。
 
 ### 🐛 Bug Fixes / 修复
 
 #### 🔐 Boss直聘 — 登录态误判（双凭据存储）
-
 - **根因：** Boss 有两个互不代表的登录态存储——本地 `~/.boss-agent/auth/session.enc`
   和专用 Chrome profile 内的浏览器 cookie。`boss status` / `status --live` **只校验前者**
   （Bridge/httpx 时代的遗留凭据库），而 `existing-browser` 严格 CDP 模式下搜索走的是浏览器 cookie。
@@ -28,23 +70,36 @@ All notable changes to this project will be documented in this file.
   `AUTH_EXPIRED` 定为 ground truth（直接走登录流程，禁止往安全校验方向解释），
   `_security_check` 仅在无 `AUTH_EXPIRED` 时按滑块处理。
 
-### ✨ Features / 新增
+#### Channel reliability
+- `v2ex`: encode caller-supplied values in URLs, constrain the TLS fallback boundary, recover
+  from Python TLS EOF errors.
+- `xueqiu`: honor and clamp hot-post limits, return detail quote fields safely.
+- `xiaohongshu`: fail (not silently continue) when container restart fails; resolve OpenCLI
+  status at check time instead of install time.
+- `linkedin`: refresh the uvx stdio contract.
+- `youtube`: install required default dependencies, align `yt-dlp` runtime support.
+- `transcribe`: decode subprocess output as UTF-8, support Windows Git Bash.
+- `skill`: use shell-safe `mcporter` arguments, propagate install failures instead of
+  swallowing them, use registered Exa search tools, support OpenCode discovery, document
+  verified backend fallbacks.
+- `cli`: make P0 configuration paths explicit.
+- 渠道可靠性修复：`v2ex`（URL 编码调用方输入、收紧 TLS fallback 边界、从 TLS EOF 错误恢复）、
+  `xueqiu`（限制并校验热帖数量、安全返回详情行情字段）、`小红书`（容器重启失败时报错而非静默
+  继续、OpenCLI 状态改为 check 时解析而非安装时）、`linkedin`（修复 uvx stdio 契约）、
+  `youtube`（补齐默认依赖、对齐 yt-dlp 运行时支持）、转写（子进程输出按 UTF-8 解码、支持
+  Windows Git Bash）、skill（shell 安全的 mcporter 参数、安装失败不吞错、使用已注册的 Exa
+  搜索工具、支持 OpenCode 发现、补充已验证的 backend fallback 文档）、cli（P0 配置路径显式化）。
 
-#### 🎯 Boss直聘 channel
+### 🧪 Testing & CI / 测试与持续集成
+- Added a Windows CI suite (Git Bash discovery, UTF-8 decoding of Git Bash output, portable
+  shell command doubles).
+- Added unit tests for the `youtube`, `v2ex`, `xueqiu`, `reddit`, `web`, and `rss` channels.
+- 新增 Windows CI 测试套件（Git Bash 探测、Git Bash 输出 UTF-8 解码、可移植的 shell 命令替身）。
+- 为 `youtube`、`v2ex`、`xueqiu`、`reddit`、`web`、`rss` channel 新增单元测试。
 
-- 新增 `boss` channel：经 boss-agent-cli + CDP 真 Chrome 搜岗位、取 JD 全文。
-- `check()` 四层只读探测（boss-agent-cli 装没装 → 9222 端口通不通 → 有无 zhipin 页签
-  → 浏览器内有无 `wt2` 登录 cookie）。
-- 抓取走公开 API（`search_jobs` + `job_card_browser` + `browser_source="existing-browser"`）。
-- `agent-reach install --system --channels=boss` 可安装锁定上游 boss-agent-cli
-  （#403–#407 已合并入 master）固定提交的后端；上游发布正式版后切回版本约束。
-- Skill 与安装指南支持“帮我配 Boss直聘”：Agent 启动仅监听回环地址的专用 Chrome，
-  用户只负责手动登录，最后由 Agent 验证登录态与 CDP 链路。
-- 固定依赖从 fork 快照 `8ff6bd3` 切换到上游 commit `4c991b7`（#403–#407 已合并入
-  master）：已登录 CDP 会话可直接复用，搜索可通过 `--browser-source existing-browser`
-  禁止 headless 降级。
-- code 37 按原始文案分类：环境异常为 `ENVIRONMENT_RISK` 并立即停止；只有明确
-  token/stoken 过期才允许一次刷新。专用 Chrome profile 应长期复用并降低频率。
+### 📈 Improvements / 改进
+- Channel count: 14 → 16.
+- 渠道数量：14 → 16。
 
 ## [1.3.1] - 2026-03-27
 
