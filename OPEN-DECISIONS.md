@@ -29,6 +29,14 @@ None open. `DEC-0012` (the only one filed) was withdrawn 2026-10-02 — its unde
 **Your options:** No discrete options — your call in your own words.
 **The moment you answer:** The moment any of those rows is in the approved order, the repo builds it on the next tick and this question withdraws itself.
 
+## DEC-0045 — … which do you want: (a) I keep trying at the back of the order, (b) I drop it, or (c) you rule on it?
+
+**Row:** OI-0045 (PRJ-003)
+**Clock:** not urgent, but it blocks the row above until answered
+**What is true right now:** PRJ-003's own DoD asserts as fact that 'Agent-Reach already has its own UI' and requires work to 'ADD a new screen/section to that EXISTING UI'. This is false: Agent-Reach is a CLI + library with no web/desktop UI at all — pyproject.toml declares no web framework dependency (flask/fastapi/django/streamlit/gradio), README.md has zero mentions of login/dashboard/localhost, and the only HTML in the t
+**Your options:** (a) Keep trying PRJ-003 at the back of the order — COST: no decision needed now, but it will keep re-surfacing here unchanged if the underlying cause is never named. (b) Drop it — COST: it stays stalled with no further automatic retry until you revisit it. (c) Rule on it directly now, stating what should happen to the item — COST: requires reading its own note/instruction first, but resolves it for good.
+**The moment you answer:** I requeue the item and the order continues from where it stopped.
+
 ## Settled decisions (history)
 
 > Decisions whose work is complete. Kept for the record; nothing here is waiting on you.
