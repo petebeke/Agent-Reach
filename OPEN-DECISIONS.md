@@ -37,6 +37,7 @@ None open. `DEC-0012` (the only one filed) was withdrawn 2026-10-02 — its unde
 **Your options:** (a) You request release/write access on Panniantong/Agent-Reach, or ask Panniantong to tag+release v1.6.0 directly -- COST: depends on an external person's availability, no fixed timeline. (b) I open a PR from petebeke/Agent-Reach to Panniantong/Agent-Reach with the version/changelog/docs changes now -- COST: an outward-facing action on a third party's repo, and the functional goal (doctor/check-update reporting 'update available') still stays unmet until Panniantong merges and releases it. (c) Tell me the real relationship with Panniantong (shared account, a CI deploy key I haven't found, etc.) -- COST: requires you to point me at it.
 **The moment you answer:** I either (a) wait for the access/release and re-run the DoD check, or (b) open the PR against Panniantong/Agent-Reach with the already-committed version/changelog/docs changes, per your answer.
 
+
 ## Settled decisions (history)
 
 > Decisions whose work is complete. Kept for the record; nothing here is waiting on you.
@@ -100,4 +101,19 @@ Withdrawn automatically by the loop that raised it (`park-question.py --withdraw
 **The probe that established that:** probed: the repo has a live item its order can reach, and is building
 
 Withdrawn automatically by the loop that raised it (`park-question.py --withdraw`, key `overnight-run:Agent-Reach:ORDER-EXHAUSTED-WORK-REMAINS`). Row(s) restamped `WITHDRAWN`: `OI-0039`. The question and its five fields are kept above, unchanged, as the record.
+
+## DEC-0051 — Which of them should go into the build order?
+
+<!-- park-key: overnight-run:Agent-Reach:ORDER-EXHAUSTED-WORK-REMAINS -->
+**Row:** OI-0051 (PRJ-003)
+**Clock:** not urgent, but it blocks the row above until answered
+**What is true right now:** The repo is NOT building. Its supervisor stands down immediately with verdict ORDER-EXHAUSTED-WORK-REMAINS, 0 cycles.
+**Your options:** No discrete options — your call in your own words.
+**The moment you answer:** The moment any of those rows is in the approved order, the repo builds it on the next tick and this question withdraws itself.
+
+**Withdrawn:** the condition this question was raised about no longer holds, so there is nothing left for you to decide.
+
+**The probe that established that:** probed: the repo has a live item its order can reach, and is building
+
+Withdrawn automatically by the loop that raised it (`park-question.py --withdraw`, key `overnight-run:Agent-Reach:ORDER-EXHAUSTED-WORK-REMAINS`). Row(s) restamped `WITHDRAWN`: `OI-0051`. The question and its five fields are kept above, unchanged, as the record.
 
