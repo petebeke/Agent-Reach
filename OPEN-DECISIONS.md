@@ -28,6 +28,14 @@ None open. `DEC-0012` (the only one filed) was withdrawn 2026-10-02 — its unde
 **Your options:** (a) Keep trying PRJ-003 at the back of the order — COST: no decision needed now, but it will keep re-surfacing here unchanged if the underlying cause is never named. (b) Drop it — COST: it stays stalled with no further automatic retry until you revisit it. (c) Rule on it directly now, stating what should happen to the item — COST: requires reading its own note/instruction first, but resolves it for good.
 **The moment you answer:** I requeue the item and the order continues from where it stopped.
 
+## DEC-0048 — … or do you want me to open a PR there with the version/changelog/docs changes and leave the tag+release to whoever merges it?
+
+<!-- park-key: OI-0042-upstream-release-access -->
+**Row:** OI-0048 (PRJ-003)
+**Clock:** not urgent, but it blocks the row above until answered
+**What is true right now:** pyproject.toml/agent_reach/__init__.py bumped to 1.6.0, CHANGELOG.md [1.6.0] section written, CLAUDE.md stale lines fixed -- committed to origin main (petebeke/Agent-Reach). Confirmed: gh api repos/Panniantong/agent-reach --jq .permissions -> push:false, admin:false; gh api repos/Panniantong/agent-reach/collaborators/petebeke -> 403 'Must have push access'. All prior releases v1.1.0-v1.5.0 authored by Panniantong, none by petebeke.
+**Your options:** (a) You request release/write access on Panniantong/Agent-Reach, or ask Panniantong to tag+release v1.6.0 directly -- COST: depends on an external person's availability, no fixed timeline. (b) I open a PR from petebeke/Agent-Reach to Panniantong/Agent-Reach with the version/changelog/docs changes now -- COST: an outward-facing action on a third party's repo, and the functional goal (doctor/check-update reporting 'update available') still stays unmet until Panniantong merges and releases it. (c) Tell me the real relationship with Panniantong (shared account, a CI deploy key I haven't found, etc.) -- COST: requires you to point me at it.
+**The moment you answer:** I either (a) wait for the access/release and re-run the DoD check, or (b) open the PR against Panniantong/Agent-Reach with the already-committed version/changelog/docs changes, per your answer.
 
 ## Settled decisions (history)
 
