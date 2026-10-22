@@ -80,10 +80,49 @@ mypy agent_reach
 Run this on current `main` BEFORE wiring it into CI — if any of the three already fails on `main` as-is,
 that failure must be fixed (or the specific rule intentionally suppressed in `pyproject.toml`) first, or
 the new CI job goes red on its very first run with no PR having caused it.
-**DoD status:** DoD UNVERIFIABLE · 1 of 2 conjunct(s) ran and passed · EXIT=0 · project INCOMPLETE — coverage not met · 2026-10-22T09:02:07Z · `grep -n "ruff check\|ruff format --check\|mypy agent_reach" .github/workflows/pytest.yml`
-**DoD last grading attempt:** DoD UNVERIFIABLE · 1 of 2 conjunct(s) ran and passed · EXIT=0 · project INCOMPLETE — coverage not met · 2026-10-22T09:02:07Z · `grep -n "ruff check\|ruff format --check\|mypy agent_reach" .github/workflows/pytest.yml`
+**DoD status:** DoD UNVERIFIABLE · 1 of 2 conjunct(s) ran and passed · EXIT=0 · project INCOMPLETE — coverage not met · 2026-10-22T13:38:31Z · `grep -n "ruff check\|ruff format --check\|mypy agent_reach" .github/workflows/pytest.yml`
+**DoD last grading attempt:** DoD UNVERIFIABLE · 1 of 2 conjunct(s) ran and passed · EXIT=0 · project INCOMPLETE — coverage not met · 2026-10-22T13:38:31Z · `grep -n "ruff check\|ruff format --check\|mypy agent_reach" .github/workflows/pytest.yml`
 
 ## Overnight runs
+
+### Run of 2026-10-22 08:00 — ORDER-EXHAUSTED-WORK-REMAINS
+
+- **Cycles:** 0 · **verdict:** `ORDER-EXHAUSTED-WORK-REMAINS`
+- **Order now:** `PRJ-002`=BLOCKED, `OI-0021`=BLOCKED, `PRJ-003`=BLOCKED
+- **Still buildable:** `OI-0021`, `PRJ-003`, `PRJ-001`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-22 07:59 — ORDER-EXHAUSTED-WORK-REMAINS
+
+- **Cycles:** 0 · **verdict:** `ORDER-EXHAUSTED-WORK-REMAINS`
+- **Order now:** `PRJ-002`=BLOCKED, `OI-0021`=BLOCKED, `PRJ-003`=BLOCKED
+- **Still buildable:** `OI-0021`, `PRJ-003`, `PRJ-001`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
+
+### Run of 2026-10-22 07:56 — ORDER-EXHAUSTED-WORK-REMAINS
+
+- **Cycles:** 0 · **verdict:** `ORDER-EXHAUSTED-WORK-REMAINS`
+- **Order now:** `PRJ-002`=BLOCKED, `OI-0021`=BLOCKED, `PRJ-003`=BLOCKED
+- **Still buildable:** `OI-0021`, `PRJ-003`, `PRJ-001`
+- **Awaited job(s):** none
+
+| # | moved | commits | note |
+|---|-------|---------|------|
+
+> Written by `overnight-run.py`. Progress is measured against OBSERVABLES between cycles — the git HEAD, the order's item statuses, the ledger — never against a cycle's own account of itself, because activity is not progress.
+
 
 ### Run of 2026-10-22 06:51 — ORDER-EXHAUSTED-WORK-REMAINS
 
@@ -393,8 +432,8 @@ on this machine, never pushed), AND a real PR opened against the GitHub repo wit
 violation shows a failing `lint` check in the GitHub Checks UI (a Checks-tab URL or screenshot as
 evidence — this cannot be simulated locally; there is no `act`/local CI runner available in this
 environment, as the original spec's own Blockers section already noted).
-**DoD status:** DoD UNVERIFIABLE · not checked · EXIT=n/a · project INCOMPLETE — evidence, coverage not met · 2026-10-22T09:02:07Z · `git show origin/main:.github/workflows/pytest.yml | grep -n "ruff check\|ruff format --check\|mypy agent_reach"`
-**DoD last grading attempt:** DoD UNVERIFIABLE · not checked · EXIT=n/a · project INCOMPLETE — evidence, coverage not met · 2026-10-22T09:02:07Z · `git show origin/main:.github/workflows/pytest.yml | grep -n "ruff check\|ruff format --check\|mypy agent_reach"`
+**DoD status:** DoD UNVERIFIABLE · not checked · EXIT=n/a · project INCOMPLETE — evidence, coverage not met · 2026-10-22T13:38:31Z · `git show origin/main:.github/workflows/pytest.yml | grep -n "ruff check\|ruff format --check\|mypy agent_reach"`
+**DoD last grading attempt:** DoD UNVERIFIABLE · not checked · EXIT=n/a · project INCOMPLETE — evidence, coverage not met · 2026-10-22T13:38:31Z · `git show origin/main:.github/workflows/pytest.yml | grep -n "ruff check\|ruff format --check\|mypy agent_reach"`
 
 # PRJ-003 — UI & live verification coverage
 
