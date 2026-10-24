@@ -28,23 +28,6 @@ None open. `DEC-0012` (the only one filed) was withdrawn 2026-10-02 — its unde
 **Your options:** (a) Keep trying PRJ-003 at the back of the order — COST: no decision needed now, but it will keep re-surfacing here unchanged if the underlying cause is never named. (b) Drop it — COST: it stays stalled with no further automatic retry until you revisit it. (c) Rule on it directly now, stating what should happen to the item — COST: requires reading its own note/instruction first, but resolves it for good.
 **The moment you answer:** I requeue the item and the order continues from where it stopped.
 
-## DEC-0048 — … or do you want me to open a PR there with the version/changelog/docs changes and leave the tag+release to whoever merges it?
-
-<!-- park-key: OI-0042-upstream-release-access -->
-**Row:** OI-0048 (PRJ-003)
-**Clock:** not urgent, but it blocks the row above until answered
-**What is true right now:** pyproject.toml/agent_reach/__init__.py bumped to 1.6.0, CHANGELOG.md [1.6.0] section written, CLAUDE.md stale lines fixed -- committed to origin main (petebeke/Agent-Reach). Confirmed: gh api repos/Panniantong/agent-reach --jq .permissions -> push:false, admin:false; gh api repos/Panniantong/agent-reach/collaborators/petebeke -> 403 'Must have push access'. All prior releases v1.1.0-v1.5.0 authored by Panniantong, none by petebeke.
-**Your options:** (a) You request release/write access on Panniantong/Agent-Reach, or ask Panniantong to tag+release v1.6.0 directly -- COST: depends on an external person's availability, no fixed timeline. (b) I open a PR from petebeke/Agent-Reach to Panniantong/Agent-Reach with the version/changelog/docs changes now -- COST: an outward-facing action on a third party's repo, and the functional goal (doctor/check-update reporting 'update available') still stays unmet until Panniantong merges and releases it. (c) Tell me the real relationship with Panniantong (shared account, a CI deploy key I haven't found, etc.) -- COST: requires you to point me at it.
-**The moment you answer:** I either (a) wait for the access/release and re-run the DoD check, or (b) open the PR against Panniantong/Agent-Reach with the already-committed version/changelog/docs changes, per your answer.
-
-## DEC-0054 — Which of them should go into the build order?
-
-<!-- park-key: overnight-run:Agent-Reach:ORDER-EXHAUSTED-WORK-REMAINS -->
-**Row:** OI-0054 (PRJ-003)
-**Clock:** not urgent, but it blocks the row above until answered
-**What is true right now:** The repo is NOT building. Its supervisor stands down immediately with verdict ORDER-EXHAUSTED-WORK-REMAINS, 0 cycles.
-**Your options:** No discrete options — your call in your own words.
-**The moment you answer:** The moment any of those rows is in the approved order, the repo builds it on the next tick and this question withdraws itself.
 
 ## Settled decisions (history)
 
@@ -124,4 +107,34 @@ Withdrawn automatically by the loop that raised it (`park-question.py --withdraw
 **The probe that established that:** probed: the repo has a live item its order can reach, and is building
 
 Withdrawn automatically by the loop that raised it (`park-question.py --withdraw`, key `overnight-run:Agent-Reach:ORDER-EXHAUSTED-WORK-REMAINS`). Row(s) restamped `WITHDRAWN`: `OI-0051`. The question and its five fields are kept above, unchanged, as the record.
+
+## DEC-0054 — Which of them should go into the build order?
+
+<!-- park-key: overnight-run:Agent-Reach:ORDER-EXHAUSTED-WORK-REMAINS -->
+**Row:** OI-0054 (PRJ-003)
+**Clock:** not urgent, but it blocks the row above until answered
+**What is true right now:** The repo is NOT building. Its supervisor stands down immediately with verdict ORDER-EXHAUSTED-WORK-REMAINS, 0 cycles.
+**Your options:** No discrete options — your call in your own words.
+**The moment you answer:** The moment any of those rows is in the approved order, the repo builds it on the next tick and this question withdraws itself.
+
+**Withdrawn:** the condition this question was raised about no longer holds, so there is nothing left for you to decide.
+
+**The probe that established that:** probed: the repo has a live item its order can reach, and is building
+
+Withdrawn automatically by the loop that raised it (`park-question.py --withdraw`, key `overnight-run:Agent-Reach:ORDER-EXHAUSTED-WORK-REMAINS`). Row(s) restamped `WITHDRAWN`: `OI-0054`. The question and its five fields are kept above, unchanged, as the record.
+
+## DEC-0048 — … or do you want me to open a PR there with the version/changelog/docs changes and leave the tag+release to whoever merges it?
+
+<!-- park-key: OI-0042-upstream-release-access -->
+**Row:** OI-0048 (PRJ-003)
+**Clock:** not urgent, but it blocks the row above until answered
+**What is true right now:** pyproject.toml/agent_reach/__init__.py bumped to 1.6.0, CHANGELOG.md [1.6.0] section written, CLAUDE.md stale lines fixed -- committed to origin main (petebeke/Agent-Reach). Confirmed: gh api repos/Panniantong/agent-reach --jq .permissions -> push:false, admin:false; gh api repos/Panniantong/agent-reach/collaborators/petebeke -> 403 'Must have push access'. All prior releases v1.1.0-v1.5.0 authored by Panniantong, none by petebeke.
+**Your options:** (a) You request release/write access on Panniantong/Agent-Reach, or ask Panniantong to tag+release v1.6.0 directly -- COST: depends on an external person's availability, no fixed timeline. (b) I open a PR from petebeke/Agent-Reach to Panniantong/Agent-Reach with the version/changelog/docs changes now -- COST: an outward-facing action on a third party's repo, and the functional goal (doctor/check-update reporting 'update available') still stays unmet until Panniantong merges and releases it. (c) Tell me the real relationship with Panniantong (shared account, a CI deploy key I haven't found, etc.) -- COST: requires you to point me at it.
+**The moment you answer:** I either (a) wait for the access/release and re-run the DoD check, or (b) open the PR against Panniantong/Agent-Reach with the already-committed version/changelog/docs changes, per your answer.
+
+**Withdrawn:** the condition this question was raised about no longer holds, so there is nothing left for you to decide.
+
+**The probe that established that:** Panniantong merged their own release PR #809 (2026-10-23T06:44:09Z) and github-actions[bot] published GitHub Release v1.6.0 on Panniantong/Agent-Reach (2026-10-23T06:45:50Z), independent of petebeke's access. Live-probed: GET https://api.github.com/repos/Panniantong/Agent-Reach/releases/latest -> tag_name=v1.6.0. Ran .venv/bin/python -m agent_reach.cli check-update locally -> '当前版本: v1.6.0 / ✅ 已是最新版本', confirming the functional goal (doctor/check-update reporting correctly against the real release) is met without the founder needing to act.
+
+Withdrawn automatically by the loop that raised it (`park-question.py --withdraw`, key `OI-0042-upstream-release-access`). Row(s) restamped `WITHDRAWN`: `OI-0048`. The question and its five fields are kept above, unchanged, as the record.
 
