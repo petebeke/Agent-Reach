@@ -28,6 +28,14 @@ None open. `DEC-0012` (the only one filed) was withdrawn 2026-10-02 — its unde
 **Your options:** (a) Keep trying PRJ-003 at the back of the order — COST: no decision needed now, but it will keep re-surfacing here unchanged if the underlying cause is never named. (b) Drop it — COST: it stays stalled with no further automatic retry until you revisit it. (c) Rule on it directly now, stating what should happen to the item — COST: requires reading its own note/instruction first, but resolves it for good.
 **The moment you answer:** I requeue the item and the order continues from where it stopped.
 
+## DEC-0057 — Which of them should go into the build order?
+
+<!-- park-key: overnight-run:Agent-Reach:ORDER-EXHAUSTED-WORK-REMAINS -->
+**Row:** OI-0057 (PRJ-002)
+**Clock:** not urgent, but it blocks the row above until answered
+**What is true right now:** The repo is NOT building. Its supervisor stands down immediately with verdict ORDER-EXHAUSTED-WORK-REMAINS, 0 cycles.
+**Your options:** (a) add one or more of the named buildable row(s) to the approved build order — COST: one line in your own order list, and the repo builds it on the next tick. (b) leave the approved order exactly as it is for now — COST: the repo keeps standing down at 0 cycles until you add something or the order itself changes.
+**The moment you answer:** The moment any of those rows is in the approved order, the repo builds it on the next tick and this question withdraws itself.
 
 ## Settled decisions (history)
 
