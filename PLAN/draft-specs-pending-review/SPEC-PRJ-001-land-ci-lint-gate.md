@@ -31,6 +31,20 @@ Conjunct 2 (a real PR observed showing red, caused by Actions actually running) 
 unchanged from the `0` recorded on 2026-10-05 and 2026-10-10. Zero Actions runs have ever fired on
 this fork, for any push or PR, ever — not a transient gap.
 
+**RE-CONFIRMED 2026-10-31 (this grounding pass):** this pass runs under a stricter unattended policy
+than the pass that wrote the above (no live GitHub API calls permitted, local-filesystem-only), so it
+could not independently re-probe `gh api .../actions/runs` itself. Instead it checked the two sources
+that would show a change if one had happened: (1) `OPEN-DECISIONS.md` — `DEC-0024` (the Actions-consent
+banner ask) is still listed under "Open decisions", not "Settled decisions"; it has not been withdrawn,
+meaning the founder has not yet clicked the banner. (2) `PROJECT-LEDGER.md` row `OI-0024` shows its own
+last re-probe at `2026-10-19` (unchanged since `2026-10-17`), and row `OI-0057` (opened `2026-10-24`,
+still `OPEN`) independently confirms the repo was still not building as of that date for an unrelated
+reason (build-order administration), with no mention of the banner having been clicked. (3) Re-ran this
+project's own `completion-audit.py` fresh this pass: conjunct 1 (workflow file on the local working
+tree, which matches `origin/main` since local `main` is only 2 generic unrelated commits ahead) still
+exits 0; conjunct 2 is still rated UNVERIFIABLE (no local way to observe a live GitHub Checks run).
+Net: no evidence of any change since 2026-10-19; the banner click has not happened.
+
 ## Fits
 - `.github/workflows/pytest.yml:8` (confirmed on `origin/main`, not just the local working tree) —
   the `lint:` job starts here, and is complete: `ruff check agent_reach tests` runs at
