@@ -6,6 +6,7 @@ None open. `DEC-0012` (the only one filed) was withdrawn 2026-10-02 — its unde
 ## DEC-0024 — Will you open https://github.com/petebeke/Agent-Reach/actions and click the one-time 'I understand my workflows, go ahead and…?
 
 <!-- park-key: gh-actions-fork-enable-agent-reach -->
+<!-- triage: genuine-decision | no mechanical-duplicate or pure-action pattern matched; treated as a real judgment call (default) -->
 **Row:** OI-0024 (PRJ-002)
 **Clock:** not urgent, but it blocks the row above until answered
 **What is true right now:** OBSERVED 2026-10-05: pushed 6c1e02f/6d5f425/780d08c/89e0e5a to origin/main (OI-0015 DONE); pushed demo/ci-lint-gate-red-check and opened https://github.com/petebeke/Agent-Reach/pull/1 (OI-0018). gh api repos/petebeke/Agent-Reach/actions/runs -> total_count=0 across all history incl. 2 pushes to main + 2 to the demo branch today; gh run list on the PR's branch -> 'no checks reported'; a fresh nudge commit pushed to rule out propagation delay produced no run after 20s. RE-CONFIRMED 2026-10-10: pushed a second nudge commit (`5b7cf46`), waited 25s, still total_count=0; `actions/workflows` shows the `ci` workflow `state: "active"` and `actions/permissions` shows `enabled: true` — rules out a disabled workflow, leaves only the fork first-run consent banner. RE-CONFIRMED 2026-10-17: `repos/petebeke/Agent-Reach` confirmed `fork: true`, `parent: Panniantong/Agent-Reach`; `actions/runs` (unfiltered and `?branch=demo/ci-lint-gate-red-check`) both still `total_count: 0`; `gh pr checks 1` -> "no checks reported"; `actions/permissions` still `enabled: true`. Separately, the CI workflow itself (`origin/main:.github/workflows/pytest.yml`) now DOES contain the ruff/mypy steps (`git show` + grep exits 0) — PRJ-002's DoD first clause passes; only the second clause (a live Checks-tab URL) remains blocked on this banner. Unchanged otherwise; not re-asking. ⚠️ CORRECTION, re-probed live 2026-10-17 (later this cycle): the push-access side of this row's history ("push=yes per DEC-0242") no longer holds — a live `git push origin main` was refused this cycle by the pre-bash guard (`class: owned-default`, push=no, DEC-0202), confirmed by reading `~/.claude/state/repo-intake-policy.tsv` directly (row 177: `owned-default\tyes\tno\tno\t*`). The banner is still the only thing blocking this decision; this just means the eventual revert/push/confirm-green step may need one more click (`attended-push-grant.py`) or will queue — not a new ask.
@@ -14,6 +15,7 @@ None open. `DEC-0012` (the only one filed) was withdrawn 2026-10-02 — its unde
 
 ## DEC-0036 — Should it be dropped, re-scoped, or do you want to unblock it yourself?
 
+<!-- triage: genuine-decision | no mechanical-duplicate or pure-action pattern matched; treated as a real judgment call (default) -->
 **Row:** OI-0036 (PRJ-002)
 **Clock:** not urgent, but it blocks the row above until answered
 **What is true right now:** OI-0021 is "Still blocked on OI-0018 (task dependency, unchanged) — OI-0018 itself is no longer blocked on push access (that claim was wrong, corrected above) but on the…". the remedy ladder is spent for CLEAN-NOOP after 12 prior cycle(s) (2 re-escalation(s) of the same incident) and keeps producing nothing.
@@ -22,6 +24,7 @@ None open. `DEC-0012` (the only one filed) was withdrawn 2026-10-02 — its unde
 
 ## DEC-0045 — … which do you want: (a) I keep trying at the back of the order, (b) I drop it, or (c) you rule on it?
 
+<!-- triage: likely-mechanical | near-identical (similarity 0.99) to another 👤 row's ask in this repo -- either the same question re-filed, or a recurring template that may want one standing policy instead of N individual asks; worth a glance before treating as a fresh decision -->
 **Row:** OI-0045 (PRJ-003)
 **Clock:** not urgent, but it blocks the row above until answered
 **What is true right now:** PRJ-003's own DoD asserts as fact that 'Agent-Reach already has its own UI' and requires work to 'ADD a new screen/section to that EXISTING UI'. This is false: Agent-Reach is a CLI + library with no web/desktop UI at all — pyproject.toml declares no web framework dependency (flask/fastapi/django/streamlit/gradio), README.md has zero mentions of login/dashboard/localhost, and the only HTML in the t
@@ -31,6 +34,7 @@ None open. `DEC-0012` (the only one filed) was withdrawn 2026-10-02 — its unde
 ## DEC-0057 — Which of them should go into the build order?
 
 <!-- park-key: overnight-run:Agent-Reach:ORDER-EXHAUSTED-WORK-REMAINS -->
+<!-- triage: likely-mechanical | near-identical (similarity 0.97) to another 👤 row's ask in this repo -- either the same question re-filed, or a recurring template that may want one standing policy instead of N individual asks; worth a glance before treating as a fresh decision -->
 **Row:** OI-0057 (PRJ-002)
 **Clock:** not urgent, but it blocks the row above until answered
 **What is true right now:** The repo is NOT building. Its supervisor stands down immediately with verdict ORDER-EXHAUSTED-WORK-REMAINS, 0 cycles.
